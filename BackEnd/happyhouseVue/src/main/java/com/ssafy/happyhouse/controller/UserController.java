@@ -82,10 +82,10 @@ public class UserController {
 	}
 	
 	@PostMapping("/delete")
-	public String delete(@RequestParam Map<String, String> map, Model model,  HttpSession session, HttpServletResponse response) throws Exception{
+	public String delete(@RequestParam HashMap<String, String> map, Model model,  HttpSession session, HttpServletResponse response) throws Exception{
 		logger.debug("map : {}", map.get("deluserid"));
 		logger.debug("map : {}", map.get("deluserpw"));
-		Map<String, String> delmap = new HashMap<String, String>();
+		HashMap<String, String> delmap = new HashMap<String, String>();
 		delmap.put("userid", map.get("deluserid"));
 		delmap.put("userpw", map.get("deluserpw"));
 		UserDto userDtoDel = userService.login(delmap);
@@ -100,7 +100,7 @@ public class UserController {
 		}
 	}
 	@PostMapping("/login")
-	public String login(@RequestParam Map<String, String> map, Model model, HttpSession session, HttpServletResponse response) throws Exception {
+	public String login(@RequestParam HashMap<String, String> map, Model model, HttpSession session, HttpServletResponse response) throws Exception {
 		logger.debug("map : {}", map.get("userid"));
 		UserDto userDto = userService.login(map);
 		if(userDto !=null) {
@@ -137,10 +137,10 @@ public class UserController {
 	}
 	
 	@PostMapping("/updateCheck")
-	public String updateCheck(@RequestParam Map<String, String> map, Model model, HttpServletResponse response) throws Exception {
+	public String updateCheck(@RequestParam HashMap<String, String> map, Model model, HttpServletResponse response) throws Exception {
 		logger.debug("map : {}", map.get("upChkuserid"));
 		logger.debug("map : {}", map.get("upChkuserpw"));
-		Map<String, String> upMap = new HashMap<String, String>();
+		HashMap<String, String> upMap = new HashMap<String, String>();
 		upMap.put("userid", map.get("upChkuserid"));
 		upMap.put("userpw", map.get("upChkuserpw"));
 		UserDto userDtoUp = userService.login(upMap);
@@ -158,10 +158,10 @@ public class UserController {
 	}
 	
 	@PostMapping("/myInfoCheck")
-	public String myInfoCheck(@RequestParam Map<String, String> map, Model model, HttpServletResponse response) throws Exception{
+	public String myInfoCheck(@RequestParam HashMap<String, String> map, Model model, HttpServletResponse response) throws Exception{
 		logger.debug("map : {}", map.get("infoChkuserid"));
 		logger.debug("map : {}", map.get("infoChkuserpw"));
-		Map<String, String> infoMap = new HashMap<String, String>();
+		HashMap<String, String> infoMap = new HashMap<String, String>();
 		infoMap.put("userid", map.get("infoChkuserid"));
 		infoMap.put("userpw", map.get("infoChkuserpw"));
 		UserDto userDtoInfo = userService.login(infoMap);
@@ -187,7 +187,7 @@ public class UserController {
 		return "user/idFind";
 	}
 	@PostMapping("/idFind")
-	public String idFind(@RequestParam Map<String, String> map, Model model, HttpServletResponse response) throws Exception{
+	public String idFind(@RequestParam HashMap<String, String> map, Model model, HttpServletResponse response) throws Exception{
 		logger.debug("map : {}", map.get("username"));
 		logger.debug("map : {}", map.get("useraddress"));
 		logger.debug("map : {}", map.get("usernumber"));
@@ -208,7 +208,7 @@ public class UserController {
 	}
 	
 	@PostMapping("/pwFind")
-	public String pwFind(@RequestParam Map<String, String> map, Model model, HttpServletResponse response) throws Exception{
+	public String pwFind(@RequestParam HashMap<String, String> map, Model model, HttpServletResponse response) throws Exception{
 		logger.debug("map : {}", map.get("username"));
 		logger.debug("map : {}", map.get("userid"));
 		logger.debug("map : {}", map.get("useraddress"));

@@ -1,6 +1,7 @@
 package com.ssafy.happyhouse.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,7 @@ import com.ssafy.happyhouse.model.mapper.QnaMapper;
 
 @Service
 public class QnaServiceImpl implements QnaService{
-	 @Autowired
+	 	@Autowired
 		private QnaMapper qnaMapper;
 
 	    @Override
@@ -42,4 +43,16 @@ public class QnaServiceImpl implements QnaService{
 		public boolean deleteQna(int articleno) {
 			return qnaMapper.deleteQna(articleno) == 1;
 		}
+
+		@Override
+		public List<QnaDto> searchById(String searchId) {
+			return qnaMapper.searchById(searchId);
+		}
+
+		@Override
+		public List<QnaDto> searchByTitle(String serarchTitle) {
+			return qnaMapper.searchByTitle(serarchTitle);
+		}
+		
+		
 }

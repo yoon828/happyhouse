@@ -47,6 +47,8 @@ public class QnaController {
 		logger.debug("detailBoard - 호출");
 		return new ResponseEntity<QnaDto>(qnaService.detailQna(articleno), HttpStatus.OK);
 	}
+    
+    
 
     @ApiOperation(value = "새로운 게시글 정보를 입력한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PostMapping
@@ -79,4 +81,26 @@ public class QnaController {
 		}
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
+    
+    @ApiOperation(value = "검색한 작성자에 글들을 반환한다. ")
+    @GetMapping("/searchid/{searchId}")
+    public ResponseEntity<List<QnaDto>> searchById(@PathVariable String searchId){
+    	logger.debug(searchId);
+    	return new ResponseEntity<List<QnaDto>>(qnaService.searchById(searchId), HttpStatus.OK); 
+    }
+    
+    @ApiOperation(value = "검색한 제목이 들어간 글들을 반환한다. ")
+    @GetMapping("/searchtitle/{searchTitle}")
+    public ResponseEntity<List<QnaDto>> searchByTitle(@PathVariable String searchTitle){
+    	logger.debug(searchTitle);
+    	return new ResponseEntity<List<QnaDto>>(qnaService.searchByTitle(searchTitle), HttpStatus.OK); 
+    }
+    
+    @ApiOperation(value = "글 번호로 검색한 게시글의 정보를 반환한다.", response = QnaDto.class)    
+   	@GetMapping("/searchno/{articleno}")
+   	public ResponseEntity<QnaDto> searchByNo(@PathVariable int articleno) {
+   		logger.debug("detailBoard - 호출");
+   		return new ResponseEntity<QnaDto>(qnaService.detailQna(articleno), HttpStatus.OK);
+   	}
+  
 }

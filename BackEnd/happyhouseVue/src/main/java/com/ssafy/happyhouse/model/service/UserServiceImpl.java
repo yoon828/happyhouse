@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.happyhouse.model.UserDto;
 import com.ssafy.happyhouse.model.mapper.UserMapper;
@@ -39,10 +40,10 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public void registUser(UserDto userDto) throws Exception {
+	public int registUser(UserDto userDto) throws Exception {
 		String encodePw = passwordEncoder.encode(userDto.getUserpw());
 		userDto.setUserpw(encodePw);
-		userMapper.registUser(userDto);	
+		return userMapper.registUser(userDto);	
 	}
 
 	@Override
@@ -51,6 +52,7 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
+	@Transactional
 	public int updateUser(UserDto userDto) throws Exception {
 		String encodePw = passwordEncoder.encode(userDto.getUserpw());
 		userDto.setUserpw(encodePw);
@@ -58,8 +60,9 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public void deleteUser(String userid) throws Exception {
-		userMapper.deleteUser(userid);
+	@Transactional
+	public int deleteUser(String userid) throws Exception {
+		return userMapper.deleteUser(userid);
 	}
 
 	@Override

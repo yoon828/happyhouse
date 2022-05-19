@@ -11,13 +11,27 @@
 		order by articleno desc
 	</select>
 	
-	<!-- 게시글 상세 조회 -->
+	
+	<!-- 게시글 상세 조회  + 글 번호 검색 -->
 	<select id="selectQnaByNo" resultType="qnaDto">
 		select articleno, subject, userid, content, hit, regtime
 		from qna 
 		where articleno = #{articleno}
 	</select>
-
+	
+	<!-- 작성자로 검색 -->
+	<select id="searchById" resultType="map" >
+		select articleno, subject, userid, content, hit, regtime
+		from qna 
+		where userid = #{searchId}
+	</select>
+	
+	<!-- 제목으로 검색 -->
+	<select id="searchByTitle" resultType="map" >
+		select articleno, subject, userid, content, hit, regtime
+		from qna 
+		where subject like concat('%', #{searchTitle}, '%')
+	</select>
 	<!-- 게시글 등록 -->
 	<insert id="insertQna" parameterType="qnaDto">
 		insert into qna(

@@ -1,9 +1,11 @@
+
+
+
 .overlaybox {
   position: relative;
   width: 360px;
   height: 350px;
-  background: url("https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/box_movie.png")
-    no-repeat;
+  background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/box_movie.png') no-repeat;
   padding: 15px 10px;
 }
 .overlaybox div,
@@ -19,8 +21,8 @@ ul {
   color: #fff;
   font-size: 16px;
   font-weight: bold;
-  background: url("https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png")
-    no-repeat right 120px center;
+  background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png') no-repeat right 120px
+    center;
   margin-bottom: 8px;
 }
 .overlaybox .first {
@@ -39,8 +41,7 @@ ul {
   height: 48px;
   top: 0;
   left: 0;
-  background: url("https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/triangle.png")
-    no-repeat;
+  background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/triangle.png') no-repeat;
   padding: 6px;
   font-size: 18px;
 }
@@ -83,8 +84,7 @@ ul {
   right: 25px;
   width: 5px;
   height: 3px;
-  background: url("https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/updown.png")
-    no-repeat;
+  background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/updown.png') no-repeat;
 }
 .overlaybox li .up {
   background-position: 0 -40px;
@@ -108,6 +108,7 @@ ul {
 .overlaybox li:hover .down {
   background-position: 0 -20px;
 }
+
 
 /*--------------------------------------------------------------
 # About
@@ -155,8 +156,9 @@ ul {
   margin-bottom: 0;
 }
 
+
 section {
-  padding: 50px 0;
+  padding: 60px 0;
   overflow: hidden;
 }
 

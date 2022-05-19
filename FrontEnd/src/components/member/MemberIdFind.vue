@@ -125,7 +125,7 @@ export default {
           }
           let findId = data;
           alert(msg);
-          alert(findId);
+          alert("찾은 아이디 : " + findId);
           if (!err) {
             this.$router.push({ name: "login" });
           } else {

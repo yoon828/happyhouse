@@ -4,7 +4,7 @@ const api = apiInstance();
 
 async function login(user, success, fail) {
   await api
-    .post(`/user/login`, JSON.stringify(user))
+    .post(`/userapi/login`, JSON.stringify(user))
     .then(success)
     .catch(fail);
 }

@@ -9,24 +9,24 @@
                 <h1>HappyHouse</h1>
               </b-row>
               <b-row class="justify-content-center">
-                <b-link href="#main">
-                  <md-button class="md-warning">실거래가 조회</md-button>
-                </b-link>
+                <md-button class="md-warning" @click.prevent="goHouseView"
+                  >아파트 거래 조회</md-button
+                >
               </b-row>
             </div>
           </div>
         </div>
       </div>
     </parallax>
-    <div class="main main-raised">
+    <!-- <div class="main main-raised">
       <div class="section section-basic" id="main">
         <div class="container">
           <div class="title">
-            <h2>실거래가 조회하기</h2>
+            <h2>홈페이지 소개 및 기능 소개</h2>
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -56,6 +56,9 @@ export default {
       } else {
         this.leafShow = true;
       }
+    },
+    goHouseView() {
+      this.$router.push({ name: "house" });
     },
   },
   computed: {

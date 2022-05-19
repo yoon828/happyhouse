@@ -4,6 +4,7 @@ import HomeView from "./views/HomeView.vue";
 import MainNavbar from "./layout/MainNavbar.vue";
 import MainFooter from "./layout/MainFooter.vue";
 import BoardView from "./views/BoardView.vue";
+import HouseView from "./views/HouseView.vue";
 
 Vue.use(Router);
 
@@ -13,6 +14,19 @@ export default new Router({
       path: "/",
       name: "home",
       components: { default: HomeView, header: MainNavbar, footer: MainFooter },
+      props: {
+        header: { colorOnScroll: 400 },
+        footer: { backgroundColor: "black" },
+      },
+    },
+    {
+      path: "/house",
+      name: "house",
+      components: {
+        default: HouseView,
+        header: MainNavbar,
+        footer: MainFooter,
+      },
       props: {
         header: { colorOnScroll: 400 },
         footer: { backgroundColor: "black" },

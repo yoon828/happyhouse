@@ -29,8 +29,8 @@
               <!-- Here you can add your items from the section-start of your toolbar -->
             </mobile-menu>
             <md-list>
-              <md-list-item href="/">
-                <p>실거래가</p>
+              <md-list-item href="#/house">
+                <p>거래조회</p>
               </md-list-item>
 
               <md-list-item href="#/board">

@@ -5,10 +5,36 @@ import createPersistedState from "vuex-persistedstate";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {},
+  state: {
+    houses: [],
+    house: null,
+  },
   getters: {},
-  mutations: {},
-  actions: {},
+  mutations: {
+    SET_HOUSE_LIST: (state, houses) => {
+      //   console.log(houses);
+      state.houses = houses;
+    },
+    SET_DETAIL_HOUSE: (state, house) => {
+      state.house = house;
+    },
+  },
+  actions: {
+    getHouseList: ({ commit }, dongCode) => {
+      params,
+        (response) => {
+          //   console.log(response.data.response.body.items.item);
+          commit("SET_HOUSE_LIST", response.data.response.body.items.item);
+        },
+        (error) => {
+          console.log(error);
+        };
+    },
+    detailHouse: ({ commit }, house) => {
+      // 나중에 house.일련번호를 이용하여 API 호출
+      commit("SET_DETAIL_HOUSE", house);
+    },
+  },
   modules: {},
   plugins: [
     createPersistedState({

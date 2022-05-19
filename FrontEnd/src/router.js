@@ -5,7 +5,11 @@ import MainNavbar from "./layout/MainNavbar.vue";
 import MainFooter from "./layout/MainFooter.vue";
 import BoardView from "./views/BoardView.vue";
 import HouseView from "./views/HouseView.vue";
+import MemberView from "./views/MemberView.vue";
 
+const onlyAuthUser = async (to, from, next) => {
+  const checkUserInfo = store.getters[""];
+};
 Vue.use(Router);
 
 export default new Router({
@@ -70,6 +74,63 @@ export default new Router({
           path: "delete/:articleno",
           name: "boardDelete",
           component: () => import("@/components/board/BoardDelete.vue"),
+        },
+      ],
+    },
+    {
+      path: "/member",
+      name: "member",
+
+      components: {
+        default: MemberView,
+        header: MainNavbar,
+        footer: MainFooter,
+      },
+      props: {
+        header: { colorOnScroll: 400 },
+        footer: { backgroundColor: "black" },
+      },
+      redirect: "/member/login",
+      children: [
+        {
+          path: "login",
+          name: "login",
+          component: () => import("@/components/member/MemberLogin.vue"),
+        },
+        {
+          path: "idfind",
+          name: "idfind",
+          component: () => import("@/components/member/MemberIdFind.vue"),
+        },
+        {
+          path: "pwfind",
+          name: "pwfind",
+          component: () => import("@/components/member/MemberPwFind.vue"),
+        },
+        {
+          path: "mypage",
+          name: "mypage",
+          component: () => import("@/components/member/MemberMyPage.vue"),
+        },
+        {
+          path: "myinfo",
+          name: "myinfo",
+          component: () => import("@/components/member/MemberInfo.vue"),
+        },
+        {
+          path: "regist",
+          name: "regist",
+          component: () => import("@/components/member/MemberRegist.vue"),
+        },
+        {
+          path: "update",
+          name: "update",
+          component: () => import("@/components/member/MemberUpdate.vue"),
+        },
+        {
+          path: "delete",
+          name: "delete",
+          component: () => import("@/components/member/MemberDelete.vue"),
         },
       ],
     },

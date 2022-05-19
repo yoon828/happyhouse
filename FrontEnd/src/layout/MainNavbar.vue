@@ -37,8 +37,32 @@
                 <p>게시판</p>
               </md-list-item>
 
-              <md-list-item href="#">
+              <md-list-item href="#/member/login">
                 <p>로그인</p>
+              </md-list-item>
+
+              <md-list-item href="#/member/regist">
+                <p>회원 가입</p>
+              </md-list-item>
+              <md-list-item href="#/member/idfind">
+                <p>아이디 찾기</p>
+              </md-list-item>
+
+              <md-list-item href="#/member/pwfind">
+                <p>비밀번호 찾기</p>
+              </md-list-item>
+
+              <md-list-item href="#/member/mypage">
+                <p>마이 페이지</p>
+              </md-list-item>
+              <md-list-item href="#/member/myinfo">
+                <p>내 정보 조회</p>
+              </md-list-item>
+              <md-list-item href="#/member/update">
+                <p>내 정보 수정</p>
+              </md-list-item>
+              <md-list-item href="#/">
+                <p>로그 아웃</p>
               </md-list-item>
             </md-list>
           </div>

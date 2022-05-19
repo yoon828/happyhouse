@@ -18,5 +18,26 @@ async function findById(userid, success, fail) {
 }
 
 // function logout(success, fail)
+//회원 가입
+async function registMember(user, success, fail) {
+  api
+    .post("/userapi/regist", JSON.stringify(user))
+    .then(success)
+    .catch(fail);
+}
 
-export { login, findById };
+async function idFindMember(user, success, fail) {
+  api
+    .post("/userapi/idFind", JSON.stringify(user))
+    .then(success)
+    .catch(fail);
+}
+
+async function pwFindMember(user, success, fail) {
+  api
+    .post("/userapi/pwFind", JSON.stringify(user))
+    .then(success)
+    .catch(fail);
+}
+
+export { login, findById, registMember, idFindMember, pwFindMember };

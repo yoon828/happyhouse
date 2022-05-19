@@ -1,5 +1,7 @@
 package com.ssafy.happyhouse.model;
 
+
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -18,6 +20,8 @@ public class UserDto {
 	
 	
 	public UserDto() {}
+	
+
 	public UserDto(String userid, String userpw, String username, String useraddress, String usernumber) {
 		super();
 		this.userid = userid;
@@ -26,41 +30,64 @@ public class UserDto {
 		this.useraddress = useraddress;
 		this.usernumber = usernumber;
 	}
+
+
 	public String getUserid() {
 		return userid;
 	}
+
+
 	public void setUserid(String userid) {
 		this.userid = userid;
 	}
+
+
 	public String getUserpw() {
 		return userpw;
 	}
+
+
 	public void setUserpw(String userpw) {
 		this.userpw = userpw;
 	}
+
+
 	public String getUsername() {
 		return username;
 	}
+
+
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
+
 	public String getUseraddress() {
 		return useraddress;
 	}
+
+
 	public void setUseraddress(String useraddress) {
 		this.useraddress = useraddress;
 	}
+
+
 	public String getUsernumber() {
 		return usernumber;
 	}
+
+
 	public void setUsernumber(String usernumber) {
 		this.usernumber = usernumber;
 	}
+
+
 	@Override
 	public String toString() {
 		return "UserDto [userid=" + userid + ", userpw=" + userpw + ", username=" + username + ", useraddress="
 				+ useraddress + ", usernumber=" + usernumber + "]";
 	}
+	
 	
 	
 }

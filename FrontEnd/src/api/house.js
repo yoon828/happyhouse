@@ -24,7 +24,6 @@ function dongList(params, success, fail) {
     .catch(fail);
 }
 
-
 function houseListByDong(params, success, fail) {
   house
     .get(`/map/apt?dong=${params.dongCode}`)

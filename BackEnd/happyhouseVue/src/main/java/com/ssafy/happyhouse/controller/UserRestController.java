@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.happyhouse.model.IdFindDto;
@@ -26,7 +26,7 @@ import com.ssafy.happyhouse.model.UserDto;
 import com.ssafy.happyhouse.model.service.UserService;
 
 import io.swagger.annotations.ApiOperation;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+
 
 @CrossOrigin(origins = { "*" }, maxAge = 6000)
 @RestController
@@ -120,7 +120,7 @@ public class UserRestController {
 		if(findId != ""  && findId != null) {
 			return new ResponseEntity<String>(findId, HttpStatus.OK);  
 		}
-		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);  
+		return new ResponseEntity<String>(FAIL, HttpStatus.OK);   
 	}
 	//비밀번호 찾기
 	@ApiOperation(value = "이름, 아이디 , 이메일 주소, 전화번호를 받아서 임시 비밀번호를 발급한다. 성공하면 임시 비밀 번호를 반환한다.실패하면 fail 문자열을 반환한다.")
@@ -139,7 +139,7 @@ public class UserRestController {
 		if(ranPw != null && ranPw !="") {
 			return new ResponseEntity<String>(ranPw, HttpStatus.OK); 
 		}
-		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+		return new ResponseEntity<String>(FAIL, HttpStatus.OK); 
 	}
 	
 	

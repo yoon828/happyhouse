@@ -1,6 +1,7 @@
 package com.ssafy.happyhouse.config;
 import static springfox.documentation.builders.PathSelectors.regex;
 
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -27,6 +28,7 @@ public class SwaggerConfig {
 				.paths(regex("/.*"))
 				.build();
 	}
+	
 
 	private ApiInfo apiInfo() {
 		return new ApiInfoBuilder().title("SSAFY HappyHouse REST API")

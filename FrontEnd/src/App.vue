@@ -25,4 +25,7 @@ a:active {
 .card {
   min-height: 350px;
 }
+.wt-100 {
+  width: 100%;
+}
 </style>

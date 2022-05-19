@@ -1,10 +1,12 @@
 <template>
-  <b-container v-if="houses && houses.length != 0" class="bv-example-row mt-3">
-    <house-list-item
-      v-for="(house, index) in houses"
-      :key="index"
-      :house="house"
-    />
+  <b-container v-if="houses && houses.length != 0" class="bv-example-row">
+    <b-list-group class="con wt-100">
+      <house-list-item
+        v-for="(house, index) in houses"
+        :key="index"
+        :house="house"
+      />
+    </b-list-group>
   </b-container>
   <b-container v-else class="bv-example-row mt-3">
     <b-row>
@@ -45,4 +47,20 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.con {
+  position: relative;
+  overflow-y: auto;
+  height: 600px;
+}
+.con::-webkit-scrollbar {
+  width: 10px;
+}
+.con::-webkit-scrollbar-thumb {
+  background-color: #edcf25;
+  border-radius: 10px;
+}
+.con::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
+</style>

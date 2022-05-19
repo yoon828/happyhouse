@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 <template>
   <b-row class="my-4 wc mx-auto">
     <b-col class="sm-3">
@@ -36,9 +37,7 @@ export default {
   created() {
     this.getSidoList();
   },
-  computed: {
-    ...mapState(["houses"]),
-  },
+  computed: {},
   methods: {
     ...mapActions(["setHouses"]),
     getSidoList() {
@@ -65,11 +64,16 @@ export default {
       });
     },
     getHouseList() {
-      console.log(this.dongCode);
-      houseListByDong(this.dongCode, (res) => {
-        console.log(res);
-        this.setHouses(res.data);
-      });
+      component("HouseMap").displayMarkers();
+      houseListByDong(
+        {
+          dongCode: this.dongCode,
+        },
+        (res) => {
+          this.setHouses(res.data);
+          // eslint-disable-next-line prettier/prettier
+        }
+      );
     },
   },
 };

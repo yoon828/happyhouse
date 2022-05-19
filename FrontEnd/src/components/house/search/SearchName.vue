@@ -17,6 +17,7 @@
 
 <script>
 import { houseListByName } from "@/api/house.js";
+import { mapActions } from "vuex";
 
 export default {
   data() {
@@ -25,13 +26,14 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["setHouses"]),
     search() {
       houseListByName(
         {
           aptName: this.aptname,
         },
         (res) => {
-          console.log(res.data);
+          this.setHouses(res.data);
           // eslint-disable-next-line prettier/prettier
         }
       );

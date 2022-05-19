@@ -48,18 +48,11 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-
 const houseStore = "houseStore";
 
 export default {
   name: "HouseDetail",
-  computed: {
-    ...mapState(houseStore, ["house"]),
-    // house() {
-    //   return this.$store.state.house;
-    // },
-  },
+  computed: {},
   filters: {
     price(value) {
       if (!value) return value;

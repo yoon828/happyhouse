@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import Vue from "vue";
 import Vuex from "vuex";
 import createPersistedState from "vuex-persistedstate";
@@ -11,6 +12,9 @@ export default new Vuex.Store({
   },
   getters: {},
   mutations: {
+    CLEAR_HOUSE_LIST: (state) => {
+      state.houses = [];
+    },
     SET_HOUSE_LIST: (state, houses) => {
       //   console.log(houses);
       state.houses = houses;
@@ -20,15 +24,11 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    getHouseList: ({ commit }, dongCode) => {
-      params,
-        (response) => {
-          //   console.log(response.data.response.body.items.item);
-          commit("SET_HOUSE_LIST", response.data.response.body.items.item);
-        },
-        (error) => {
-          console.log(error);
-        };
+    clearHouses: ({ commit }) => {
+      commit("CLEAR_HOUSE_LIST");
+    },
+    setHouses: ({ commit }, houses) => {
+      commit("SET_HOUSE_LIST", houses);
     },
     detailHouse: ({ commit }, house) => {
       // 나중에 house.일련번호를 이용하여 API 호출

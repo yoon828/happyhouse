@@ -10,8 +10,8 @@
           </div>
         </div>
         <house-search-bar></house-search-bar>
-        <b-row>
-          <b-col>
+        <b-row class="mb-5">
+          <b-col cols="4">
             <house-list> </house-list>
           </b-col>
           <b-col>

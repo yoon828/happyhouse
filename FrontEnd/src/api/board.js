@@ -10,6 +10,7 @@ function listArticle(param, success, fail) {
 }
 
 function writeArticle(article, success, fail) {
+  console.log(article);
   api
     .post(`/qna`, JSON.stringify(article))
     .then(success)

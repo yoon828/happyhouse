@@ -8,30 +8,39 @@
   </b-container>
   <b-container v-else class="bv-example-row mt-3">
     <b-row>
-      <b-col><b-alert show>주택 목록이 없습니다.</b-alert></b-col>
+      <b-col>
+        <div class="alert alert-info d-flex align-items-center">
+          <div class="alert-icon">
+            <md-icon>info_outline</md-icon>
+          </div>
+          주택 목록이 없습니다.
+        </div>
+      </b-col>
     </b-row>
   </b-container>
 </template>
 
 <script>
 import HouseListItem from "@/components/house/HouseListItem.vue";
-import { mapState } from "vuex";
-
-const houseStore = "houseStore";
+import { mapActions, mapState } from "vuex";
 
 export default {
   name: "HouseList",
   components: {
     HouseListItem,
   },
+
   data() {
     return {};
   },
+  created() {
+    this.clearHouses();
+  },
   computed: {
-    ...mapState(houseStore, ["houses"]),
-    // houses() {
-    //   return this.$store.state.houses;
-    // },
+    ...mapState(["houses"]),
+  },
+  methods: {
+    ...mapActions(["clearHouses"]),
   },
 };
 </script>

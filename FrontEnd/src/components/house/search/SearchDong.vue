@@ -1,31 +1,84 @@
 <template>
-  <b-row class="mt-4 mb-4 text-center">
+  <b-row class="my-4 wc mx-auto">
     <b-col class="sm-3">
-      <b-form-select
-        v-model="sidoCode"
-        :options="sidos"
-        @change="gugunList"
-      ></b-form-select>
-    </b-col>
-    <b-col class="sm-3">
-      <b-form-select
-        v-model="sidoCode"
-        :options="sidos"
-        @change="gugunList"
-      ></b-form-select>
+      <b-form-select v-model="sidoCode" :options="sidos" @change="getGugunList">
+      </b-form-select>
     </b-col>
     <b-col class="sm-3">
       <b-form-select
         v-model="gugunCode"
         :options="guguns"
-        @change="searchApt"
-      ></b-form-select>
+        @change="getDongList"
+      >
+      </b-form-select>
+    </b-col>
+    <b-col class="sm-3">
+      <b-form-select v-model="dongCode" :options="dongs" @change="getHouseList">
+      </b-form-select>
     </b-col>
   </b-row>
 </template>
 
 <script>
-export default {};
+import { sidoList, gugunList, dongList, houseListByDong } from "@/api/house.js";
+import { mapState, mapActions } from "vuex";
+export default {
+  data() {
+    return {
+      sidoCode: null,
+      gugunCode: null,
+      dongCode: null,
+      sidos: [{ value: null, text: "선택" }],
+      guguns: [{ value: null, text: "선택" }],
+      dongs: [{ value: null, text: "선택" }],
+    };
+  },
+  created() {
+    this.getSidoList();
+  },
+  computed: {
+    ...mapState(["houses"]),
+  },
+  methods: {
+    ...mapActions(["setHouses"]),
+    getSidoList() {
+      sidoList((res) => {
+        res.data.forEach((sido) => {
+          this.sidos.push({ value: sido.sidoCode, text: sido.sidoName });
+        });
+      });
+    },
+    getGugunList() {
+      this.guguns = [{ value: null, text: "선택" }];
+      gugunList({ sidoCode: this.sidoCode }, (res) => {
+        res.data.forEach((gugun) => {
+          this.guguns.push({ value: gugun.gugunCode, text: gugun.gugunName });
+        });
+      });
+    },
+    getDongList() {
+      this.dongs = [{ value: null, text: "선택" }];
+      dongList({ sidoCode: this.gugunCode }, (res) => {
+        res.data.forEach((dong) => {
+          this.dongs.push({ value: dong.dongCode, text: dong.dongName });
+        });
+      });
+    },
+    getHouseList() {
+      console.log(this.dongCode);
+      houseListByDong(this.dongCode, (res) => {
+        console.log(res);
+        this.setHouses(res.data);
+      });
+    },
+  },
+};
 </script>
 
-<style></style>
+<style>
+.wc {
+  width: 38rem;
+  display: flex;
+  align-content: center;
+}
+</style>

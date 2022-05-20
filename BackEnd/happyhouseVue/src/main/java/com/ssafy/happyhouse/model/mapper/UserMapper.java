@@ -28,9 +28,9 @@ public interface UserMapper {
 	String idFind(Map<String, String> map) throws Exception;
 	//비밀번호 찾기 
 	UserDto pwFind(Map<String, String> map) throws Exception;
-	
 	//관심지역 등록
 	void addLikeDong(Map<String, String>map)throws Exception;
 	//관심지역 조회
 	List<SidoGugunCodeDto> listLikeDong(String userid)throws Exception;
+
 }

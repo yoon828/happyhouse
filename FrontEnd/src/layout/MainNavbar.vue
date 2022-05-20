@@ -36,34 +36,36 @@
               <md-list-item href="#/board">
                 <p>게시판</p>
               </md-list-item>
+              <md-list v-if="!userInfo"
+                ><md-list-item href="#/member/login">
+                  <p>로그인</p>
+                </md-list-item>
 
-              <md-list-item href="#/member/login">
-                <p>로그인</p>
-              </md-list-item>
+                <md-list-item href="#/member/regist">
+                  <p>회원 가입</p>
+                </md-list-item>
+                <md-list-item href="#/member/idfind">
+                  <p>아이디 찾기</p>
+                </md-list-item>
 
-              <md-list-item href="#/member/regist">
-                <p>회원 가입</p>
-              </md-list-item>
-              <md-list-item href="#/member/idfind">
-                <p>아이디 찾기</p>
-              </md-list-item>
-
-              <md-list-item href="#/member/pwfind">
-                <p>비밀번호 찾기</p>
-              </md-list-item>
-
-              <md-list-item href="#/member/mypage">
-                <p>마이 페이지</p>
-              </md-list-item>
-              <md-list-item href="#/member/myinfo">
-                <p>내 정보 조회</p>
-              </md-list-item>
-              <md-list-item href="#/member/update">
-                <p>내 정보 수정</p>
-              </md-list-item>
-              <md-list-item href="#/">
-                <p>로그 아웃</p>
-              </md-list-item>
+                <md-list-item href="#/member/pwfind">
+                  <p>비밀번호 찾기</p>
+                </md-list-item></md-list
+              >
+              <md-list v-if="userInfo">
+                <md-list-item href="#/member/mypage">
+                  <p>마이 페이지</p>
+                </md-list-item>
+                <md-list-item href="#/member/myinfo">
+                  <p>내 정보 조회</p>
+                </md-list-item>
+                <md-list-item href="#/member/update">
+                  <p>내 정보 수정</p>
+                </md-list-item>
+                <md-list-item href="#/">
+                  <p>로그 아웃</p>
+                </md-list-item>
+              </md-list>
             </md-list>
           </div>
         </div>
@@ -85,8 +87,9 @@ function resizeThrottler(actualResizeHandler) {
     }, 66);
   }
 }
-
+import { mapState, mapMutations } from "vuex";
 import MobileMenu from "@/layout/MobileMenu";
+const memberStore = "memberStore";
 export default {
   components: {
     MobileMenu,
@@ -107,7 +110,9 @@ export default {
       toggledClass: false,
     };
   },
-  computed: {},
+  computed: {
+    ...mapState(memberStore, ["isLogin", "userInfo"]),
+  },
   methods: {
     bodyClick() {
       let bodyClick = document.getElementById("bodyClick");
@@ -152,6 +157,13 @@ export default {
       if (element_id) {
         element_id.scrollIntoView({ block: "end", behavior: "smooth" });
       }
+    },
+    ...mapMutations(memberStore, ["SET_IS_LOGIN", "SET_USER_INFO"]),
+    OnclickLogout() {
+      this.SET_IS_LOGIN(false);
+      this.SET_USER_INFO(null);
+      sessionStorage.removeItem("access-token");
+      if (this.$route.path != "/") this.$router.push({ name: "home" });
     },
   },
   mounted() {

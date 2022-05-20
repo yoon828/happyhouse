@@ -12,7 +12,7 @@ async function login(user, success, fail) {
 async function findById(userid, success, fail) {
   api.defaults.headers["access-token"] = sessionStorage.getItem("access-token");
   await api
-    .get(`/user/info/${userid}`)
+    .get(`/userapi/myInfo/${userid}`)
     .then(success)
     .catch(fail);
 }
@@ -25,14 +25,14 @@ async function registMember(user, success, fail) {
     .then(success)
     .catch(fail);
 }
-
+//아이디 찾기
 async function idFindMember(user, success, fail) {
   api
     .post("/userapi/idFind", JSON.stringify(user))
     .then(success)
     .catch(fail);
 }
-
+// 비밀 번호 찾기
 async function pwFindMember(user, success, fail) {
   api
     .post("/userapi/pwFind", JSON.stringify(user))

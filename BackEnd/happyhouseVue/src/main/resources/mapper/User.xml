@@ -42,6 +42,7 @@
 		order by userid desc;
 	</select>
 	
+	
 	<update id="updateUser" parameterType="UserDto" >
       update user
       <trim prefix="set" suffixOverrides=",">

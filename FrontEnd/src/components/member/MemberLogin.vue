@@ -8,14 +8,18 @@
       <md-field class="md-form-group" slot="inputs">
         <md-icon>face</md-icon>
         <label>아이디</label>
-        <md-input v-model="userid"></md-input>
+        <md-input v-model="user.userid"></md-input>
       </md-field>
       <md-field class="md-form-group" slot="inputs">
         <md-icon>lock_outline</md-icon>
         <label>비밀번호</label>
-        <md-input type="password" v-model="userpw"></md-input>
+        <md-input
+          type="password"
+          v-model="user.userpw"
+          @keyup.enter="confirm"
+        ></md-input>
       </md-field>
-      <md-button slot="footer" class="md-success">
+      <md-button slot="footer" class="md-success" @click="confirm">
         로그인
       </md-button>
     </div>
@@ -23,7 +27,35 @@
 </template>
 
 <script>
-export default {};
+import { mapState, mapActions } from "vuex";
+
+const memberStroe = "memberStore";
+
+export default {
+  name: "MemberLogin",
+  data() {
+    return {
+      user: {
+        userid: null,
+        userpw: null,
+      },
+    };
+  },
+  computed: {
+    ...mapState(memberStroe, ["isLogin", "isLoginError"]),
+  },
+  methods: {
+    ...mapActions(memberStroe, ["userConfirm", "getUserInfo"]),
+    async confirm() {
+      await this.userConfirm(this.user);
+      let token = sessionStorage.getItem("access-token");
+      if (this.isLogin) {
+        await this.getUserInfo(token);
+        this.$router.push({ name: "home" });
+      }
+    },
+  },
+};
 </script>
 
 <style>

@@ -92,7 +92,6 @@ public class UserServiceImpl implements UserService{
 		}
 		return null;
 	}
-
 	//관심지역 추가
 	@Override
 	public void addLikeDong(Map<String, String> map) throws Exception {
@@ -103,5 +102,6 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public List<SidoGugunCodeDto> listLikeDong(String userid) throws Exception {
 		return userMapper.listLikeDong(userid);
+
 	}
 }

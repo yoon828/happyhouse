@@ -15,7 +15,7 @@
             <house-list> </house-list>
           </b-col>
           <b-col>
-            <house-map></house-map>
+            <house-map v-on:show-modal="showModal"></house-map>
           </b-col>
         </b-row>
       </b-container>
@@ -65,6 +65,11 @@ export default {
         backgroundImage: `url(${this.image})`,
         height: "30vh",
       };
+    },
+  },
+  methods: {
+    showModal() {
+      this.modalShow = true;
     },
   },
 };

@@ -15,7 +15,6 @@ export default {
   components: {},
   data() {
     return {
-      house: null,
       initPostion: [],
       markers: [],
       map: null,
@@ -80,42 +79,34 @@ export default {
         bounds.extend(placePosition);
 
         //마커와 검색 결과 항목에 mouseover 했을때 해당 장소에 인포윈도우에 장소명 표시
-        let content = `<div class="infowindow">
-                          <span class="title">
-                            ${house.apartmentName}
-                            </span>
-                      </div>`;
-        let overlay = new kakao.maps.CustomOverlay({
-          content: content,
-          map: map,
-          position: mk.getPosition(),
+        let iwContent = `<div style="padding:5px;">${house.apartmentName}</div>`;
+        let infowindow = new kakao.maps.InfoWindow({
+          content: iwContent,
+          removable: true,
         });
-        overlay.setMap(null);
-        //마커 클릭시 vuex에 해당 아파트 정보 저장하고, 모달창 띄우기
-        kakao.maps.event.addListener(mk, "click", () => {
-          this.setDetail(house);
+
+        kakao.maps.event.addListener(mk, "click", function() {
+          //마커 클릭시 해당 좌표를 중심으로 이동 , 레벨 변경
+          map.setCenter(placePosition);
+          if (map.getLevel() > 4) {
+            map.setLevel(3, { anchor: placePosition });
+          }
+          infowindow.open(map, mk);
         });
-        // kakao.maps.event.addListener(mk, "click", function() {
-        //   //마커 클릭시 해당 좌표를 중심으로 이동 , 레벨 변경
-        //   map.setCenter(placePosition);
-        //   if (map.getLevel() > 4) {
-        //     map.setLevel(3, { anchor: placePosition });
-        //   }
-        //   overlay.setMap(map);
-        // });
-        kakao.maps.event.addListener(mk, "mouseover", function() {
-          overlay.setMap(map);
+
+        kakao.maps.event.addListener(map, "click", function() {
+          infowindow.close();
         });
-        kakao.maps.event.addListener(mk, "mouseout", function() {
-          overlay.setMap(null);
+
+        kakao.maps.event.addListener(map, "idle", function() {
+          infowindow.close();
         });
       });
       //검색된 장소 위치를 기준으로 지도 범위 재설정
       this.map.setBounds(bounds);
     },
-    setDetail(house) {
+    setHouseDetail(house) {
       this.detailHouse(house);
-      this.$emit("show-modal");
     },
     removeMarker() {
       for (let i = 0; i < this.markers.length; i++) {
@@ -148,7 +139,7 @@ export default {
       return marker;
     },
     //vuex에 house 세팅
-    showDetail() {
+    setHouse() {
       console.log("house");
     },
   },
@@ -158,15 +149,5 @@ export default {
 .map {
   width: 100%;
   height: 400px;
-}
-.infowindow {
-  padding: 5px 10px;
-  background-color: white;
-  position: relative;
-  bottom: 70px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  border-bottom: 2px solid #ddd;
-  float: left;
 }
 </style>

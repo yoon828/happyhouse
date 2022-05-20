@@ -1,7 +1,7 @@
-import { apiInstance, houseInstance } from "./index.js";
+import { apiInstance } from "./index.js";
 
 const api = apiInstance();
-const house = houseInstance();
+// const house = houseInstance();
 
 function sidoList(success) {
   api
@@ -52,16 +52,16 @@ function houseListByName(params, success) {
     });
 }
 
-//공동 데이터 아파트 실거래 조회 api사용
-function houseList(params, success) {
-  house
-    .get(``, { params: params })
-    .then(success)
-    .catch((error) => {
-      alert("문제가 발생했습니다.");
-      console.log(error);
-    });
-}
+// //공동 데이터 아파트 실거래 조회 api사용
+// function houseList(params, success) {
+//   house
+//     .get(``, { params: params })
+//     .then(success)
+//     .catch((error) => {
+//       alert("문제가 발생했습니다.");
+//       console.log(error);
+//     });
+// }
 
 export {
   sidoList,
@@ -69,5 +69,5 @@ export {
   dongList,
   houseListByDong,
   houseListByName,
-  houseList,
+  // houseList,
 };

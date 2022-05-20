@@ -7,10 +7,10 @@
     :class="{ 'mouse-over-bgcolor': isColor }"
   >
     <b-row>
-      <strong>{{ house.aptName }}</strong> {{ house.recentPrice }}
+      <strong>{{ house.apartmentName }}</strong> {{ house.recentPrice }}만원
     </b-row>
     <b-row>
-      {{ house.sidoName }} {{ house.gugunName }} {{ house.dongName }}
+      {{ house.sidoname }} {{ house.gugunname }} {{ house.dong }}
       {{ house.jibun }}
     </b-row>
   </b-list-group-item>

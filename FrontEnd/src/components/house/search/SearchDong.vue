@@ -17,17 +17,15 @@
       <b-form-select v-model="dongCode" :options="dongs" @change="getHouseList">
       </b-form-select>
     </b-col>
+    <b-button type="button" variant="warning" @click="addLikeDong">
+      <b-icon icon="heart"></b-icon>
+      <!-- <b-icon icon="heart-fill"></b-icon> -->
+    </b-button>
   </b-row>
 </template>
 
 <script>
-import {
-  sidoList,
-  gugunList,
-  dongList,
-  houseList,
-  houseListByDong,
-} from "@/api/house.js";
+import { sidoList, gugunList, dongList, houseListByDong } from "@/api/house.js";
 import { mapActions } from "vuex";
 
 const houseStore = "houseStore";
@@ -73,28 +71,19 @@ export default {
       });
     },
     getHouseList() {
-      // //나중에 .env파일로 빼기
-      // const SERVICE_KEY =
-      //   "ncoTsC4jRn7O24ipGkrF24oKEDr7l2uTab3PnB%2F7XER1spQHFhleCl6iLOBf3nTm8tZLyEkNdBta%2FL0rI47H0A%3D%3D";
-      // console.log(this.gugunCode);
-      // const params = {
-      //   LAWD_CD: this.gugunCode,
-      //   DEAL_YMD: "202110",
-      //   serviceKey: decodeURIComponent(SERVICE_KEY),
-      // };
-      // houseList(params, ({ data }) => {
-      //   this.setHouses(data.response.body.items.item);
-      // });
+      console.log(this.dongCode);
       houseListByDong(
         {
           dongCode: this.dongCode,
         },
         (res) => {
+          console.log(res);
           this.setHouses(res.data);
           // eslint-disable-next-line prettier/prettier
         }
       );
     },
+    addLikeDong() {},
   },
 };
 </script>

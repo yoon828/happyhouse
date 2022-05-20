@@ -95,6 +95,17 @@ export default {
     type: {
       type: String,
       default: "white",
+      validator(value) {
+        return [
+          "white",
+          "default",
+          "primary",
+          "danger",
+          "success",
+          "warning",
+          "info",
+        ].includes(value);
+      },
     },
     colorOnScroll: {
       type: Number,

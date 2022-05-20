@@ -25,6 +25,7 @@
 <script>
 import HouseListItem from "@/components/house/HouseListItem.vue";
 import { mapActions, mapState } from "vuex";
+const houseStore = "houseStore";
 
 export default {
   name: "HouseList",
@@ -39,10 +40,10 @@ export default {
     this.clearHouses();
   },
   computed: {
-    ...mapState(["houses"]),
+    ...mapState(houseStore, ["houses"]),
   },
   methods: {
-    ...mapActions(["clearHouses"]),
+    ...mapActions(houseStore, ["clearHouses"]),
   },
 };
 </script>

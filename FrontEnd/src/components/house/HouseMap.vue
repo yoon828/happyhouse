@@ -8,6 +8,8 @@
 <script>
 import { mapActions, mapState } from "vuex";
 
+const houseStore = "houseStore";
+
 export default {
   name: "HouseMap",
   components: {},
@@ -23,7 +25,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["houses"]),
+    ...mapState(houseStore, ["houses"]),
   },
   mounted() {
     window.kakao && window.kakao.maps
@@ -31,7 +33,7 @@ export default {
       : this.addKakaoMapScript();
   },
   methods: {
-    ...mapActions(["clearHouses"]),
+    ...mapActions(houseStore, ["clearHouses"]),
     addKakaoMapScript() {
       const script = document.createElement("script");
       /* global kakao */

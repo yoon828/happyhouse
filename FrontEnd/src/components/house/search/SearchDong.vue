@@ -22,8 +22,11 @@
 
 <script>
 import { sidoList, gugunList, dongList, houseListByDong } from "@/api/house.js";
-import { mapState, mapActions } from "vuex";
+import { mapActions } from "vuex";
+
+const houseStore = "houseStore";
 export default {
+  name: "SearchDong",
   data() {
     return {
       sidoCode: null,
@@ -39,7 +42,7 @@ export default {
   },
   computed: {},
   methods: {
-    ...mapActions(["setHouses"]),
+    ...mapActions(houseStore, ["setHouses"]),
     getSidoList() {
       sidoList((res) => {
         res.data.forEach((sido) => {

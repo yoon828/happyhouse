@@ -18,6 +18,7 @@
 <script>
 import { houseListByName } from "@/api/house.js";
 import { mapActions } from "vuex";
+const houseStore = houseStore;
 
 export default {
   data() {
@@ -26,7 +27,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["setHouses"]),
+    ...mapActions(houseStore, ["setHouses"]),
     search() {
       houseListByName(
         {

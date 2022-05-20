@@ -35,7 +35,7 @@
         회원 가입
       </md-button>
 
-      <md-button slot="footer" class="md-success" v-on:click="initData()">
+      <md-button slot="footer" class="md-warning" v-on:click="initData()">
         초기화
       </md-button>
     </div>

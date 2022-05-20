@@ -13,17 +13,55 @@
       <md-field class="md-form-group" slot="inputs">
         <md-icon>lock_outline</md-icon>
         <label>비밀번호</label>
-        <md-input type="password" v-model="userpw"></md-input>
+        <md-input
+          type="password"
+          v-model="userpw"
+          @keyup.enter="confirm"
+        ></md-input>
       </md-field>
-      <md-button slot="footer" class="md-success">
+      <md-button slot="footer" class="md-success" @click="confirm">
         로그인
+      </md-button>
+      <md-button slot="footer" class="md-warning" @click="initData">
+        초기화
       </md-button>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+import { mapState, mapActions } from "vuex";
+
+const memberStore = "memberStore";
+
+export default {
+  name: "MemberLogin",
+  data() {
+    return {
+      userid: null,
+      userpw: null,
+    };
+  },
+  computed: {
+    ...mapState(memberStore, ["isLogin", "isLoginError"]),
+  },
+  methods: {
+    ...mapActions(memberStore, ["userConfirm", "getUserInfo"]),
+    async confirm() {
+      await this.userConfirm({ userid: this.userid, userpw: this.userpw });
+      if (this.isLogin) {
+        alert("로그인 성공");
+        this.$router.push({ name: "home" });
+      } else {
+        alert("입력 정보를 다시 확인하세요.");
+      }
+    },
+    initData() {
+      this.userid = "";
+      this.userpw = "";
+    },
+  },
+};
 </script>
 
 <style>

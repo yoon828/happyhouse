@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ssafy.happyhouse.model.SidoGugunCodeDto;
 import com.ssafy.happyhouse.model.UserDto;
 import com.ssafy.happyhouse.model.mapper.UserMapper;
 import com.ssafy.util.RandomPw;
@@ -90,5 +91,17 @@ public class UserServiceImpl implements UserService{
 			return null;
 		}
 		return null;
+	}
+	//관심지역 추가
+	@Override
+	public void addLikeDong(Map<String, String> map) throws Exception {
+		userMapper.addLikeDong(map);
+	}
+
+	//관심지역 조회
+	@Override
+	public List<SidoGugunCodeDto> listLikeDong(String userid) throws Exception {
+		return userMapper.listLikeDong(userid);
+
 	}
 }

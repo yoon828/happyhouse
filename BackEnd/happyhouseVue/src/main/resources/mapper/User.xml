@@ -42,6 +42,7 @@
 		order by userid desc;
 	</select>
 	
+	
 	<update id="updateUser" parameterType="UserDto" >
       update user
       <trim prefix="set" suffixOverrides=",">
@@ -56,5 +57,14 @@
 		delete from user
 		where userid = #{userid}
 	</delete>
+	
+	
+		<!-- 관심지역 등록하기 -->
+	<insert id="addLikeDong" parameterType="map">
+		insert into likedong(userid, dongCode)
+		values(#{userid},#{dongCode})	
+	</insert>
+	
+	<!-- 유저이름으로 관심지역 조회 -->
 	
 </mapper>

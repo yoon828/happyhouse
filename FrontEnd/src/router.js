@@ -113,11 +113,6 @@ export default new Router({
           component: () => import("@/components/member/MemberMyPage.vue"),
         },
         {
-          path: "myinfo",
-          name: "myinfo",
-          component: () => import("@/components/member/MemberInfo.vue"),
-        },
-        {
           path: "regist",
           name: "regist",
           component: () => import("@/components/member/MemberRegist.vue"),

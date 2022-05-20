@@ -1,84 +1,82 @@
 <template>
-  <div class="wrapper">
-    <div class="section page-header header-filter" :style="headerStyle">
-      <div class="container">
-        <div class="md-layout">
-          <div
-            class="md-layout-item md-size-33 md-small-size-66 md-xsmall-size-100 md-medium-size-40 mx-auto"
-          >
-            <login-card header-color="green">
-              <h4 slot="title" class="card-title">내 프로필 수정</h4>
-              <p slot="description" class="description">
-                내 프로필 수정입니다.
-              </p>
-              <md-field class="md-form-group" slot="inputs">
-                <md-icon>man</md-icon>
-                <label>이름</label>
-                <md-input v-model="username" readonly></md-input>
-              </md-field>
-              <md-field class="md-form-group" slot="inputs">
-                <md-icon>face</md-icon>
-                <label>아이디</label>
-                <md-input v-model="userid" readonly></md-input>
-              </md-field>
-              <md-field class="md-form-group" slot="inputs">
-                <md-icon>lock_outline</md-icon>
-                <label>비밀번호</label>
-                <md-input type="password" v-model="userpw"></md-input>
-              </md-field>
-              <md-field class="md-form-group" slot="inputs">
-                <md-icon>email</md-icon>
-                <label>이메일</label>
-                <md-input type="email" v-model="useraddress"></md-input>
-              </md-field>
-              <md-field class="md-form-group" slot="inputs">
-                <md-icon>phone</md-icon>
-                <label>전화 번호</label>
-                <md-input v-model="usernumber"></md-input>
-              </md-field>
+  <div class="container">
+    <div id="box" class="col-md-12">
+      <div class="box-content"><h2>내 정보 수정</h2></div>
 
-              <md-button slot="footer" class="md-success">
-                회원 가입
-              </md-button>
-            </login-card>
-          </div>
-        </div>
+      <div class="box-content">
+        <md-icon>man</md-icon>
+        <label for=""> 이름 :</label>
+        {{ userInfo.username }}
+      </div>
+      <div class="box-content">
+        <md-icon>face</md-icon>
+        <label for=""> 아이디 :</label>
+        {{ userInfo.userid }}
+      </div>
+      <div class="box-content">
+        <md-icon>lock_outline</md-icon>
+        <label for=""> 비밀번호 : </label>
+        <input type="password" v-model="userpw" />
+      </div>
+
+      <div class="box-content">
+        <md-icon>email</md-icon>
+        <label for=""> 이메일 : </label>
+        <input type="text" v-model="useraddress" />
+      </div>
+      <div class="box-content">
+        <md-icon>phone</md-icon>
+        <label for=""> 전화 번호 : </label>
+        <input type="password" v-model="usernumber" />
+      </div>
+      <div>
+        <b-button variant="success" @click="moveUpdate">회원 수정</b-button
+        ><b-button variant="warning">회원 탈퇴</b-button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { LoginCard } from "@/components";
-
+import { mapState, mapActions, mapGetters } from "vuex";
+const memberStore = "memberStore";
 export default {
-  components: {
-    LoginCard,
-  },
-  bodyClass: "login-page",
   data() {
     return {
-      username: null,
-      userid: null,
+      userid: userInfo.userid,
       userpw: null,
+      username: userInfo.username,
       useraddress: null,
       usernumber: null,
     };
   },
-  props: {
-    header: {
-      type: String,
-      default: require("@/assets/img/house-bg.png"),
-    },
-  },
   computed: {
-    headerStyle() {
-      return {
-        backgroundImage: `url(${this.header})`,
-      };
-    },
+    ...mapState(memberStore, ["userInfo"]),
   },
 };
 </script>
 
-<style lang="css"></style>
+<style>
+#box {
+  padding: 100px;
+  margin: 5px;
+}
+.md-form-group {
+  margin: 0 auto;
+  padding: 15px;
+}
+table {
+  margin-left: auto;
+  margin-right: auto;
+}
+.box-content {
+  padding: 15px;
+  margin: 15px;
+}
+button {
+  margin: 5px;
+}
+label {
+  margin: 10px;
+}
+</style>

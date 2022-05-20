@@ -45,11 +45,13 @@ public class HouseMapController {
 	
 	@GetMapping("/apt")
 	public ResponseEntity<List<HouseInfoDto>> apt(@RequestParam("dong") String dong) throws Exception {
+		logger.debug("dong : {}", dong);
 		return new ResponseEntity<List<HouseInfoDto>>(happyHouseMapService.getAptInDong(dong), HttpStatus.OK);
 	}
 	
 	@GetMapping("/aptName")
 	public ResponseEntity<List<HouseInfoDto>> aptName(@RequestParam("aptName") String aptName) throws Exception {
+		logger.debug("aptName : {}", aptName);
 		return new ResponseEntity<List<HouseInfoDto>>(happyHouseMapService.getAptName(aptName), HttpStatus.OK);
 	}
 }

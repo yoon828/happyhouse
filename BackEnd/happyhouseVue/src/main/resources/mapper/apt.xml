@@ -44,7 +44,7 @@
 		on left(h.dongcode,2) = left(si.sidocode,2)
 		left join guguncode gu
 		on left(h.dongcode,5) = left(gu.guguncode,5)
-		where h.aptName = #{aptName} 
+		where h.aptName like concat('%', #{aptName},'%')
 		order by aptName
 	</select>
 	
@@ -59,5 +59,8 @@
 		where h.aptName = #{aptName} 
 		order by recentPrice
 	</select>
+	
+
+	
 	
 </mapper>

@@ -8,19 +8,22 @@
       <md-field class="md-form-group" slot="inputs">
         <md-icon>face</md-icon>
         <label>아이디</label>
-        <md-input v-model="user.userid"></md-input>
+        <md-input v-model="userid"></md-input>
       </md-field>
       <md-field class="md-form-group" slot="inputs">
         <md-icon>lock_outline</md-icon>
         <label>비밀번호</label>
         <md-input
           type="password"
-          v-model="user.userpw"
+          v-model="userpw"
           @keyup.enter="confirm"
         ></md-input>
       </md-field>
       <md-button slot="footer" class="md-success" @click="confirm">
         로그인
+      </md-button>
+      <md-button slot="footer" class="md-warning" @click="initData">
+        초기화
       </md-button>
     </div>
   </div>
@@ -29,30 +32,33 @@
 <script>
 import { mapState, mapActions } from "vuex";
 
-const memberStroe = "memberStore";
+const memberStore = "memberStore";
 
 export default {
   name: "MemberLogin",
   data() {
     return {
-      user: {
-        userid: null,
-        userpw: null,
-      },
+      userid: null,
+      userpw: null,
     };
   },
   computed: {
-    ...mapState(memberStroe, ["isLogin", "isLoginError"]),
+    ...mapState(memberStore, ["isLogin", "isLoginError"]),
   },
   methods: {
-    ...mapActions(memberStroe, ["userConfirm", "getUserInfo"]),
+    ...mapActions(memberStore, ["userConfirm", "getUserInfo"]),
     async confirm() {
-      await this.userConfirm(this.user);
-      let token = sessionStorage.getItem("access-token");
+      await this.userConfirm({ userid: this.userid, userpw: this.userpw });
       if (this.isLogin) {
-        await this.getUserInfo(token);
+        alert("로그인 성공");
         this.$router.push({ name: "home" });
+      } else {
+        alert("입력 정보를 다시 확인하세요.");
       }
+    },
+    initData() {
+      this.userid = "";
+      this.userpw = "";
     },
   },
 };

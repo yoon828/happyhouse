@@ -1,6 +1,4 @@
-import jwt_decode from "jwt-decode";
-import { login } from "@/api/member.js";
-import { findById } from "../../api/member";
+import { login, deleteMember } from "@/api/member.js";
 
 const memberStore = {
   namespaced: true,
@@ -34,32 +32,15 @@ const memberStore = {
         user,
         (response) => {
           if (response.data.message === "success") {
-            let token = response.data["acess-token"];
             commit("SET_IS_LOGIN", true);
             commit("SET_IS_LOGIN_ERROR", false);
-            sessionStorage.setItem("access-token", token);
+            commit("SET_USER_INFO", response.data.userInfo);
           } else {
             commit("SET_IS_LOGIN", false);
             commit("SET_IS_LOGIN_ERROR", true);
           }
         },
         () => {},
-      );
-    },
-    getUserInfo({ commit }, token) {
-      let decode_token = jwt_decode(token);
-      findById(
-        decode_token.userid,
-        (response) => {
-          if (response.data.message === "success") {
-            commit("SET_USER_INFO", response.data.userInfo);
-          } else {
-            console.log("유저 정보 없음!!");
-          }
-        },
-        (error) => {
-          console.log(error);
-        },
       );
     },
   },

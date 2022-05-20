@@ -66,11 +66,5 @@
 	</insert>
 	
 	<!-- 유저이름으로 관심지역 조회 -->
-	<select id="listLikeDong" parameterType="string" resultType="houseDto" >
-	select d.dongCode, d.sidoName, d.gugunName, d.dongName
-	from likedong l
-	join dongcode d
-	on l.dongCode=d.dongCode
-	where userid=#{userid}
-	</select>
+	
 </mapper>

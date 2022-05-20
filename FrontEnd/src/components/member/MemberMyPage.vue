@@ -1,65 +1,92 @@
 <template>
-  <div class="wrapper">
-    <div class="section page-header header-filter" :style="headerStyle">
-      <div class="container">
-        <div class="md-layout">
-          <div
-            class="md-layout-item md-size-33 md-small-size-66 md-xsmall-size-100 md-medium-size-40 mx-auto"
-          >
-            <login-card header-color="green">
-              <h4 slot="title" class="card-title">마이 페이지</h4>
-              <p slot="description" class="description">
-                정보 조회를 위해 비밀 번호를 입력해주세요.
-              </p>
-              <md-field class="md-form-group" slot="inputs">
-                <md-icon>face</md-icon>
-                <label>아이디</label>
-                <md-input v-model="userid"></md-input>
-              </md-field>
-              <md-field class="md-form-group" slot="inputs">
-                <md-icon>lock_outline</md-icon>
-                <label>비밀번호</label>
-                <md-input v-model="userpw"></md-input>
-              </md-field>
-              <md-button slot="footer" class="md-success">
-                로그인
-              </md-button>
-            </login-card>
-          </div>
-        </div>
+  <div class="container">
+    <div id="box" class="col-md-12">
+      <div class="box-content"><h2>마이 페이지</h2></div>
+
+      <div class="box-content">
+        <md-icon>man</md-icon>
+        <label for=""> 이름 :</label>
+        {{ userInfo.username }}
+      </div>
+      <div class="box-content">
+        <md-icon>face</md-icon>
+        <label for=""> 아이디 :</label>
+        {{ userInfo.userid }}
+      </div>
+      <div class="box-content">
+        <md-icon>lock_outline</md-icon>
+        <label for=""> 비밀번호 :</label>
+        **********
+      </div>
+
+      <div class="box-content">
+        <md-icon>email</md-icon>
+        <label for=""> 이메일 : </label>
+        {{ userInfo.useraddress }}
+      </div>
+      <div class="box-content">
+        <md-icon>phone</md-icon>
+        <label for=""> 전화 번호 : </label>
+        {{ userInfo.usernumber }}
+      </div>
+      <div>
+        <b-button variant="success" @click="moveUpdate">회원 수정</b-button
+        ><b-button variant="warning">회원 탈퇴</b-button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { LoginCard } from "@/components";
-
+import { mapState, mapActions, mapGetters } from "vuex";
+const memberStore = "memberStore";
 export default {
-  components: {
-    LoginCard,
-  },
-  bodyClass: "login-page",
   data() {
-    return {
-      userid: null,
-      userpw: null,
-    };
-  },
-  props: {
-    header: {
-      type: String,
-      default: require("@/assets/img/house-bg.png"),
-    },
+    return {};
   },
   computed: {
-    headerStyle() {
-      return {
-        backgroundImage: `url(${this.header})`,
-      };
+    ...mapState(memberStore, ["userInfo"]),
+  },
+  methods: {
+    ...mapActions(memberStore, ["userConfirm", "getUserInfo"]),
+    async confirm() {
+      await this.userConfirm({ userid: this.userid, userpw: this.userpw });
+      if (this.isLogin) {
+        alert("내 정보를 조회하겠습니다.");
+        this.$router.push({ name: "home" });
+      } else {
+        alert("비밀번호를 다시 확인하세요.");
+      }
+    },
+    confirmCheck() {
+      if (this.userpw === "null") {
+        alert("비밀번호를 입력해주세요.");
+      }
+    },
+    moveUpdate() {
+      this.$router.push({ name: "update" });
     },
   },
 };
 </script>
 
-<style lang="css"></style>
+<style>
+#box {
+  padding: 100px;
+  margin: 5px;
+}
+.md-form-group {
+  margin: 0 auto;
+  padding: 15px;
+}
+table {
+  margin-left: auto;
+  margin-right: auto;
+}
+.box-content {
+  padding: 15px;
+}
+button {
+  margin: 15px;
+}
+</style>

@@ -28,7 +28,7 @@
       <md-button slot="footer" class="md-success" v-on:click="pwFindCheck">
         비밀번호 찾기
       </md-button>
-      <md-button slot="footer" class="md-success" v-on:click="initData()">
+      <md-button slot="footer" class="md-warning" v-on:click="initData">
         초기화
       </md-button>
     </div>

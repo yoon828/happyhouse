@@ -36,34 +36,26 @@
               <md-list-item href="#/board">
                 <p>게시판</p>
               </md-list-item>
-              <md-list v-if="!userInfo"
-                ><md-list-item href="#/member/login">
-                  <p>로그인</p>
-                </md-list-item>
-
+              <md-list v-if="!userInfo">
                 <md-list-item href="#/member/regist">
                   <p>회원 가입</p>
                 </md-list-item>
-                <md-list-item href="#/member/idfind">
-                  <p>아이디 찾기</p>
+
+                <md-list-item href="#/member/login">
+                  <p>로그인</p>
                 </md-list-item>
 
-                <md-list-item href="#/member/pwfind">
-                  <p>비밀번호 찾기</p>
+                <md-list-item>
+                  <a href="#/member/idfind">아이디/</a>
+                  <a href="#/member/pwfind">비밀번호 찾기</a>
                 </md-list-item></md-list
               >
               <md-list v-if="userInfo">
                 <md-list-item href="#/member/mypage">
                   <p>마이 페이지</p>
                 </md-list-item>
-                <md-list-item href="#/member/myinfo">
-                  <p>내 정보 조회</p>
-                </md-list-item>
-                <md-list-item href="#/member/update">
-                  <p>내 정보 수정</p>
-                </md-list-item>
-                <md-list-item href="#/">
-                  <p>로그 아웃</p>
+                <md-list-item @click="OnclickLogout">
+                  <md-icon>logout</md-icon>
                 </md-list-item>
               </md-list>
             </md-list>
@@ -162,8 +154,6 @@ export default {
     OnclickLogout() {
       this.SET_IS_LOGIN(false);
       this.SET_USER_INFO(null);
-      sessionStorage.removeItem("access-token");
-      if (this.$route.path != "/") this.$router.push({ name: "home" });
     },
   },
   mounted() {

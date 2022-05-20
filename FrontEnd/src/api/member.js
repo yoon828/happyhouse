@@ -39,5 +39,18 @@ async function pwFindMember(user, success, fail) {
     .then(success)
     .catch(fail);
 }
-
-export { login, findById, registMember, idFindMember, pwFindMember };
+//회원 탈퇴
+async function deleteMember(user, success, fail) {
+  api
+    .post("/userapi/delete", JSON.stringify(user))
+    .then(success)
+    .catch(fail);
+}
+export {
+  login,
+  findById,
+  registMember,
+  idFindMember,
+  pwFindMember,
+  deleteMember,
+};

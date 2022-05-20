@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
+
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -107,11 +107,12 @@ public class UserRestController {
 		map.put("userid", userDto.getUserid());
 		map.put("userpw", userDto.getUserpw());
 		UserDto loginUser = userService.login(map);
+		Map<String, Object> resultMap = new HashMap<String, Object>();
 		if(loginUser != null) {
-			return new ResponseEntity<UserDto>(loginUser, HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(FAIL, HttpStatus.OK);
-		}
+			resultMap.put("userInfo", loginUser);
+			resultMap.put("message", SUCCESS);
+		} 
+		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 		} 
 
 	

@@ -1,11 +1,11 @@
 package com.ssafy.happyhouse.model.mapper;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.ssafy.happyhouse.model.SidoGugunCodeDto;
 import com.ssafy.happyhouse.model.UserDto;
 
 @Mapper
@@ -28,4 +28,9 @@ public interface UserMapper {
 	String idFind(Map<String, String> map) throws Exception;
 	//비밀번호 찾기 
 	UserDto pwFind(Map<String, String> map) throws Exception;
+	
+	//관심지역 등록
+	void addLikeDong(Map<String, String>map)throws Exception;
+	//관심지역 조회
+	List<SidoGugunCodeDto> listLikeDong(String userid)throws Exception;
 }

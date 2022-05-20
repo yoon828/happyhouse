@@ -1,6 +1,7 @@
 package com.ssafy.happyhouse.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.happyhouse.model.IdFindDto;
 import com.ssafy.happyhouse.model.IdPwDto;
 import com.ssafy.happyhouse.model.PwFindDto;
+import com.ssafy.happyhouse.model.SidoGugunCodeDto;
 import com.ssafy.happyhouse.model.UserDto;
 import com.ssafy.happyhouse.model.service.UserService;
 
@@ -122,6 +124,7 @@ public class UserRestController {
 		}
 		return new ResponseEntity<String>(FAIL, HttpStatus.OK);   
 	}
+	
 	//비밀번호 찾기
 	@ApiOperation(value = "이름, 아이디 , 이메일 주소, 전화번호를 받아서 임시 비밀번호를 발급한다. 성공하면 임시 비밀 번호를 반환한다.실패하면 fail 문자열을 반환한다.")
 	@PostMapping("/pwFind")
@@ -142,5 +145,24 @@ public class UserRestController {
 		return new ResponseEntity<String>(FAIL, HttpStatus.OK); 
 	}
 	
+	//관심지역 추가
+	@ApiOperation(value = "유저 아이디로 관심지역을 추가한다.")
+	@PostMapping("/addLikedong")
+	public ResponseEntity<String> addLikedong(@RequestBody Map<String, String> map) throws Exception{
+		logger.debug("map : {}",map);
+		try {
+			userService.addLikeDong(map);
+		}catch(Exception e) {
+			return new ResponseEntity<String>(FAIL, HttpStatus.OK); 
+		}
+		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK); 
+	}
+	//내 관심지역 조회
+	@ApiOperation(value = "회원의 아이디를 받아서 관심지역 리스트를 반환한다.")
+	@GetMapping(value = "/myInfo")
+	public ResponseEntity<List<SidoGugunCodeDto>> myInfo(@RequestBody String userid) throws Exception{
+		logger.debug("userid : {}", userid);
+		return new ResponseEntity<List<SidoGugunCodeDto>>(userService.listLikeDong(userid), HttpStatus.OK); 
+	}
 	
 }

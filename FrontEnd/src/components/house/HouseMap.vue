@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 <template>
   <b-container>
-    <div id="map" class="map" style="height:600px">{{}}</div>
+    <div id="map" class="map" style="height:600px"></div>
   </b-container>
 </template>
 
@@ -32,7 +32,9 @@ export default {
   },
   watch: {
     houses: function() {
-      this.displayMarkers();
+      if (this.houses.length != 0 && this.houses) {
+        this.displayMarkers();
+      }
     },
   },
   mounted() {
@@ -41,7 +43,8 @@ export default {
       : this.addKakaoMapScript();
   },
   methods: {
-    ...mapActions(houseStore, ["clearHouses"]),
+    ...mapActions(houseStore, ["detailHouse"]),
+    //카카오 map api를 사용하기 위한 초기 설정 메소드
     addKakaoMapScript() {
       const script = document.createElement("script");
       /* global kakao */
@@ -57,40 +60,52 @@ export default {
         level: 3, // 지도의 확대 레벨
       };
       this.map = new kakao.maps.Map(mapContainer, mapOption);
-      this.ps = new kakao.maps.services.Places();
       this.infoWindow = new kakao.maps.InfoWindow({ zIndex: 1 });
       this.geocoder = new kakao.maps.services.Geocoder();
     },
     displayMarkers() {
+      let map = this.map;
       let bounds = new kakao.maps.LatLngBounds();
       this.removeMarker();
-      for (let i = 0; i < this.houses.length; i++) {
+
+      this.houses.map((house) => {
         let placePosition = new kakao.maps.LatLng(
-          this.houses[i].lat,
+          house.lat,
           // eslint-disable-next-line prettier/prettier
-          this.houses[i].lng
+          house.lng
         );
-        let marker = this.addMarker(placePosition, i);
+        let mk = this.addMarker(placePosition);
         //지도 범위를 재설정하기 위해 LatLngBounds에 좌표를 추가
         bounds.extend(placePosition);
-        //마커와 검색 결과 항목에 mouseover 했을때 해당 장소에 인포윈도우에 장소명 표시
 
-        //클릭하면 InfoWindow 보이기
-        kakao.maps.event.addListener(marker, "click", function() {
-          this.displayInfowindow(
-            marker,
-            this.houses[i].aptName,
-            // eslint-disable-next-line prettier/prettier
-            this.houses[i]
-          );
+        //마커와 검색 결과 항목에 mouseover 했을때 해당 장소에 인포윈도우에 장소명 표시
+        let iwContent = `<div style="padding:5px;">${house.apartmentName}</div>`;
+        let infowindow = new kakao.maps.InfoWindow({
+          content: iwContent,
+          removable: true,
         });
-        kakao.maps.event.addListener(this.map, "click", function() {
-          console.log(this.customOverlay);
-          this.customOverlay.setMap(null);
+
+        kakao.maps.event.addListener(mk, "click", function() {
+          //마커 클릭시 해당 좌표를 중심으로 이동 , 레벨 변경
+          map.setCenter(placePosition);
+          if (map.getLevel() > 4) {
+            map.setLevel(3, { anchor: placePosition });
+          }
+          infowindow.open(map, mk);
         });
-      }
+
+        kakao.maps.event.addListener(map, "click", function() {
+          infowindow.close();
+        });
+        kakao.maps.event.addListener(map, "idle", function() {
+          infowindow.close();
+        });
+      });
       //검색된 장소 위치를 기준으로 지도 범위 재설정
       this.map.setBounds(bounds);
+    },
+    setHouseDetail(house) {
+      this.detailHouse(house);
     },
     removeMarker() {
       for (let i = 0; i < this.markers.length; i++) {
@@ -98,53 +113,13 @@ export default {
       }
       this.markers = [];
     },
-    displayInfowindow(marker, name, place) {
-      console.log("first");
-      let content = `
-		<div class="overlaybox">
-			<div class="boxtitle">${name}</div>
-			<div class="first"><img src="${root}/img/apt.png" style="width:247px; height:136px;" alt=""></div>
-			<ul>
-				<li class="up">
-					<span class="title">건축년도</span>
-					<span class="count">${place.buildYear}</span>
-				</li>
-				<li>
-					<span class="title">주소</span>
-					<span class="count">${place.sidoName} ${place.gugunName} ${place.dongName} ${place.jibun}</span>
-				</li>
-				<li>
-					<span class="title">최신거래금액</span>
-					<span class="count">${place.recentPrice}</span>
-				</li>
-				<li>
-					<span class="last" id="recenthistor" data-toggle="modal" data-target="#myModal">아파트정보 update</span>
-				</li>
-			</ul>
-		</div>
-	`;
-      let position = new kakao.maps.LatLng(
-        marker.getPosition().getLat() + 0.00033,
-        // eslint-disable-next-line prettier/prettier
-        marker.getPosition().getLng() - 0.00003
-      );
-      this.customOverlay = new kakao.maps.CustomOverlay({
-        position: position,
-        content: content,
-        xAnchor: 0.3,
-        yAnchor: 0.91,
-      });
-      this.customOverlay.setMap(this.map);
-    },
-
-    addMarker(position, idx, title) {
-      var imageSrc =
-          "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png", // 마커 이미지 url, 스프라이트 이미지를 씁니다
-        imageSize = new kakao.maps.Size(36, 37), // 마커 이미지의 크기
+    //마커 추가하기
+    addMarker(position) {
+      let imageSrc =
+          "https://images.vexels.com/media/users/3/142675/isolated/lists/84e468a8fff79b66406ef13d3b8653e2-house-location-marker-icon.png", // 마커 이미지 url, 스프라이트 이미지를 씁니다
+        imageSize = new kakao.maps.Size(50, 50), // 마커 이미지의 크기
         imgOptions = {
-          spriteSize: new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
-          spriteOrigin: new kakao.maps.Point(0, idx * 46 + 10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
-          offset: new kakao.maps.Point(13, 37), // 마커 좌표에 일치시킬 이미지 내에서의 좌표
+          // offset: new kakao.maps.Point(13, 37), // 마커 좌표에 일치시킬 이미지 내에서의 좌표
         },
         markerImage = new kakao.maps.MarkerImage(
           imageSrc,
@@ -162,10 +137,10 @@ export default {
 
       return marker;
     },
-    removeAllChildNods(el) {
-      while (el.hasChildNodes()) {
-        el.removeChild(el.lastChild);
-      }
+    //vuex에 house 세팅
+    setHouse() {
+      console.log("house");
+      // this.detailHouse(house);
     },
   },
 };

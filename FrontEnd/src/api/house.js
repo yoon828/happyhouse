@@ -44,7 +44,17 @@ function houseListByDong(params, success) {
 }
 function houseListByName(params, success) {
   api
-    .get(`/map/aptName?aptName=${params.aptName}`)
+    .get(`/map/apt-name?aptName=${params.aptName}`)
+    .then(success)
+    .catch((error) => {
+      alert("문제가 발생했습니다.");
+      console.log(error);
+    });
+}
+
+function dealByCode(params, success) {
+  api
+    .get(`/map/apt-deals?aptCode=${params.aptCode}`)
     .then(success)
     .catch((error) => {
       alert("문제가 발생했습니다.");
@@ -69,5 +79,6 @@ export {
   dongList,
   houseListByDong,
   houseListByName,
+  dealByCode,
   // houseList,
 };

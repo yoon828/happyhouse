@@ -58,7 +58,9 @@ export default {
       this.guguns = [{ value: null, text: "선택" }];
       gugunList({ sidoCode: this.sidoCode }, (res) => {
         res.data.forEach((gugun) => {
-          this.guguns.push({ value: gugun.gugunCode, text: gugun.gugunName });
+          if (gugun.gugunName != null) {
+            this.guguns.push({ value: gugun.gugunCode, text: gugun.gugunName });
+          }
         });
       });
     },
@@ -66,18 +68,18 @@ export default {
       this.dongs = [{ value: null, text: "선택" }];
       dongList({ sidoCode: this.gugunCode }, (res) => {
         res.data.forEach((dong) => {
-          this.dongs.push({ value: dong.dongCode, text: dong.dongName });
+          if (dong.dongName != null) {
+            this.dongs.push({ value: dong.dongCode, text: dong.dongName });
+          }
         });
       });
     },
     getHouseList() {
-      console.log(this.dongCode);
       houseListByDong(
         {
           dongCode: this.dongCode,
         },
         (res) => {
-          console.log(res);
           this.setHouses(res.data);
           // eslint-disable-next-line prettier/prettier
         }

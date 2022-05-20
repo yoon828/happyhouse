@@ -20,20 +20,38 @@
         </b-row>
       </b-container>
     </div>
+    <b-button @click="modalShow = !modalShow">Open Modal</b-button>
+    <b-modal
+      id="modal-lg"
+      size="lg"
+      v-model="modalShow"
+      title="아파트 상세 조회"
+      hide-footer
+    >
+      <house-detail-modal></house-detail-modal>
+    </b-modal>
   </div>
 </template>
 
 <script>
 import HouseSearchBar from "@/components/house/HouseSearchBar.vue";
-import HouseList from "../components/house/HouseList.vue";
-import HouseMap from "../components/house/HouseMap.vue";
+import HouseList from "@/components/house/HouseList.vue";
+import HouseMap from "@/components/house/HouseMap.vue";
+import HouseDetailModal from "../components/house/HouseDetailModal.vue";
+
 export default {
   components: {},
   name: "HouseView",
+  data() {
+    return {
+      modalShow: false,
+    };
+  },
   components: {
     HouseSearchBar,
     HouseList,
     HouseMap,
+    HouseDetailModal,
   },
   props: {
     image: {

@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 <template>
   <b-container>
-    <div id="map" class="map" style="height:600px">지도</div>
+    <div id="map" class="map" style="height:600px">{{}}</div>
   </b-container>
 </template>
 
@@ -26,6 +26,14 @@ export default {
   },
   computed: {
     ...mapState(houseStore, ["houses"]),
+    // listUpdate: function() {
+    //   return displayMarkers(this.houses);
+    // },
+  },
+  watch: {
+    houses: function() {
+      this.displayMarkers();
+    },
   },
   mounted() {
     window.kakao && window.kakao.maps
@@ -54,49 +62,32 @@ export default {
       this.geocoder = new kakao.maps.services.Geocoder();
     },
     displayMarkers() {
-      console.log("마커 그리기");
-      let fragment = document.createDocumentFragment();
       let bounds = new kakao.maps.LatLngBounds();
-      var listStr = "";
-      removeMarker();
-
+      this.removeMarker();
       for (let i = 0; i < this.houses.length; i++) {
         let placePosition = new kakao.maps.LatLng(
           this.houses[i].lat,
           // eslint-disable-next-line prettier/prettier
           this.houses[i].lng
         );
-        let marker = addMarker(placePosition, i);
-        let itemEl = getListItem(i, this.houses[i]); // 검색 결과 항목 Element를 생성합니다
+        let marker = this.addMarker(placePosition, i);
         //지도 범위를 재설정하기 위해 LatLngBounds에 좌표를 추가
         bounds.extend(placePosition);
         //마커와 검색 결과 항목에 mouseover 했을때 해당 장소에 인포윈도우에 장소명 표시
-        (function(marker, name, code, place) {
-          //클릭하면 InfoWindow 보이기
-          kakao.maps.event.addListener(marker, "click", function() {
-            displayInfowindow(marker, name, place);
-          });
 
-          kakao.maps.event.addListener(this.map, "click", function() {
-            console.log(this.customOverlay);
-            this.customOverlay.setMap(null);
-          });
-
-          itemEl.onmouseover = function() {
-            displayInfowindow(marker, name);
-          };
-
-          itemEl.onmouseout = function() {
-            this.customOverlay.setMap(null);
-          };
-        })(
-          marker,
-          this.houses[i].aptName,
-          this.houses[i].aptCode,
-          // eslint-disable-next-line prettier/prettier
-          this.houses[i]
-        );
-        fragment.appendChild(itemEl);
+        //클릭하면 InfoWindow 보이기
+        kakao.maps.event.addListener(marker, "click", function() {
+          this.displayInfowindow(
+            marker,
+            this.houses[i].aptName,
+            // eslint-disable-next-line prettier/prettier
+            this.houses[i]
+          );
+        });
+        kakao.maps.event.addListener(this.map, "click", function() {
+          console.log(this.customOverlay);
+          this.customOverlay.setMap(null);
+        });
       }
       //검색된 장소 위치를 기준으로 지도 범위 재설정
       this.map.setBounds(bounds);
@@ -108,6 +99,7 @@ export default {
       this.markers = [];
     },
     displayInfowindow(marker, name, place) {
+      console.log("first");
       let content = `
 		<div class="overlaybox">
 			<div class="boxtitle">${name}</div>

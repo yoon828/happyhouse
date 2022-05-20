@@ -6,7 +6,9 @@
     @mouseout="colorChange(false)"
     :class="{ 'mouse-over-bgcolor': isColor }"
   >
-    <b-row> {{ house.aptName }} {{ house.recentPrice }} </b-row>
+    <b-row>
+      <strong>{{ house.aptName }}</strong> {{ house.recentPrice }}
+    </b-row>
     <b-row>
       {{ house.sidoName }} {{ house.gugunName }} {{ house.dongName }}
       {{ house.jibun }}

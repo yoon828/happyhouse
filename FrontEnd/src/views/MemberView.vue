@@ -1,19 +1,20 @@
 <template>
-  <router-view></router-view>
+  <div class="wrapper">
+    <parallax class="page-header header-filter" :style="headerStyle">
+    </parallax>
+    <div class="main main-raised">
+      <router-view></router-view>
+    </div>
+  </div>
 </template>
 
 <script>
 export default {
   components: {},
-  bodyClass: "login-page",
-  data() {
-    return {
-      userid: null,
-      userpw: null,
-    };
-  },
+  name: "index",
+  bodyClass: "index-page",
   props: {
-    header: {
+    image: {
       type: String,
       default: require("@/assets/img/house-bg.png"),
     },
@@ -21,11 +22,20 @@ export default {
   computed: {
     headerStyle() {
       return {
-        backgroundImage: `url(${this.header})`,
+        backgroundImage: `url(${this.image})`,
+        height: "30vh",
       };
     },
   },
 };
 </script>
-
-<style lang="css"></style>
+<style lang="scss">
+@media all and (min-width: 991px) {
+  .btn-container {
+    display: flex;
+  }
+}
+.pb-2 {
+  padding-bottom: 2rem !important;
+}
+</style>

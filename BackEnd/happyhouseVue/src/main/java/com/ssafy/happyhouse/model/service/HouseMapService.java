@@ -2,6 +2,7 @@ package com.ssafy.happyhouse.model.service;
 
 import java.util.List;
 
+import com.ssafy.happyhouse.model.HouseDealDto;
 import com.ssafy.happyhouse.model.HouseInfoDto;
 import com.ssafy.happyhouse.model.SidoGugunCodeDto;
 
@@ -12,6 +13,6 @@ public interface HouseMapService {
 	List<HouseInfoDto> getDongInGugun(String gugun) throws Exception;
 	List<HouseInfoDto> getAptInDong(String dong) throws Exception;
 	List<HouseInfoDto> getAptName(String aptName) throws Exception;
-	
-	List<HouseInfoDto> getAptByPrice(int start, int end, String dong) throws Exception;
+//	List<HouseInfoDto> getAptByPrice(int start, int end, String dong) throws Exception;
+	List<HouseDealDto> getHouseDealByCode(String aptCode) throws Exception;
 }

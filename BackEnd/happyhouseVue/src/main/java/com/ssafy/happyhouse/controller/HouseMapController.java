@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.happyhouse.model.HouseDealDto;
 import com.ssafy.happyhouse.model.HouseInfoDto;
 import com.ssafy.happyhouse.model.SidoGugunCodeDto;
 import com.ssafy.happyhouse.model.service.HouseMapService;
@@ -35,11 +36,13 @@ public class HouseMapController {
 	
 	@GetMapping("/gugun")
 	public ResponseEntity<List<SidoGugunCodeDto>> gugun(@RequestParam("sido") String sido) throws Exception {
+		logger.debug("sido : {}", sido);
 		return new ResponseEntity<List<SidoGugunCodeDto>>(happyHouseMapService.getGugunInSido(sido), HttpStatus.OK);
 	}
 	
 	@GetMapping("/dong")
 	public ResponseEntity<List<HouseInfoDto>> dong(@RequestParam("gugun") String gugun) throws Exception {
+		logger.debug("gugun : {}",gugun);
 		return new ResponseEntity<List<HouseInfoDto>>(happyHouseMapService.getDongInGugun(gugun), HttpStatus.OK);
 	}
 	
@@ -49,9 +52,15 @@ public class HouseMapController {
 		return new ResponseEntity<List<HouseInfoDto>>(happyHouseMapService.getAptInDong(dong), HttpStatus.OK);
 	}
 	
-	@GetMapping("/aptName")
+	@GetMapping("/apt-name")
 	public ResponseEntity<List<HouseInfoDto>> aptName(@RequestParam("aptName") String aptName) throws Exception {
 		logger.debug("aptName : {}", aptName);
 		return new ResponseEntity<List<HouseInfoDto>>(happyHouseMapService.getAptName(aptName), HttpStatus.OK);
+	}
+	
+	@GetMapping("/apt-deals")
+	public ResponseEntity<List<HouseDealDto>> aptDeals(@RequestParam("aptCode") String aptCode) throws Exception {
+		logger.debug("aptCode : {}", aptCode);
+		return new ResponseEntity<List<HouseDealDto>>(happyHouseMapService.getHouseDealByCode(aptCode), HttpStatus.OK);
 	}
 }

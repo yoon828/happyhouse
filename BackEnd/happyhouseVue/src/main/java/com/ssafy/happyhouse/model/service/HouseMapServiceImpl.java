@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ssafy.happyhouse.model.HouseDealDto;
 import com.ssafy.happyhouse.model.HouseInfoDto;
 import com.ssafy.happyhouse.model.SidoGugunCodeDto;
 import com.ssafy.happyhouse.model.mapper.HouseMapMapper;
@@ -39,10 +40,15 @@ public class HouseMapServiceImpl implements HouseMapService {
 	public List<HouseInfoDto> getAptName(String aptName) throws Exception {
 		return houseMapMapper.getAptName(aptName);
 	}
-
+	
 	@Override
-	public List<HouseInfoDto> getAptByPrice(int start, int end, String dong) throws Exception {
-		return houseMapMapper.getAptByDong(dong);
+	public List<HouseDealDto> getHouseDealByCode(String aptCode) throws Exception {
+		return houseMapMapper.getHouseDealByCode(aptCode);
+	}
+
+//	@Override
+//	public List<HouseInfoDto> getAptByPrice(int start, int end, String dong) throws Exception {
+//		return houseMapMapper.getAptByDong(dong);
 //		List<HouseDealDto> allList = houseMapDao.getAptByDong(dong);		
 //		List<HouseDealDto> priceList = new LinkedList<HouseDealDto>();
 //		Iterator<HouseDealDto> iter = allList.iterator();
@@ -58,5 +64,5 @@ public class HouseMapServiceImpl implements HouseMapService {
 //			}
 //		}
 //		return priceList;
-	}
+//	}
 }

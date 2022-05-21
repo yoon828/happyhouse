@@ -37,12 +37,12 @@ public class SmartSearchController {
 		return "plus/smartSearch";
 	}
 
-	@ResponseBody
-	@GetMapping("/price")
-	public List<HouseInfoDto> selectAptByPrice(@RequestParam int start, @RequestParam int end, @RequestParam String dong) throws Exception{
-		System.out.println(start);
-		System.out.println(end);
-		return houseMapService.getAptByPrice(start,end,dong);
-	}
+//	@ResponseBody
+//	@GetMapping("/price")
+//	public List<HouseInfoDto> selectAptByPrice(@RequestParam int start, @RequestParam int end, @RequestParam String dong) throws Exception{
+//		System.out.println(start);
+//		System.out.println(end);
+//		return houseMapService.getAptByPrice(start,end,dong);
+//	}
 
 }

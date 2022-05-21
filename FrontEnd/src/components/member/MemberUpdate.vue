@@ -23,14 +23,12 @@
       <md-field class="md-form-group" slot="inputs">
         <md-icon>email</md-icon>
         <label>이메일(수정 가능)</label>
-        <md-input type="email" v-model="useraddress"></md-input>
+        <md-input type="email" v-model="userInfo.useraddress"></md-input>
       </md-field>
       <md-field class="md-form-group" slot="inputs">
         <md-icon>phone</md-icon>
         <label>전화 번호(수정 가능)</label>
-        <md-input v-model="usernumber"></md-input>
         <md-input v-model="userInfo.usernumber"></md-input>
-        <md-button>수정</md-button>
       </md-field>
 
       <md-button slot="footer" class="md-success" v-on:click="checkUpdate()">
@@ -70,8 +68,8 @@ export default {
         userid: this.userInfo.userid,
         userpw: this.userpw,
         username: this.userInfo.username,
-        useraddress: this.useraddress,
-        usernumber: this.usernumber,
+        useraddress: this.userInfo.useraddress,
+        usernumber: this.userInfo.usernumber,
       });
       if (this.isUpdate) {
         alert("정보 수정 성공");
@@ -90,10 +88,10 @@ export default {
       if (!this.userpw) {
         msg = "비밀 번호를 입력해주세요.";
         err = true;
-      } else if (!this.useraddress) {
+      } else if (!this.userInfo.useraddress) {
         msg = "이메일을 입력해주세요";
         err = true;
-      } else if (!this.usernumber) {
+      } else if (!this.userInfo.usernumber) {
         msg = "전화 번호를 입력해주세요.";
         err = true;
       }

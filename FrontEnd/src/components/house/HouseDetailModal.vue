@@ -26,12 +26,12 @@
           </b-col>
           <b-col>
             <span class="title">평균 거래 금액</span>
-            {{ this.house.avgPrice | price }}만원
+            {{ this.house.avgPrice | price | toprice }}만원
           </b-col>
         </b-row>
       </b-list-group-item>
     </b-list-group>
-    <h4>거래 목록</h4>
+    <h4 class="my-3">거래 목록</h4>
     <b-table-simple sticky-header class="deal-list center">
       <b-thead head-variant="dark">
         <b-tr>
@@ -47,7 +47,7 @@
             {{ deal.dealDay }}일</b-td
           >
           <b-td>{{ deal.area | areaChange }}</b-td>
-          <b-td>{{ deal.dealAmount }}만원</b-td>
+          <b-td>{{ deal.dealAmount | price | toprice }}만원</b-td>
           <b-td>{{ deal.floor }}층</b-td>
         </b-tr>
       </b-tbody>
@@ -74,6 +74,7 @@ export default {
   },
   filters: {
     toInt(val) {
+      if (!val) return "";
       let num = parseInt(val);
       if (num == 0) return "";
       else return num;
@@ -81,6 +82,14 @@ export default {
     price(value) {
       if (!value) return value;
       return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    },
+    toprice(value) {
+      let front = value.substr(0, value.length - 5);
+      let back = value.substr(value.length - 5, value.length);
+      if (back.charAt(0) == "0") {
+        back = back.substr(2);
+      }
+      return front == "" ? `${back}` : `${front}억 ${back}`;
     },
     areaChange(value) {
       let ch = Math.round(parseInt(value) * 0.3025);

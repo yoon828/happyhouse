@@ -70,11 +70,6 @@ export default new Router({
           name: "boardModify",
           component: () => import("@/components/board/BoardModify.vue"),
         },
-        {
-          path: "delete/:articleno",
-          name: "boardDelete",
-          component: () => import("@/components/board/BoardDelete.vue"),
-        },
       ],
     },
     {

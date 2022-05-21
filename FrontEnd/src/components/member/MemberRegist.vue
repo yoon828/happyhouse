@@ -76,26 +76,26 @@ export default {
       this.usernumber = "";
     },
     registCheck() {
-      let err = true;
+      let err = false;
       let msg = "";
 
       if (!this.username) {
         msg = "이름을 입력해주세요.";
-        err = false;
+        err = true;
       } else if (!this.userid) {
         msg = "아이디를 입력해주세요.";
-        err = false;
+        err = true;
       } else if (!this.userpw) {
         msg = "비밀번호를 입력해주세요.";
-        err = false;
+        err = true;
       } else if (!this.useraddress) {
         msg = "이메일을 입력해주세요.";
-        err = false;
+        err = true;
       } else if (!this.usernumber) {
         msg = "전화번호를 입력해주세요.";
-        err = false;
+        err = true;
       }
-      if (!err) {
+      if (err) {
         alert(msg);
       } else {
         this.regist();

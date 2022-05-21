@@ -9,6 +9,7 @@ const memberStore = {
     findPassword: null,
     findId: null,
     isUpdate: false,
+    isDelete: false,
   },
   getters: {
     checkUserInfo: function(state) {
@@ -43,6 +44,9 @@ const memberStore = {
     },
     SET_IS_UPDATE: (state, isUpdate) => {
       state.isUpdate = isUpdate;
+    },
+    SET_IS_DELETE: (state, isDelete) => {
+      state.isDelete = isDelete;
     },
   },
   actions: {

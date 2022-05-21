@@ -8,12 +8,12 @@
       <md-field class="md-form-group" slot="inputs">
         <md-icon>man</md-icon>
         <label>이름</label>
-        <md-input v-model="userInfo.username" disabled="true"></md-input>
+        <md-input v-model="userInfo.username" :readonly="true"></md-input>
       </md-field>
       <md-field class="md-form-group" slot="inputs">
         <md-icon>face</md-icon>
         <label>아이디</label>
-        <md-input v-model="userInfo.userid" disabled="true"></md-input>
+        <md-input v-model="userInfo.userid" :readonly="true"></md-input>
       </md-field>
       <md-field class="md-form-group" slot="inputs">
         <md-icon>lock_outline</md-icon>
@@ -22,7 +22,7 @@
           type="password"
           v-model="defaultpw"
           ref="userpw"
-          disabled="true"
+          :readonly="true"
         ></md-input>
       </md-field>
       <md-field class="md-form-group" slot="inputs">
@@ -31,13 +31,13 @@
         <md-input
           type="email"
           v-model="userInfo.useraddress"
-          disabled="true"
+          :readonly="true"
         ></md-input>
       </md-field>
       <md-field class="md-form-group" slot="inputs">
         <md-icon>phone</md-icon>
         <label>전화 번호</label>
-        <md-input v-model="userInfo.usernumber" disabled="true"></md-input>
+        <md-input v-model="userInfo.usernumber" :readonly="true"></md-input>
       </md-field>
 
       <md-button slot="footer" class="md-success" v-on:click="moveUpdate()">
@@ -52,7 +52,8 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapGetters } from "vuex";
+import { mapState, mapActions, mapMutations } from "vuex";
+import http from "@/api/http";
 const memberStore = "memberStore";
 export default {
   data() {
@@ -61,11 +62,31 @@ export default {
     };
   },
   computed: {
-    ...mapState(memberStore, ["userInfo"]),
+    ...mapState(memberStore, [
+      "userInfo",
+      "isLogin",
+      "isLoginError",
+      "isUpdate",
+    ]),
   },
   methods: {
+    ...mapMutations(memberStore, ["SET_USER_INFO", "SET_IS_LOGIN"]),
     moveUpdate() {
       this.$router.push({ name: "update" });
+    },
+    deleteUser() {
+      if (confirm("탈퇴 하시겠습니까?")) {
+        if (this.isLogin) {
+          http
+            .delete(`userapi/delete/${this.userInfo.userid}`)
+            .then(({ data }) => {
+              alert("탈퇴가 완료 되었습니다.");
+              this.SET_USER_INFO(null);
+              this.SET_IS_LOGIN(false);
+              this.$router.push({ name: "home" });
+            });
+        }
+      }
     },
   },
 };

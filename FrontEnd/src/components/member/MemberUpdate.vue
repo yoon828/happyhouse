@@ -32,7 +32,7 @@
       </md-field>
 
       <md-button slot="footer" class="md-success" v-on:click="checkUpdate()">
-        회원 수정
+        수정 하기
       </md-button>
 
       <md-button slot="footer" class="md-warning" v-on:click="deleteUser()">
@@ -43,14 +43,13 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapGetters } from "vuex";
+import { mapState, mapActions, mapGetters, mapMutations } from "vuex";
+import http from "@/api/http";
 const memberStore = "memberStore";
 export default {
   data() {
     return {
       userpw: null,
-      useraddress: null,
-      usernumber: null,
     };
   },
   computed: {
@@ -63,6 +62,7 @@ export default {
   },
   methods: {
     ...mapActions(memberStore, ["userConfirm", "userUpdate"]),
+    ...mapMutations(memberStore, ["SET_USER_INFO", "SET_IS_LOGIN"]),
     async update() {
       await this.userUpdate({
         userid: this.userInfo.userid,
@@ -99,6 +99,20 @@ export default {
         alert(msg);
       } else {
         this.update();
+      }
+    },
+    deleteUser() {
+      if (confirm("탈퇴 하시겠습니까?")) {
+        if (this.isLogin) {
+          http
+            .delete(`userapi/delete/${this.userInfo.userid}`)
+            .then(({ data }) => {
+              alert("탈퇴가 완료 되었습니다.");
+              this.SET_USER_INFO(null);
+              this.SET_IS_LOGIN(false);
+              this.$router.push({ name: "home" });
+            });
+        }
       }
     },
   },

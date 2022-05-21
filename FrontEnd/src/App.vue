@@ -28,4 +28,7 @@ a:active {
 .wt-100 {
   width: 100%;
 }
+.bold {
+  font-weight: bold;
+}
 </style>

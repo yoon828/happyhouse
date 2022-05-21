@@ -6,8 +6,9 @@
     @mouseout="colorChange(false)"
     :class="{ 'mouse-over-bgcolor': isColor }"
   >
-    <b-row>
-      <strong>{{ house.apartmentName }}</strong> {{ house.recentPrice }}만원
+    <b-row class="d-flex justify-content-between">
+      <p class="px-1 bold apt">{{ house.apartmentName }}</p>
+      평균 {{ house.avgPrice | price }}만원
     </b-row>
     <b-row>
       {{ house.sidoname }} {{ house.gugunname }} {{ house.dong }}
@@ -28,6 +29,12 @@ export default {
       isColor: false,
     };
   },
+  filters: {
+    price(value) {
+      if (!value) return value;
+      return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    },
+  },
   props: {
     house: Object,
   },
@@ -47,7 +54,7 @@ export default {
 
 <style scoped>
 .apt {
-  width: 50px;
+  font-size: 1rem;
 }
 .mouse-over-bgcolor {
   background-color: #ffc107;

@@ -52,7 +52,7 @@ function houseListByName(params, success) {
     });
 }
 
-function dealByCode(params, success) {
+function dealsByCode(params, success) {
   api
     .get(`/map/apt-deals?aptCode=${params.aptCode}`)
     .then(success)
@@ -79,6 +79,6 @@ export {
   dongList,
   houseListByDong,
   houseListByName,
-  dealByCode,
+  dealsByCode,
   // houseList,
 };

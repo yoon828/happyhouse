@@ -8,7 +8,7 @@
       />
     </b-list-group>
   </b-container>
-  <b-container v-else class="bv-example-row mt-3">
+  <b-container v-else class="bv-example-row mt-3 center">
     <b-row>
       <b-col>
         <div class="alert alert-info d-flex align-items-center">
@@ -63,5 +63,10 @@ export default {
 }
 .con::-webkit-scrollbar-track {
   border-radius: 10px;
+}
+.center {
+  height: 100%;
+  display: flex;
+  justify-content: center;
 }
 </style>

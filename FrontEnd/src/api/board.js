@@ -72,4 +72,12 @@ function getArticleBySubject(subject, success) {
     });
 }
 
-export { listArticle, writeArticle, getArticle, modifyArticle, deleteArticle };
+export {
+  listArticle,
+  writeArticle,
+  getArticle,
+  modifyArticle,
+  deleteArticle,
+  getArticleById,
+  getArticleBySubject,
+};

@@ -37,6 +37,8 @@ import HouseSearchBar from "@/components/house/HouseSearchBar.vue";
 import HouseList from "@/components/house/HouseList.vue";
 import HouseMap from "@/components/house/HouseMap.vue";
 import HouseDetailModal from "@/components/house/HouseDetailModal.vue";
+import { mapActions } from "vuex";
+const houseStore = "houseStore";
 
 export default {
   components: {},
@@ -58,6 +60,9 @@ export default {
       default: require("@/assets/img/house-bg.png"),
     },
   },
+  created() {
+    this.clearHouse();
+  },
   computed: {
     headerStyle() {
       return {
@@ -67,6 +72,7 @@ export default {
     },
   },
   methods: {
+    ...mapActions(houseStore, ["clearHouse"]),
     showModal() {
       this.modalShow = true;
     },

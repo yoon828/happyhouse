@@ -11,6 +11,9 @@ const houseStore = {
     CLEAR_HOUSE_LIST: (state) => {
       state.houses = [];
     },
+    CLEAR_HOUSE: (state) => {
+      state.house = null;
+    },
     SET_HOUSE_LIST: (state, houses) => {
       //   console.log(houses);
       state.houses = houses;
@@ -22,6 +25,9 @@ const houseStore = {
   actions: {
     clearHouses: ({ commit }) => {
       commit("CLEAR_HOUSE_LIST");
+    },
+    clearHouse: ({ commit }) => {
+      commit("CLEAR_HOUSE");
     },
     setHouses: ({ commit }, houses) => {
       commit("SET_HOUSE_LIST", houses);

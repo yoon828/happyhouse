@@ -41,8 +41,6 @@ export default {
   methods: {
     ...mapActions(houseStore, ["detailHouse"]),
     selectHouse() {
-      // console.log("listRow : ", this.house);
-      // this.$store.dispatch("getHouse", this.house);
       this.detailHouse(this.house);
     },
     colorChange(flag) {

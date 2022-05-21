@@ -7,7 +7,6 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
-
 const houseStore = "houseStore";
 
 export default {
@@ -15,18 +14,16 @@ export default {
   components: {},
   data() {
     return {
-      house: null,
       initPostion: [],
       markers: [],
       map: null,
       places: null,
       infoWindow: null,
       customOverlay: null,
-      geocoder: null,
     };
   },
   computed: {
-    ...mapState(houseStore, ["houses"]),
+    ...mapState(houseStore, ["houses", "house"]),
     // listUpdate: function() {
     //   return displayMarkers(this.houses);
     // },
@@ -36,6 +33,9 @@ export default {
       if (this.houses.length != 0 && this.houses) {
         this.displayMarkers();
       }
+    },
+    house: function() {
+      this.setMapCenter();
     },
   },
   mounted() {
@@ -62,7 +62,6 @@ export default {
       };
       this.map = new kakao.maps.Map(mapContainer, mapOption);
       this.infoWindow = new kakao.maps.InfoWindow({ zIndex: 1 });
-      this.geocoder = new kakao.maps.services.Geocoder();
     },
     displayMarkers() {
       let map = this.map;
@@ -147,9 +146,10 @@ export default {
 
       return marker;
     },
-    //vuex에 house 세팅
-    showDetail() {
-      console.log("house");
+    setMapCenter() {
+      let moveLatLon = new kakao.maps.LatLng(this.house.lat, this.house.lng);
+      this.map.setCenter(moveLatLon);
+      this.map.setLevel(2);
     },
   },
 };

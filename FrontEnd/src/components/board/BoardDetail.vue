@@ -37,7 +37,7 @@
 
 <script>
 // import moment from "moment";
-import http from "@/api/http";
+import { getArticle } from "@/api/board.js";
 
 export default {
   name: "BoardDetail",
@@ -54,8 +54,8 @@ export default {
     },
   },
   created() {
-    http.get(`/qna/${this.$route.params.articleno}`).then(({ data }) => {
-      this.article = data;
+    getArticle(this.$route.params.articleno, (res) => {
+      this.article = res.data;
     });
   },
   methods: {
@@ -71,8 +71,12 @@ export default {
     },
     deleteArticle() {
       if (confirm("삭제하시겠습니까?")) {
-        http.delete(`/qna/${this.$route.params.articleno}`).then(({ data }) => {
-          alert("글이 삭제되었습니다.");
+        deleteArticle(this.$route.params.articleno, (res) => {
+          let msg = "문제가 발생했습니다.";
+          if (res.data == "success") {
+            msg = "글이 삭제되었습니다.";
+          }
+          alert(msg);
           this.$router.push({ name: "boardList" });
         });
       }

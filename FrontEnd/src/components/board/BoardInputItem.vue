@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import http from "@/api/http";
+import { writeArticle, modifyArticle } from "@/api/board.js";
 
 export default {
   name: "BoardInputItem",
@@ -78,8 +78,8 @@ export default {
   },
   created() {
     if (this.type === "modify") {
-      http.get(`/qna/${this.$route.params.articleno}`).then(({ data }) => {
-        this.article = data;
+      getArticle(this.$route.params.articleno, (res) => {
+        this.article = res.data;
       });
       this.isUserid = true;
     }
@@ -106,7 +106,7 @@ export default {
 
       if (!err) alert(msg);
       else
-        this.type === "register" ? this.registArticle() : this.modifyArticle();
+        this.type === "register" ? this.registArticle() : this.modifyArticleM();
     },
     onReset(event) {
       event.preventDefault();
@@ -115,38 +115,36 @@ export default {
       this.article.content = "";
     },
     registArticle() {
-      http
-        .post(`/qna`, {
-          userid: this.article.userid,
-          subject: this.article.subject,
-          content: this.article.content,
-        })
-        .then(({ data }) => {
-          let msg = "등록 처리시 문제가 발생했습니다.";
-          if (data === "success") {
-            msg = "등록이 완료되었습니다.";
-          }
-          alert(msg);
-          this.moveList();
-        });
+      let article = {
+        userid: this.article.userid,
+        subject: this.article.subject,
+        content: this.article.content,
+      };
+      writeArticle(article, (res) => {
+        let msg = "등록 처리시 문제가 발생했습니다.";
+        if (res.data === "success") {
+          msg = "등록이 완료되었습니다.";
+        }
+        alert(msg);
+        this.moveList();
+      });
     },
-    modifyArticle() {
-      http
-        .put(`/qna/${this.article.articleno}`, {
-          articleno: this.article.articleno,
-          userid: this.article.userid,
-          subject: this.article.subject,
-          content: this.article.content,
-        })
-        .then(({ data }) => {
-          let msg = "수정 처리시 문제가 발생했습니다.";
-          if (data === "success") {
-            msg = "수정이 완료되었습니다.";
-          }
-          alert(msg);
-          // 현재 route를 /list로 변경.
-          this.$router.push({ name: "boardList" });
-        });
+    modifyArticleM() {
+      let article = {
+        articleno: this.article.articleno,
+        userid: this.article.userid,
+        subject: this.article.subject,
+        content: this.article.content,
+      };
+      modifyArticle(article, (res) => {
+        let msg = "수정 처리시 문제가 발생했습니다.";
+        if (res.data === "success") {
+          msg = "수정이 완료되었습니다.";
+        }
+        alert(msg);
+        // 현재 route를 /list로 변경.
+        this.$router.push({ name: "boardList" });
+      });
     },
     moveList() {
       this.$router.push({ name: "boardList" });

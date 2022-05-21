@@ -58,8 +58,12 @@
 </template>
 
 <script>
-import http from "@/api/http";
-import { listArticle } from "@/api/board.js";
+import {
+  listArticle,
+  getArticleById,
+  getArticle,
+  getArticleBySubject,
+} from "@/api/board.js";
 import BoardListItem from "@/components/board/BoardListItem";
 import { Pagination } from "@/components";
 
@@ -80,8 +84,8 @@ export default {
     };
   },
   created() {
-    http.get(`/qna/`).then(({ data }) => {
-      this.articles = data;
+    listArticle((res) => {
+      this.articles = res.dat;
       this.totalPage = this.articles.length / this.pageSize + 1;
     });
   },
@@ -94,22 +98,22 @@ export default {
       //검색기능
       if (this.searchQnA == "userid") {
         //아이디 검색
-        http.get(`/qna/searchid/${this.keyword}`).then(({ data }) => {
-          this.articles = data;
+        getArticleById(this.keyword, (res) => {
+          this.articles = res.data;
         });
       } else if (this.searchQnA == "articleno") {
         //글번호 검색
-        http.get(`/qna/searchno/${this.keyword}`).then(({ data }) => {
-          this.articles.push(data);
+        getArticle(this.keyword, (res) => {
+          this.articles.push(res.data);
         });
       } else if (this.searchQnA == "subject") {
         //제목 검색
-        http.get(`/qna/searchtitle/${this.keyword}`).then(({ data }) => {
-          this.articles = data;
+        getArticleBySubject(this.keyword, (res) => {
+          this.articles = res.data;
         });
       } else {
-        http.get(`/qna/`).then(({ data }) => {
-          this.articles = data;
+        listArticle((res) => {
+          this.articles = res.data;
         });
       }
       this.totalPage = this.articles.length / this.pageSize + 1;

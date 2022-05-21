@@ -39,10 +39,10 @@ async function pwFindMember(user, success, fail) {
     .then(success)
     .catch(fail);
 }
-//회원 탈퇴
-async function deleteMember(user, success, fail) {
+//회원 수정
+async function updateMember(user, success, fail) {
   api
-    .post("/userapi/delete", JSON.stringify(user))
+    .put("/userapi/update", JSON.stringify(user))
     .then(success)
     .catch(fail);
 }
@@ -52,5 +52,5 @@ export {
   registMember,
   idFindMember,
   pwFindMember,
-  deleteMember,
+  updateMember,
 };

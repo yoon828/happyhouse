@@ -82,18 +82,12 @@ public class UserRestController {
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
 	//회원 탈퇴
-	@ApiOperation(value = "아이디와 비밀번호를 받아 회원을 삭제한다. 성공하면 success 실패하면 fail 문자열을 반환한다.", response = String.class)
-	@DeleteMapping(value = "/delete")
-	public ResponseEntity<String> deleteUser(@RequestBody UserDto userDto) throws Exception {
-		logger.debug("userid : {}", userDto.getUserid());
-		logger.debug("userpw : {}", userDto.getUserpw());
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("userid", userDto.getUserid());
-		map.put("userpw", userDto.getUserpw());
-		if(userService.login(map) != null) {
-			if(userService.deleteUser(map.get("userid")) == 1)  {
-				return new ResponseEntity<String>(SUCCESS, HttpStatus.OK); 
-			}
+	@ApiOperation(value = "아이디를 받아 회원을 삭제한다. 성공하면 success 실패하면 fail 문자열을 반환한다.", response = String.class)
+	@DeleteMapping(value = "/delete/{userid}")
+	public ResponseEntity<String> deleteUser(@PathVariable String userid) throws Exception {
+		logger.debug("userid : {}", userid);
+		if(userService.deleteUser(userid) == 1)  {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK); 
 		}
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}

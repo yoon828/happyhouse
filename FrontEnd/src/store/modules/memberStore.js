@@ -1,4 +1,4 @@
-import { login, deleteMember } from "@/api/member.js";
+import { login, deleteMember, updateMember } from "@/api/member.js";
 
 const memberStore = {
   namespaced: true,
@@ -8,10 +8,27 @@ const memberStore = {
     userInfo: null,
     findPassword: null,
     findId: null,
+    isUpdate: false,
+    isDelete: false,
   },
   getters: {
     checkUserInfo: function(state) {
       return state.userInfo;
+    },
+    getUserName: function(state) {
+      return state.userInfo.username;
+    },
+    getUserId: function(state) {
+      return state.userInfo.userid;
+    },
+    getUserPw: function(state) {
+      return state.userInfo.userpw;
+    },
+    getUserAddress: function(state) {
+      return state.userInfo.useraddress;
+    },
+    getUserNumber: function(state) {
+      return state.userInfo.usernumber;
     },
   },
   mutations: {
@@ -24,6 +41,12 @@ const memberStore = {
     SET_USER_INFO: (state, userInfo) => {
       state.isLogin = true;
       state.userInfo = userInfo;
+    },
+    SET_IS_UPDATE: (state, isUpdate) => {
+      state.isUpdate = isUpdate;
+    },
+    SET_IS_DELETE: (state, isDelete) => {
+      state.isDelete = isDelete;
     },
   },
   actions: {
@@ -38,6 +61,19 @@ const memberStore = {
           } else {
             commit("SET_IS_LOGIN", false);
             commit("SET_IS_LOGIN_ERROR", true);
+          }
+        },
+        () => {},
+      );
+    },
+    async userUpdate({ commit }, user) {
+      await updateMember(
+        user,
+        (response) => {
+          if (response.data === "success") {
+            commit("SET_IS_UPDATE", true);
+          } else {
+            commit("SET_IS_UPDATE", false);
           }
         },
         () => {},

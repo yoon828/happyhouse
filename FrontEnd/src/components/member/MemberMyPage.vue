@@ -43,17 +43,12 @@
       <md-button slot="footer" class="md-success" v-on:click="moveUpdate()">
         회원 수정
       </md-button>
-
-      <md-button slot="footer" class="md-warning" v-on:click="deleteUser()">
-        회원 탈퇴
-      </md-button>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState, mapActions, mapMutations } from "vuex";
-import http from "@/api/http";
+import { mapState, mapMutations } from "vuex";
 const memberStore = "memberStore";
 export default {
   data() {
@@ -73,23 +68,6 @@ export default {
     ...mapMutations(memberStore, ["SET_USER_INFO", "SET_IS_LOGIN"]),
     moveUpdate() {
       this.$router.push({ name: "update" });
-    },
-    deleteUser() {
-      if (confirm("탈퇴 하시겠습니까?")) {
-        if (this.isLogin) {
-          this.userDelete(this.userInfo.userid, ({ data }) => {
-            let msg = "회원 탈퇴 시 문제가 발생했습니다.";
-            if (data === "success") {
-              msg = "회원 탈퇴가 완료되었습니다.";
-              err = false;
-            }
-            alert(msg);
-            if (!err) {
-              this.$router.push({ name: "home" });
-            }
-          });
-        }
-      }
     },
   },
 };

@@ -163,8 +163,10 @@ export default {
     },
     ...mapMutations(memberStore, ["SET_IS_LOGIN", "SET_USER_INFO"]),
     OnclickLogout() {
+      sessionStorage.removeItem("token");
       this.SET_IS_LOGIN(false);
       this.SET_USER_INFO(null);
+      this.$router.push({ name: "home" });
     },
   },
   mounted() {

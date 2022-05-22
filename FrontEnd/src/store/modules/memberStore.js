@@ -57,46 +57,35 @@ const memberStore = {
   },
   actions: {
     async userConfirm({ commit }, user) {
-      await login(
-        user,
-        (response) => {
-          if (response.data.message === "success") {
-            commit("SET_IS_LOGIN", true);
-            commit("SET_IS_LOGIN_ERROR", false);
-            commit("SET_USER_INFO", response.data.userInfo);
-          } else {
-            commit("SET_IS_LOGIN", false);
-            commit("SET_IS_LOGIN_ERROR", true);
-          }
-        },
-        () => {},
-      );
+      await login(user, (response) => {
+        if (response.data.message === "success") {
+          commit("SET_IS_LOGIN", true);
+          commit("SET_IS_LOGIN_ERROR", false);
+          commit("SET_USER_INFO", response.data.userInfo);
+          sessionStorage.setItem("token", response.data.token);
+        } else {
+          commit("SET_IS_LOGIN", false);
+          commit("SET_IS_LOGIN_ERROR", true);
+        }
+      });
     },
     async userUpdate({ commit }, user) {
-      await updateMember(
-        user,
-        (response) => {
-          if (response.data === "success") {
-            commit("SET_IS_UPDATE", true);
-          } else {
-            commit("SET_IS_UPDATE", false);
-          }
-        },
-        () => {},
-      );
+      await updateMember(user, (response) => {
+        if (response.data === "success") {
+          commit("SET_IS_UPDATE", true);
+        } else {
+          commit("SET_IS_UPDATE", false);
+        }
+      });
     },
     async userDelete({ commit }, userid) {
-      await deleteMember(
-        userid,
-        (response) => {
-          if (response.data === "success") {
-            commit("SET_IS_DELETE", true);
-          } else {
-            commit("SET_IS_DELETE", false);
-          }
-        },
-        () => {},
-      );
+      await deleteMember(userid, (response) => {
+        if (response.data === "success") {
+          commit("SET_IS_DELETE", true);
+        } else {
+          commit("SET_IS_DELETE", false);
+        }
+      });
     },
     async idFindSet({ commit }, userid) {
       commit("SET_FINDID", userid);

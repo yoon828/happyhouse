@@ -85,7 +85,7 @@ export default {
   },
   created() {
     listArticle((res) => {
-      this.articles = res.dat;
+      this.articles = res.data;
       this.totalPage = this.articles.length / this.pageSize + 1;
     });
   },

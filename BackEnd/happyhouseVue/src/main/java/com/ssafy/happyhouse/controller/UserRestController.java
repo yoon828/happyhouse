@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,8 +25,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.happyhouse.model.SidoGugunCodeDto;
 import com.ssafy.happyhouse.model.UserDto;
+import com.ssafy.happyhouse.model.service.JwtTokenProvider;
 import com.ssafy.happyhouse.model.service.UserService;
-
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -42,6 +42,9 @@ public class UserRestController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private JwtTokenProvider jwtTokenProvider;
 	
 
 	//회원 가입
@@ -70,12 +73,14 @@ public class UserRestController {
 	//내 정보 수정
 	@ApiOperation(value = "수정된 회원 정보를 받아서 이메일, 전화번호, 비밀번호를 수정한다. 성공하면 success 실패하면 fail 문자열을 반환한다.", response = String.class)
 	@PutMapping(value = "/update")
-	public ResponseEntity<String> updateUser(@RequestBody UserDto user) throws Exception{
+	public ResponseEntity<String> updateUser(@RequestBody UserDto user, HttpServletRequest request ) throws Exception{
 		logger.debug("userName : {}", user.getUsername());
 		logger.debug("userId : {}", user.getUserid());
 		logger.debug("userPw : {}", user.getUserpw());
 		logger.debug("userAddress : {}", user.getUseraddress());
 		logger.debug("userNumber : {}", user.getUsernumber());
+
+		logger.debug("userid : {}", request.getAttribute("userid"));
 		if(userService.updateUser(user) == 1) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
@@ -87,10 +92,12 @@ public class UserRestController {
 	public ResponseEntity<String> deleteUser(@PathVariable String userid) throws Exception {
 		logger.debug("userid : {}", userid);
 		if(userService.deleteUser(userid) == 1)  {
+			logger.debug("s : {}", userid);
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK); 
 		}
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
+	
 	//로그인
 	@ApiOperation(value = "아이디와 비밀번호를 입력시 로그인에 성공하면 유저 정보를 받는다. 실패시 fail값 ")
 	@PostMapping(value = "/login")
@@ -103,7 +110,11 @@ public class UserRestController {
 		UserDto loginUser = userService.login(map);
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		if(loginUser != null) {
+			//토큰 생성 
+			String token  = jwtTokenProvider.createToken(userDto.getUserid());
+			logger.debug("token : {}", token);
 			resultMap.put("userInfo", loginUser);
+			resultMap.put("token", token);
 			resultMap.put("message", SUCCESS);
 		} 
 		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
@@ -149,7 +160,7 @@ public class UserRestController {
 	}
 	
 	//관심지역 추가
-	@ApiOperation(value = "유저 아이디로 관심지역을 추가한다.")
+	@ApiOperation(value = "관심지역을 추가한다.")
 	@PostMapping("/addLikedong")
 	public ResponseEntity<String> addLikedong(@RequestBody Map<String, String> map) throws Exception{
 		logger.debug("map : {}",map);

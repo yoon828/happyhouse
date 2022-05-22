@@ -104,14 +104,11 @@ export default {
     deleteUser() {
       if (confirm("탈퇴 하시겠습니까?")) {
         if (this.isLogin) {
-          this.userDelete(this.userInfo.userid, (data) => {
-            console.log(data);
+          this.userDelete(this.userInfo.userid, ({ data }) => {
             let msg = "회원 탈퇴 시 문제가 발생했습니다.";
             if (data === "success") {
-              console.log("succ");
               msg = "회원 탈퇴가 완료되었습니다.";
               err = false;
-              // OnclickLogout();
             }
             alert(msg);
             if (!err) {
@@ -120,12 +117,6 @@ export default {
           });
         }
       }
-    },
-    OnclickLogout() {
-      sessionStorage.removeItem("token");
-      this.SET_IS_LOGIN(false);
-      this.SET_USER_INFO(null);
-      this.$router.push({ name: "home" });
     },
   },
 };

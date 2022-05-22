@@ -1,10 +1,15 @@
 <template>
   <div class="container">
     <div id="box" class="col-md-12 text-center">
-      <h2>아이디 찾기</h2>
+      <h2>회원 가입</h2>
       <p slot="description" class="description">
-        찾은 아이디 입니다.
+        happy house에 오신 걸 환영 합니다.
       </p>
+      <md-field class="md-form-group" slot="inputs">
+        <md-icon>man</md-icon>
+        <label>이름</label>
+        <md-input v-model="username"></md-input>
+      </md-field>
       <md-field class="md-form-group" slot="inputs">
         <md-icon>face</md-icon>
         <label>아이디</label>
@@ -13,16 +18,24 @@
       <md-field class="md-form-group" slot="inputs">
         <md-icon>lock_outline</md-icon>
         <label>비밀번호</label>
-        <md-input
-          type="password"
-          v-model="userpw"
-          @keyup.enter="confirm"
-        ></md-input>
+        <md-input type="password" v-model="userpw" ref="userpw"></md-input>
       </md-field>
-      <md-button slot="footer" class="md-success" @click="confirm">
-        로그인
+      <md-field class="md-form-group" slot="inputs">
+        <md-icon>email</md-icon>
+        <label>이메일</label>
+        <md-input type="email" v-model="useraddress"></md-input>
+      </md-field>
+      <md-field class="md-form-group" slot="inputs">
+        <md-icon>phone</md-icon>
+        <label>전화 번호</label>
+        <md-input v-model="usernumber"></md-input>
+      </md-field>
+
+      <md-button slot="footer" class="md-success" v-on:click="registCheck()">
+        회원 가입
       </md-button>
-      <md-button slot="footer" class="md-warning" @click="initData">
+
+      <md-button slot="footer" class="md-warning" v-on:click="initData()">
         초기화
       </md-button>
     </div>

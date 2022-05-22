@@ -42,8 +42,8 @@ public class HouseMapServiceImpl implements HouseMapService {
 	}
 	
 	@Override
-	public List<HouseDealDto> getHouseDealByCode(String aptCode) throws Exception {
-		return houseMapMapper.getHouseDealByCode(aptCode);
+	public List<HouseDealDto> getDealsByCode(String aptCode) throws Exception {
+		return houseMapMapper.getDealsByCode(aptCode);
 	}
 
 //	@Override

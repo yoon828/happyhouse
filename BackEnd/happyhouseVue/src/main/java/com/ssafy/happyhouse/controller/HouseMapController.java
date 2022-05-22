@@ -61,6 +61,6 @@ public class HouseMapController {
 	@GetMapping("/apt-deals")
 	public ResponseEntity<List<HouseDealDto>> aptDeals(@RequestParam("aptCode") String aptCode) throws Exception {
 		logger.debug("aptCode : {}", aptCode);
-		return new ResponseEntity<List<HouseDealDto>>(happyHouseMapService.getHouseDealByCode(aptCode), HttpStatus.OK);
+		return new ResponseEntity<List<HouseDealDto>>(happyHouseMapService.getDealsByCode(aptCode), HttpStatus.OK);
 	}
 }

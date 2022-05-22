@@ -18,7 +18,7 @@ public class HouseInfoDto {
 	private String lng;
 	private String sidoname;
 	private String gugunname;
-	private String recentPrice;
+	private String avgPrice;
 	public String getAptCode() {
 		return aptCode;
 	}
@@ -115,11 +115,11 @@ public class HouseInfoDto {
 	public void setGugunname(String gugunname) {
 		this.gugunname = gugunname;
 	}
-	public String getRecentPrice() {
-		return recentPrice;
+	public String getAvgPrice() {
+		return avgPrice;
 	}
-	public void setRecentPrice(String recentPrice) {
-		this.recentPrice = recentPrice;
+	public void setAvgPrice(String recentPrice) {
+		this.avgPrice = recentPrice;
 	}
 	@Override
 	public String toString() {
@@ -127,6 +127,6 @@ public class HouseInfoDto {
 				+ ", roadNameBubun=" + roadNameBubun + ", roadNameSeq=" + roadNameSeq + ", roadNameCode=" + roadNameCode
 				+ ", buildYear=" + buildYear + ", bonbun=" + bonbun + ", apartmentName=" + apartmentName + ", dongCode="
 				+ dongCode + ", dong=" + dong + ", jibun=" + jibun + ", lat=" + lat + ", lng=" + lng + ", sidoname="
-				+ sidoname + ", gugunname=" + gugunname + ", recentPrice=" + recentPrice + "]";
+				+ sidoname + ", gugunname=" + gugunname + ", avgPrice=" + avgPrice + "]";
 	}
 }

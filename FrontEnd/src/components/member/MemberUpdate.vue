@@ -43,8 +43,8 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapGetters, mapMutations } from "vuex";
-import http from "@/api/http";
+import { mapState, mapActions, mapMutations } from "vuex";
+
 const memberStore = "memberStore";
 export default {
   data() {
@@ -61,7 +61,7 @@ export default {
     ]),
   },
   methods: {
-    ...mapActions(memberStore, ["userConfirm", "userUpdate"]),
+    ...mapActions(memberStore, ["userConfirm", "userUpdate", "userDelete"]),
     ...mapMutations(memberStore, ["SET_USER_INFO", "SET_IS_LOGIN"]),
     async update() {
       await this.userUpdate({
@@ -104,14 +104,17 @@ export default {
     deleteUser() {
       if (confirm("탈퇴 하시겠습니까?")) {
         if (this.isLogin) {
-          http
-            .delete(`userapi/delete/${this.userInfo.userid}`)
-            .then(({ data }) => {
-              alert("탈퇴가 완료 되었습니다.");
-              this.SET_USER_INFO(null);
-              this.SET_IS_LOGIN(false);
+          this.userDelete(this.userInfo.userid, ({ data }) => {
+            let msg = "회원 탈퇴 시 문제가 발생했습니다.";
+            if (data === "success") {
+              msg = "회원 탈퇴가 완료되었습니다.";
+              err = false;
+            }
+            alert(msg);
+            if (!err) {
               this.$router.push({ name: "home" });
-            });
+            }
+          });
         }
       }
     },

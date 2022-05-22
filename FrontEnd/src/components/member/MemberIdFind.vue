@@ -32,6 +32,9 @@
 
 <script>
 import { idFindMember } from "@/api/member";
+import { mapState, mapActions } from "vuex";
+
+const memberStore = "memberStore";
 export default {
   data() {
     return {
@@ -47,6 +50,7 @@ export default {
     },
   },
   computed: {
+    ...mapState(memberStore, ["findId"]),
     headerStyle() {
       return {
         backgroundImage: `url(${this.header})`,
@@ -54,6 +58,7 @@ export default {
     },
   },
   methods: {
+    ...mapActions(memberStore, ["idFindSet"]),
     initData() {
       this.username = "";
       this.useraddress = "";
@@ -92,20 +97,18 @@ export default {
           let err = false;
           if (data === "fail") {
             msg = "입력 정보를 확인하세요.";
+            err = true;
           }
-          let findId = data;
           alert(msg);
-          alert("찾은 아이디 : " + findId);
           if (!err) {
-            this.$router.push({ name: "login" });
+            this.idFindSet(data);
+            this.$router.push({ name: "idfindResult" });
           } else {
             this.$router.push({ name: "idFind" });
           }
         },
         (error) => {
-          let msg = "서버에 문제가 발생했습니다.";
           console.log(error);
-          alert(msg);
         },
       );
     },

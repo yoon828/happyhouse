@@ -37,6 +37,8 @@
 
 <script>
 import { pwFindMember } from "@/api/member";
+import { mapActions, mapState } from "vuex";
+const memberStore = "memberStore";
 export default {
   data() {
     return {
@@ -60,6 +62,8 @@ export default {
     },
   },
   methods: {
+    ...mapActions(memberStore, ["pwFindSet"]),
+    ...mapState(memberStore, ["findPw"]),
     initData() {
       this.username = "";
       this.userid = "";
@@ -104,20 +108,17 @@ export default {
           if (data === "fail") {
             msg = "입력 정보를 확인하세요.";
           }
-          let findPw = data;
           alert(msg);
 
           if (!err) {
-            alert("임시 비밀번호 : " + findPw);
-            this.$router.push({ name: "login" });
+            this.pwFindSet(data);
+            this.$router.push({ name: "pwfindResult" });
           } else {
             this.$router.push({ name: "pwFind" });
           }
         },
         (error) => {
-          let msg = "서버에 문제가 발생했습니다.";
           console.log(error);
-          alert(msg);
         },
       );
     },

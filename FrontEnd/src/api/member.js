@@ -46,6 +46,14 @@ async function updateMember(user, success, fail) {
     .then(success)
     .catch(fail);
 }
+//회원 삭제
+async function deleteMember(userid, success, fail) {
+  api
+    .delete(`/userapi/delete/${userid}`)
+    .then(success)
+    .catch(fail);
+}
+
 export {
   login,
   findById,
@@ -53,4 +61,5 @@ export {
   idFindMember,
   pwFindMember,
   updateMember,
+  deleteMember,
 };

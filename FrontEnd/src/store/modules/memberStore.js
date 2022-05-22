@@ -6,7 +6,7 @@ const memberStore = {
     isLogin: false,
     isLoginError: false,
     userInfo: null,
-    findPassword: null,
+    findPw: null,
     findId: null,
     isUpdate: false,
     isDelete: false,
@@ -48,6 +48,12 @@ const memberStore = {
     SET_IS_DELETE: (state, isDelete) => {
       state.isDelete = isDelete;
     },
+    SET_FINDID: (state, findId) => {
+      state.findId = findId;
+    },
+    SET_FINDPW: (state, findPw) => {
+      state.findPw = findPw;
+    },
   },
   actions: {
     async userConfirm({ commit }, user) {
@@ -78,6 +84,25 @@ const memberStore = {
         },
         () => {},
       );
+    },
+    async userDelete({ commit }, userid) {
+      await deleteMember(
+        userid,
+        (response) => {
+          if (response.data === "success") {
+            commit("SET_IS_DELETE", true);
+          } else {
+            commit("SET_IS_DELETE", false);
+          }
+        },
+        () => {},
+      );
+    },
+    async idFindSet({ commit }, userid) {
+      commit("SET_FINDID", userid);
+    },
+    async pwFindSet({ commit }, userpw) {
+      commit("SET_FINDPW", userpw);
     },
   },
 };

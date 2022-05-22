@@ -98,9 +98,19 @@ export default new Router({
           component: () => import("@/components/member/MemberIdFind.vue"),
         },
         {
+          path: "idfindResult",
+          name: "idfindResult",
+          component: () => import("@/components/member/MemberIdFindResult.vue"),
+        },
+        {
           path: "pwfind",
           name: "pwfind",
           component: () => import("@/components/member/MemberPwFind.vue"),
+        },
+        {
+          path: "pwfindResult",
+          name: "pwfindResult",
+          component: () => import("@/components/member/MemberPwFindResult.vue"),
         },
         {
           path: "mypage",
@@ -116,11 +126,6 @@ export default new Router({
           path: "update",
           name: "update",
           component: () => import("@/components/member/MemberUpdate.vue"),
-        },
-        {
-          path: "delete",
-          name: "delete",
-          component: () => import("@/components/member/MemberDelete.vue"),
         },
       ],
     },

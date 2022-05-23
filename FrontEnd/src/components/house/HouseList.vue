@@ -1,6 +1,11 @@
 <template>
   <b-container class="flex-direction-col right">
-    <b-button id="popover-button-event" ref="button" variant="warning">
+    <b-button
+      id="popover-button-event"
+      ref="button"
+      variant="warning"
+      class="mb-2"
+    >
       <b-icon icon="sliders"></b-icon>
     </b-button>
     <div v-if="houses && houses.length != 0" class="bv-example-row wd">

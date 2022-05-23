@@ -1,8 +1,9 @@
 /* eslint-disable prettier/prettier */
 <template>
   <b-container class="flex-direction-col">
-    <b-list-group horizontal id="category">
+    <b-list-group horizontal id="category" class="mb-2">
       <b-list-group-item
+        class="category"
         :class="{ selected: bankSelected }"
         @click="selectBank(0)"
       >
@@ -10,18 +11,21 @@
         <!-- <b-button type="button">은행</b-button -->
       </b-list-group-item>
       <b-list-group-item
+        class="category"
         :class="{ selected: martSelected }"
         @click="selectMarket"
       >
         편의점
       </b-list-group-item>
       <b-list-group-item
+        class="category"
         :class="{ selected: hpSelected }"
         @click="selectHospital"
       >
         병원
       </b-list-group-item>
       <b-list-group-item
+        class="category"
         :class="{ selected: subwaySelected }"
         @click="selectSubway"
       >
@@ -76,6 +80,15 @@ export default {
     },
     house: function() {
       this.setMapCenter();
+    },
+    houses: function() {
+      this.bankSelected = false;
+      this.martSelected = false;
+      this.hpSelected = false;
+      this.subwaySelected = false;
+      for (let i = 0; i < 4; i++) {
+        this.removeMarkerSide(i);
+      }
     },
   },
   mounted() {
@@ -259,6 +272,14 @@ export default {
     //편의시설 관련 마커 추가
     displayMarkerSide(idx, data) {
       this.removeMarkerSide(idx);
+      // idle함수가 실행되는 동안에 초기화 시키기 때문에 한번더 체크 해야함
+      if (
+        (idx == 0 && !this.bankSelected) ||
+        (idx == 1 && !this.martSelected) ||
+        (idx == 2 && !this.hpSelected) ||
+        (idx == 3 && !this.subwaySelected)
+      )
+        return;
 
       let imgSrc = this.imgSrcs[idx],
         imgSize = new kakao.maps.Size(40, 40),
@@ -274,7 +295,10 @@ export default {
         this.sideMarkers[idx].push(mk);
       });
     },
+
     removeMarkerSide(idx) {
+      console.log("지워라", idx);
+      console.log(this.sideMarkers[idx]);
       for (let i = 0; i < this.sideMarkers[idx].length; i++) {
         this.sideMarkers[idx][i].setMap(null);
       }
@@ -302,5 +326,8 @@ export default {
 .selected {
   background-color: #ffc107 !important;
   color: whitesmoke;
+}
+.category {
+  height: 40px;
 }
 </style>

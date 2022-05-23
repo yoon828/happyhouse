@@ -103,6 +103,8 @@ export default {
       this.map = new kakao.maps.Map(mapContainer, mapOption);
       this.infoWindow = new kakao.maps.InfoWindow({ zIndex: 1 });
       this.ps = new kakao.maps.services.Places(this.map);
+      //지도를 이동할때마다 편의시설 조회해서 지도에 표기
+      kakao.maps.event.addListener(this.map, "idle", this.searchPlaces);
     },
     setDetail(house) {
       this.detailHouse(house);
@@ -188,7 +190,7 @@ export default {
 
     //편의시설 관련 메소드
     //은행 선택
-    selectBank(idx) {
+    selectBank() {
       if (this.bankSelected) {
         this.bankSelected = false;
         //마커에 은행 제거하기
@@ -230,6 +232,14 @@ export default {
         this.subwaySelected = true;
         this.findSide(3, this.codes[3]);
       }
+    },
+
+    //idle함수
+    searchPlaces() {
+      if (this.bankSelected) this.findSide(0, this.codes[0]);
+      if (this.martSelected) this.findSide(1, this.codes[1]);
+      if (this.hpSelected) this.findSide(2, this.codes[2]);
+      if (this.subwaySelected) this.findSide(3, this.codes[3]);
     },
 
     //시설 찾기

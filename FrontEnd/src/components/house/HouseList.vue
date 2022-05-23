@@ -3,7 +3,7 @@
     <b-button id="popover-button-event" ref="button" variant="warning">
       <b-icon icon="sliders"></b-icon>
     </b-button>
-    <div v-if="houses && houses.length != 0" class="bv-example-row">
+    <div v-if="houses && houses.length != 0" class="bv-example-row wd">
       <b-list-group class="con wt-100">
         <house-list-item
           v-for="(house, index) in housesfilter"
@@ -183,5 +183,9 @@ export default {
 .right {
   display: flex;
   align-items: flex-end;
+}
+
+.wd {
+  width: 100%;
 }
 </style>

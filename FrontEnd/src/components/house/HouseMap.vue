@@ -329,5 +329,7 @@ export default {
 }
 .category {
   height: 40px;
+  display: flex !important;
+  align-items: center !important;
 }
 </style>

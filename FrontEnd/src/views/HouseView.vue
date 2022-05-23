@@ -11,10 +11,10 @@
         </div>
         <house-search-bar></house-search-bar>
         <b-row class="mb-5">
-          <b-col cols="4">
+          <b-col cols="4" class="p-0">
             <house-list> </house-list>
           </b-col>
-          <b-col>
+          <b-col class="p-0">
             <house-map v-on:show-modal="showModal"></house-map>
           </b-col>
         </b-row>

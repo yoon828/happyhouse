@@ -23,14 +23,14 @@ export default {
     };
   },
   computed: {
-    ...mapState(houseStore, ["houses", "house"]),
+    ...mapState(houseStore, ["houses", "house", "housesfilter"]),
     // listUpdate: function() {
-    //   return displayMarkers(this.houses);
+    //   return displayMarkers(this.housesfilter);
     // },
   },
   watch: {
-    houses: function() {
-      if (this.houses.length != 0 && this.houses) {
+    housesfilter: function() {
+      if (this.housesfilter.length != 0 && this.housesfilter) {
         this.displayMarkers();
       }
     },
@@ -68,7 +68,7 @@ export default {
       let bounds = new kakao.maps.LatLngBounds();
       this.removeMarker();
 
-      this.houses.map((house) => {
+      this.housesfilter.map((house) => {
         let placePosition = new kakao.maps.LatLng(
           house.lat,
           // eslint-disable-next-line prettier/prettier

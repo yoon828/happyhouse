@@ -27,7 +27,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(houseStore, ["setHouses"]),
+    ...mapActions(houseStore, ["setHouses", "setHousesFilter"]),
     search() {
       houseListByName(
         {
@@ -35,6 +35,7 @@ export default {
         },
         (res) => {
           this.setHouses(res.data);
+          this.setHousesFilter(res.data);
           // eslint-disable-next-line prettier/prettier
         }
       );

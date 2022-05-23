@@ -8,7 +8,7 @@
   >
     <b-row class="d-flex justify-content-between">
       <p class="px-1 bold apt">{{ house.apartmentName }}</p>
-      평균 {{ house.avgPrice | price }}만원
+      평균 {{ house.avgPrice | price | toprice }}만원
     </b-row>
     <b-row>
       {{ house.sidoname }} {{ house.gugunname }} {{ house.dong }}
@@ -30,9 +30,23 @@ export default {
     };
   },
   filters: {
+    toInt(val) {
+      if (!val) return "";
+      let num = parseInt(val);
+      if (num == 0) return "";
+      else return num;
+    },
     price(value) {
       if (!value) return value;
       return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    },
+    toprice(value) {
+      let front = value.substr(0, value.length - 5);
+      let back = value.substr(value.length - 5, value.length);
+      if (back.charAt(0) == "0") {
+        back = back.substr(2);
+      }
+      return front == "" ? `${back}` : `${front}억 ${back}`;
     },
   },
   props: {

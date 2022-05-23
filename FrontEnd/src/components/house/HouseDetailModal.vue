@@ -47,7 +47,7 @@
             {{ deal.dealDay }}일</b-td
           >
           <b-td>{{ deal.area | areaChange }}</b-td>
-          <b-td>{{ deal.dealAmount | price | toprice }}만원</b-td>
+          <b-td>{{ deal.dealAmount | toInt | price | toprice }}만원</b-td>
           <b-td>{{ deal.floor }}층</b-td>
         </b-tr>
       </b-tbody>

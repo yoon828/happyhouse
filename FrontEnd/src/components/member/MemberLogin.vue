@@ -10,6 +10,7 @@
         <label>아이디</label>
         <md-input v-model="userid"></md-input>
       </md-field>
+      <p></p>
       <md-field class="md-form-group" slot="inputs">
         <md-icon>lock_outline</md-icon>
         <label>비밀번호</label>

@@ -104,7 +104,7 @@ export default {
             this.idFindSet(data);
             this.$router.push({ name: "idfindResult" });
           } else {
-            this.$router.push({ name: "idFind" });
+            this.$router.push({ name: "idfind" });
           }
         },
         (error) => {

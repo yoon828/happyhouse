@@ -19,7 +19,6 @@ async function findById(userid, success) {
     .then(success)
     .catch((err) => {
       console.log(err);
-      alert("문제가 발생했습니다.");
     });
 }
 
@@ -32,6 +31,15 @@ async function registMember(user, success) {
     .catch((err) => {
       console.log(err);
       alert("문제가 발생했습니다.");
+    });
+}
+//아이디 중복 체크
+async function idCheck(userid, success) {
+  api
+    .post(`userapi/checkid/${userid}`)
+    .then(success)
+    .catch((err) => {
+      console.log(err);
     });
 }
 //아이디 찾기
@@ -110,4 +118,5 @@ export {
   listMember,
   getMember,
   registAdmin,
+  idCheck,
 };

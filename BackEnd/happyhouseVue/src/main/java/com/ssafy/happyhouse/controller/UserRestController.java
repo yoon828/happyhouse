@@ -158,6 +158,15 @@ public class UserRestController {
 		}
 		return new ResponseEntity<String>(FAIL, HttpStatus.OK); 
 	}
+	//아이디 중복 체크
+	@ApiOperation(value = "아이디를 받아 아이디를 중복체크한다. ")
+	@PostMapping("/checkid/{userid}")
+	public ResponseEntity<?> checkId(@PathVariable String userid) throws Exception{
+		if(userService.idCheck(userid) == 1) {
+			return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+	}
 	
 	//관심지역 추가
 	@ApiOperation(value = "관심지역을 추가한다.")

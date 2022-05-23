@@ -37,7 +37,7 @@
 
 <script>
 // import moment from "moment";
-import { getArticle } from "@/api/board.js";
+import { getArticle, hitAdd } from "@/api/board.js";
 
 export default {
   name: "BoardDetail",
@@ -57,6 +57,7 @@ export default {
     getArticle(this.$route.params.articleno, (res) => {
       this.article = res.data;
     });
+    hitAdd(this.$route.params.articleno, (res) => {});
   },
   methods: {
     listArticle() {

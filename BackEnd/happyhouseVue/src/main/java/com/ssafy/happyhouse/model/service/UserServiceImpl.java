@@ -46,12 +46,23 @@ public class UserServiceImpl implements UserService{
 		userDto.setUserpw(encodePw);
 		return userMapper.registUser(userDto);	
 	}
-
+	//관리자 등록
+	@Override
+	public int registAdmin(UserDto userDto) throws Exception {
+		String encodePw = passwordEncoder.encode(userDto.getUserpw());
+		userDto.setUserpw(encodePw);
+		return userMapper.registAdmin(userDto);	
+	}
+	//유저 목록 조회
 	@Override
 	public List<UserDto> listUser() throws Exception {
 		return userMapper.listUser();
 	}
-
+	//회원 상세 조회
+	@Override
+	public UserDto detailUser(String userid) throws Exception{
+		return userMapper.detailUser(userid);
+	}
 	@Override
 	@Transactional
 	public int updateUser(UserDto userDto) throws Exception {

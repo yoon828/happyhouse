@@ -15,4 +15,5 @@ public interface QnaService {
 	public boolean deleteQna(int articleno);
 	List<QnaDto> searchById(String searchid);
 	List<QnaDto> searchByTitle(String searchtitle);
+	public int hitAdd(int articleno);
 }

@@ -71,7 +71,12 @@ function getArticleBySubject(subject, success) {
       console.log(err);
     });
 }
-
+function hitAdd(articleno, success, fail) {
+  api
+    .put(`/qna/hitadd/${articleno}`)
+    .then(success)
+    .catch(fail);
+}
 export {
   listArticle,
   writeArticle,
@@ -80,4 +85,5 @@ export {
   deleteArticle,
   getArticleById,
   getArticleBySubject,
+  hitAdd,
 };

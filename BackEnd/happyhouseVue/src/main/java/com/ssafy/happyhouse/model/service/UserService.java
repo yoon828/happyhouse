@@ -12,7 +12,8 @@ public interface UserService {
 
 	// 회원가입
 	int registUser(UserDto userDto) throws Exception;
-
+	//관리자 등록
+	int registAdmin(UserDto userDto) throws Exception;
 	// 조회
 	List<UserDto> listUser() throws Exception;
 
@@ -36,6 +37,10 @@ public interface UserService {
 
 	// 관심지역 조회
 	List<SidoGugunCodeDto> listLikeDong(String userid) throws Exception;
+
+	UserDto detailUser(String userid) throws Exception;
+
+	
 
 }
 

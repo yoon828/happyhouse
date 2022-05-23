@@ -17,7 +17,8 @@ public class UserDto {
 	private String useraddress;
 	@ApiModelProperty(value = "회원 전화 번호")
 	private String usernumber;
-	
+	@ApiModelProperty(value = "회원 타입")
+	private String usertype;
 	
 	public UserDto() {}
 	
@@ -79,6 +80,16 @@ public class UserDto {
 
 	public void setUsernumber(String usernumber) {
 		this.usernumber = usernumber;
+	}
+	
+	
+	public String getUsertype() {
+		return usertype;
+	}
+
+
+	public void setUsertype(String usertype) {
+		this.usertype = usertype;
 	}
 
 

@@ -75,6 +75,30 @@ async function deleteMember(userid, success) {
     });
 }
 
+//회원 리스트 가져오기
+async function listMember(success, fail) {
+  api
+    .get(`/admin/list`)
+    .then(success)
+    .catch((fail) => {
+      alert("문제가 발생했습니다");
+      console.log(fail);
+    });
+}
+// 회원 상세 정보 가져오기
+async function getMember(userid, success, fail) {
+  api
+    .get(`/admin/${userid}`)
+    .then(success)
+    .catch(fail);
+}
+//관리자 등록
+async function registAdmin(user, success, fail) {
+  api
+    .post("/admin/regist", JSON.stringify(user))
+    .then(success)
+    .catch(fail);
+}
 export {
   login,
   findById,
@@ -83,4 +107,7 @@ export {
   pwFindMember,
   updateMember,
   deleteMember,
+  listMember,
+  getMember,
+  registAdmin,
 };

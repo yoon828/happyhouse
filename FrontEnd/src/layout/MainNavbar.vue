@@ -50,10 +50,17 @@
                   <a href="#/member/pwfind">비밀번호 찾기</a>
                 </md-list-item></md-list
               >
-              <md-list v-if="userInfo">
+              <md-list v-if="userInfo && userInfo.usertype === 'G'">
                 <md-list-item href="#/member/mypage">
                   <p>마이 페이지</p>
                 </md-list-item>
+              </md-list>
+              <md-list v-if="userInfo && userInfo.usertype === 'A'">
+                <md-list-item href="#/member/adminList">
+                  <p>회원 관리</p>
+                </md-list-item>
+              </md-list>
+              <md-list v-if="userInfo">
                 <md-list-item @click="OnclickLogout">
                   <md-icon>logout</md-icon>
                 </md-list-item>

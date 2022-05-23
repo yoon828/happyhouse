@@ -12,8 +12,12 @@ import com.ssafy.happyhouse.model.UserDto;
 public interface UserMapper {
 	//회원 가입
 	int registUser(UserDto userDto) throws Exception;
+	//관리자 등록
+	int registAdmin(UserDto userDto) throws Exception;
 	//로그인
 	UserDto login(Map<String, String> map) throws Exception;
+	//회원 상세 조회 
+	UserDto detailUser(String userId) throws Exception;
 	//수정
 	int updateUser(UserDto userDto) throws Exception;
 	//삭제 

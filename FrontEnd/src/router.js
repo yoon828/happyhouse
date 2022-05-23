@@ -127,6 +127,31 @@ export default new Router({
           name: "update",
           component: () => import("@/components/member/MemberUpdate.vue"),
         },
+        {
+          path: "adminList",
+          name: "adminList",
+          component: () => import("@/components/member/AdminList.vue"),
+        },
+        {
+          path: "adminDetail/:userid",
+          name: "adminDetail",
+          component: () => import("@/components/member/AdminDetail.vue"),
+        },
+        {
+          path: "adminRegist",
+          name: "adminRegist",
+          component: () => import("@/components/member/AdminRegist.vue"),
+        },
+        {
+          path: "adminUserRegist",
+          name: "adminUserRegist",
+          component: () => import("@/components/member/AdminUserRegist.vue"),
+        },
+        {
+          path: "adminUpdate/:userid",
+          name: "adminUpdate",
+          component: () => import("@/components/member/AdminUpdate.vue"),
+        },
       ],
     },
   ],

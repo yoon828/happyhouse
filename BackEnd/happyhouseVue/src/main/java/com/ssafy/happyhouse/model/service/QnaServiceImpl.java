@@ -54,5 +54,11 @@ public class QnaServiceImpl implements QnaService{
 			return qnaMapper.searchByTitle(serarchTitle);
 		}
 		
+		@Override
+		@Transactional
+		public int hitAdd(int articleno) {
+			return qnaMapper.hitAdd(articleno);
+		}
+		
 		
 }

@@ -49,7 +49,12 @@
 		   	   content = #{content}
 		 where articleno = #{articleno}
 	</update>
-
+	<!-- 조회수 증가 -->
+	<update id="hitAdd" parameterType="int">
+		update qna 
+		   set hit = hit + 1
+		 where articleno = #{articleno}
+	</update>
 	<!-- 게시글 삭제 -->
 	<delete id="deleteQna" parameterType="int">
 		delete 

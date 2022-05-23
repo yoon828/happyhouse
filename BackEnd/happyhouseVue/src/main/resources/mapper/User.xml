@@ -4,8 +4,13 @@
 
 <mapper namespace="com.ssafy.happyhouse.model.mapper.UserMapper">
 	<insert id="registUser" parameterType="UserDto">
-		insert into user (userid, userpw, username, useraddress, usernumber)
-		values (#{userid}, #{userpw}, #{username}, #{useraddress}, #{usernumber})
+		insert into user (userid, userpw, username, useraddress, usernumber, usertype)
+		values (#{userid}, #{userpw}, #{username}, #{useraddress}, #{usernumber} ,"G")
+	</insert>
+	
+	<insert id="registAdmin" parameterType="UserDto">
+		insert into user (userid, userpw, username, useraddress, usernumber, usertype)
+		values (#{userid}, #{userpw}, #{username}, #{useraddress}, #{usernumber} ,"A")
 	</insert>
 	<select id="idFind" parameterType="map" resultType="string">
 		select userid
@@ -42,7 +47,12 @@
 		order by userid desc;
 	</select>
 	
-	
+	<select id="detailUser" parameterType="String" resultType="UserDto">
+		select *
+		from user
+		where userid = #{userid};
+	</select>
+
 	<update id="updateUser" parameterType="UserDto" >
       update user
       <trim prefix="set" suffixOverrides=",">

@@ -18,7 +18,7 @@
         :class="{ selected: martSelected }"
         @click="selectMarket"
       >
-        마트
+        편의점
       </b-list-group-item>
       <b-list-group-item
         id="PM9"
@@ -30,7 +30,9 @@
         병원
       </b-list-group-item>
     </b-list-group>
-    <b-img src="" />
+    <b-img
+      src="https://icon-library.com/images/subway-icon/subway-icon-10.jpg"
+    />
     <div id="map" class="map" style="height:600px"></div>
   </b-container>
 </template>
@@ -205,7 +207,7 @@ export default {
         this.removeMarkerSide(1);
       } else {
         this.martSelected = true;
-        this.findSide(1, "MT1");
+        this.findSide(1, "CS2");
       }
     },
     selectHospital() {
@@ -241,7 +243,7 @@ export default {
       this.removeMarkerSide(idx);
 
       let imgSrc = this.imgSrcs[idx],
-        imgSize = new kakao.maps.Size(40, 50),
+        imgSize = new kakao.maps.Size(40, 40),
         markerImage = new kakao.maps.MarkerImage(imgSrc, imgSize);
 
       data.map((item) => {

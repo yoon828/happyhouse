@@ -3,36 +3,31 @@
   <b-container class="flex-direction-col">
     <b-list-group horizontal id="category">
       <b-list-group-item
-        data-order="0"
-        class="category_bg bank"
         :class="{ selected: bankSelected }"
-        @click="selectBank"
+        @click="selectBank(0)"
       >
         은행
         <!-- <b-button type="button">은행</b-button -->
       </b-list-group-item>
       <b-list-group-item
-        id="MT1"
-        data-order="1"
-        class="category_bg mart"
         :class="{ selected: martSelected }"
         @click="selectMarket"
       >
         편의점
       </b-list-group-item>
       <b-list-group-item
-        id="PM9"
-        data-order="2"
-        class="category_bg pharmacy"
         :class="{ selected: hpSelected }"
         @click="selectHospital"
       >
         병원
       </b-list-group-item>
+      <b-list-group-item
+        :class="{ selected: subwaySelected }"
+        @click="selectSubway"
+      >
+        지하철
+      </b-list-group-item>
     </b-list-group>
-    <b-img
-      src="https://icon-library.com/images/subway-icon/subway-icon-10.jpg"
-    />
     <div id="map" class="map" style="height:600px"></div>
   </b-container>
 </template>
@@ -53,15 +48,18 @@ export default {
       infoWindow: null,
       customOverlay: null,
       ps: null, //장소 검색 객체
-      sideMarkers: [[], [], []], //순서대로 은행, 병원, 마트 마커를 담을 배열
+      sideMarkers: [[], [], [], []], //순서대로 은행, 병원, 마트 마커를 담을 배열
       bankSelected: false,
       martSelected: false,
       hpSelected: false,
+      subwaySelected: false,
       imgSrcs: [
         "https://github.com/yoon828/happyhouse/blob/main/FrontEnd/src/assets/img/bank.png?raw=true",
         "https://github.com/yoon828/happyhouse/blob/main/FrontEnd/src/assets/img/market.png?raw=true",
         "https://github.com/yoon828/happyhouse/blob/main/FrontEnd/src/assets/img/hospital.png?raw=true",
+        "https://github.com/yoon828/happyhouse/blob/main/FrontEnd/src/assets/img/subway.png?raw=true",
       ],
+      codes: ["BK9", "CS2", "HP8", "SW8"],
     };
   },
   computed: {
@@ -190,16 +188,17 @@ export default {
 
     //편의시설 관련 메소드
     //은행 선택
-    selectBank() {
+    selectBank(idx) {
       if (this.bankSelected) {
         this.bankSelected = false;
         //마커에 은행 제거하기
         this.removeMarkerSide(0);
       } else {
         this.bankSelected = true;
-        this.findSide(0, "BK9");
+        this.findSide(0, this.codes[0]);
       }
     },
+    //편의점
     selectMarket() {
       if (this.martSelected) {
         this.martSelected = false;
@@ -207,9 +206,10 @@ export default {
         this.removeMarkerSide(1);
       } else {
         this.martSelected = true;
-        this.findSide(1, "CS2");
+        this.findSide(1, this.codes[1]);
       }
     },
+    //병원
     selectHospital() {
       if (this.hpSelected) {
         this.hpSelected = false;
@@ -217,9 +217,22 @@ export default {
         this.removeMarkerSide(2);
       } else {
         this.hpSelected = true;
-        this.findSide(2, "HP8");
+        this.findSide(2, this.codes[2]);
       }
     },
+    //지하철
+    selectSubway() {
+      if (this.subwaySelected) {
+        this.subwaySelected = false;
+        //마커에 은행 제거하기
+        this.removeMarkerSide(3);
+      } else {
+        this.subwaySelected = true;
+        this.findSide(3, this.codes[3]);
+      }
+    },
+
+    //시설 찾기
     findSide(idx, code) {
       this.ps.categorySearch(
         code,
@@ -232,14 +245,9 @@ export default {
         { useMapBounds: true }
       );
     },
-    // placesSearchCB(data, status, pagination) {
-    //   if (status === kakao.maps.services.Status.OK) {
-    //     displayMarkerSide(idx, data[i]);
-    //   }
-    // },
+
     //편의시설 관련 마커 추가
     displayMarkerSide(idx, data) {
-      let bounds = new kakao.maps.LatLngBounds();
       this.removeMarkerSide(idx);
 
       let imgSrc = this.imgSrcs[idx],
@@ -247,7 +255,6 @@ export default {
         markerImage = new kakao.maps.MarkerImage(imgSrc, imgSize);
 
       data.map((item) => {
-        console.log(item);
         let itemPositon = new kakao.maps.LatLng(item.y, item.x);
         let mk = new kakao.maps.Marker({
           position: itemPositon, // 마커의 위치
@@ -255,12 +262,7 @@ export default {
         });
         mk.setMap(this.map);
         this.sideMarkers[idx].push(mk);
-
-        //지도 범위를 재설정하기 위해 LatLngBounds에 좌표를 추가
-        // bounds.extend(itemPositon);
       });
-      //검색된 장소 위치를 기준으로 지도 범위 재설정
-      // this.map.setBounds(bounds);
     },
     removeMarkerSide(idx) {
       for (let i = 0; i < this.sideMarkers[idx].length; i++) {

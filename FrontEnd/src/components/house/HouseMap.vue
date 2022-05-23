@@ -16,6 +16,7 @@
         data-order="1"
         class="category_bg mart"
         :class="{ selected: martSelected }"
+        @click="selectMarket"
       >
         마트
       </b-list-group-item>
@@ -24,11 +25,12 @@
         data-order="2"
         class="category_bg pharmacy"
         :class="{ selected: hpSelected }"
+        @click="selectHospital"
       >
-        약국
+        병원
       </b-list-group-item>
     </b-list-group>
-    <b-img src="require('@/assets/img/bank.png')" />
+    <b-img src="" />
     <div id="map" class="map" style="height:600px"></div>
   </b-container>
 </template>
@@ -53,10 +55,10 @@ export default {
       bankSelected: false,
       martSelected: false,
       hpSelected: false,
-      imgSrc: [
-        "public\img\bank.png",
-        "public\img\hospital.png",
-        "public\img\market.png",
+      imgSrcs: [
+        "https://github.com/yoon828/happyhouse/blob/main/FrontEnd/src/assets/img/bank.png?raw=true",
+        "https://github.com/yoon828/happyhouse/blob/main/FrontEnd/src/assets/img/market.png?raw=true",
+        "https://github.com/yoon828/happyhouse/blob/main/FrontEnd/src/assets/img/hospital.png?raw=true",
       ],
     };
   },
@@ -185,7 +187,7 @@ export default {
     },
 
     //편의시설 관련 메소드
-
+    //은행 선택
     selectBank() {
       if (this.bankSelected) {
         this.bankSelected = false;
@@ -194,6 +196,26 @@ export default {
       } else {
         this.bankSelected = true;
         this.findSide(0, "BK9");
+      }
+    },
+    selectMarket() {
+      if (this.martSelected) {
+        this.martSelected = false;
+        //마커에 은행 제거하기
+        this.removeMarkerSide(1);
+      } else {
+        this.martSelected = true;
+        this.findSide(1, "MT1");
+      }
+    },
+    selectHospital() {
+      if (this.hpSelected) {
+        this.hpSelected = false;
+        //마커에 은행 제거하기
+        this.removeMarkerSide(2);
+      } else {
+        this.hpSelected = true;
+        this.findSide(2, "HP8");
       }
     },
     findSide(idx, code) {
@@ -215,12 +237,11 @@ export default {
     // },
     //편의시설 관련 마커 추가
     displayMarkerSide(idx, data) {
-      let map = this.map;
       let bounds = new kakao.maps.LatLngBounds();
       this.removeMarkerSide(idx);
 
-      let imgSrc = "public/img/bank.png",
-        imgSize = new kakao.maps.Size(50, 50),
+      let imgSrc = this.imgSrcs[idx],
+        imgSize = new kakao.maps.Size(40, 50),
         markerImage = new kakao.maps.MarkerImage(imgSrc, imgSize);
 
       data.map((item) => {
@@ -234,10 +255,10 @@ export default {
         this.sideMarkers[idx].push(mk);
 
         //지도 범위를 재설정하기 위해 LatLngBounds에 좌표를 추가
-        bounds.extend(itemPositon);
+        // bounds.extend(itemPositon);
       });
       //검색된 장소 위치를 기준으로 지도 범위 재설정
-      this.map.setBounds(bounds);
+      // this.map.setBounds(bounds);
     },
     removeMarkerSide(idx) {
       for (let i = 0; i < this.sideMarkers[idx].length; i++) {

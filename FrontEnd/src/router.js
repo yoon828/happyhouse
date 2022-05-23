@@ -6,7 +6,7 @@ import MainFooter from "./layout/MainFooter.vue";
 import BoardView from "./views/BoardView.vue";
 import HouseView from "./views/HouseView.vue";
 import MemberView from "./views/MemberView.vue";
-
+import NewsView from "./views/NewsView.vue";
 const onlyAuthUser = async (to, from, next) => {
   const checkUserInfo = store.getters[""];
 };
@@ -69,6 +69,27 @@ export default new Router({
           path: "modify/:articleno",
           name: "boardModify",
           component: () => import("@/components/board/BoardModify.vue"),
+        },
+      ],
+    },
+    {
+      path: "/news",
+      name: "news",
+      components: {
+        default: NewsView,
+        header: MainNavbar,
+        footer: MainFooter,
+      },
+      props: {
+        header: { colorOnScroll: 400 },
+        footer: { backgroundColor: "black" },
+      },
+      redirect: "/news/list",
+      children: [
+        {
+          path: "list",
+          name: "list",
+          component: () => import("@/components/news/NewsList.vue"),
         },
       ],
     },

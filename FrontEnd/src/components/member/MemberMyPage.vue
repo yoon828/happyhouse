@@ -53,7 +53,7 @@
 
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
-import http from "@/api/http";
+
 const memberStore = "memberStore";
 export default {
   data() {
@@ -70,6 +70,7 @@ export default {
     ]),
   },
   methods: {
+    ...mapActions(memberStore, ["userDelete"]),
     ...mapMutations(memberStore, ["SET_USER_INFO", "SET_IS_LOGIN"]),
     moveUpdate() {
       this.$router.push({ name: "update" });
@@ -79,6 +80,7 @@ export default {
         if (this.isLogin) {
           this.userDelete(this.userInfo.userid, ({ data }) => {
             let msg = "회원 탈퇴 시 문제가 발생했습니다.";
+            let err = true;
             if (data === "success") {
               msg = "회원 탈퇴가 완료되었습니다.";
               err = false;

@@ -104,8 +104,9 @@ export default {
     deleteUser() {
       if (confirm("탈퇴 하시겠습니까?")) {
         if (this.isLogin) {
-          this.userDelete(this.userInfo.userid, ({ data }) => {
+          userDelete(this.userInfo.userid, ({ data }) => {
             let msg = "회원 탈퇴 시 문제가 발생했습니다.";
+            let err = true;
             if (data === "success") {
               msg = "회원 탈퇴가 완료되었습니다.";
               err = false;

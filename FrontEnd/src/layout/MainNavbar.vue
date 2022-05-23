@@ -32,7 +32,9 @@
               <md-list-item href="#/house">
                 <p>거래조회</p>
               </md-list-item>
-
+              <md-list-item href="#/news">
+                <p>뉴스</p>
+              </md-list-item>
               <md-list-item href="#/board">
                 <p>게시판</p>
               </md-list-item>

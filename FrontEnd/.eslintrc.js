@@ -11,6 +11,7 @@ module.exports = {
     "prettier/prettier": [
       "error",
       {
+        bracketSameLine: true,
         singleQuote: false,
         semi: true,
         tabWidth: 2,

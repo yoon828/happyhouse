@@ -8,7 +8,7 @@
         <house-list-item
           v-for="(house, index) in housesfilter"
           :key="index"
-          :house="house"
+          :houseItem="house"
         />
       </b-list-group>
     </div>
@@ -50,7 +50,7 @@
           <vue-slider
             v-model="pricevalue"
             :data="pricedata"
-            :tooltip="always"
+            :tooltip="'always'"
             :tooltip-placement="['bottom', 'bottom']"
             :tooltip-formatter="format1"
             @dragging="onSubmit"
@@ -96,7 +96,7 @@ export default {
   data() {
     return {
       popoverShow: false,
-      pricevalue: "120",
+      pricevalue: "1200",
       pricedata: ["1", "5", "10", "20", "50", "100", "500", "1000", "1200"],
       buildrange: [1961, 2022],
       format1: (v) => `${v / 10.0}억`,
@@ -105,7 +105,7 @@ export default {
   },
   watch: {
     houses: function() {
-      this.pricevalue = "120";
+      this.pricevalue = "1200";
       this.buildrange = [1961, 2022];
     },
   },

@@ -4,21 +4,24 @@
     @click="selectHouse"
     @mouseover="colorChange(true)"
     @mouseout="colorChange(false)"
-    :class="{ 'mouse-over-bgcolor': isColor }"
+    :class="[
+      { 'mouse-over-bgcolor': isColor },
+      { 'house-selected': isSelected },
+    ]"
   >
     <b-row class="d-flex justify-content-between">
-      <p class="px-1 bold apt">{{ house.apartmentName }}</p>
-      평균 {{ house.avgPrice | price | toprice }}만원
+      <p class="px-1 bold apt">{{ houseItem.apartmentName }}</p>
+      평균 {{ houseItem.avgPrice | price | toprice }}만원
     </b-row>
     <b-row>
-      {{ house.sidoname }} {{ house.gugunname }} {{ house.dong }}
-      {{ house.jibun }}
+      {{ houseItem.sidoname }} {{ houseItem.gugunname }} {{ houseItem.dong }}
+      {{ houseItem.jibun }}
     </b-row>
   </b-list-group-item>
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 const houseStore = "houseStore";
 
@@ -27,7 +30,14 @@ export default {
   data() {
     return {
       isColor: false,
+      isSelected: false,
     };
+  },
+  props: {
+    houseItem: Object,
+  },
+  computed: {
+    ...mapState(houseStore, ["house"]),
   },
   filters: {
     toInt(val) {
@@ -49,13 +59,22 @@ export default {
       return front == "" ? `${back}` : `${front}억 ${back}`;
     },
   },
-  props: {
-    house: Object,
+  watch: {
+    house: function() {
+      if (this.house && this.house.aptCode == this.houseItem.aptCode) {
+        this.isSelected = true;
+      } else {
+        this.isSelected = false;
+      }
+    },
   },
   methods: {
     ...mapActions(houseStore, ["detailHouse"]),
     selectHouse() {
-      this.detailHouse(this.house);
+      if (this.house && this.house.aptCode == this.houseItem.aptCode) {
+        this.isSelected = true;
+      }
+      this.detailHouse(this.houseItem);
     },
     colorChange(flag) {
       this.isColor = flag;
@@ -69,9 +88,13 @@ export default {
   font-size: 1rem;
 }
 .mouse-over-bgcolor {
-  background-color: #ffc107;
+  background-color: #ffc107b3;
 }
 .rd-2 {
   border-radius: 10px !important;
+}
+
+.house-selected {
+  background-color: #ffc107b3;
 }
 </style>

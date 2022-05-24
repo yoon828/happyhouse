@@ -32,7 +32,7 @@
               <md-list-item href="#/house">
                 <p>거래조회</p>
               </md-list-item>
-              <md-list-item href="#/mylike">
+              <md-list-item href="#/mylike" v-if="userInfo">
                 <p>관심지역</p>
               </md-list-item>
               <md-list-item href="#/news">

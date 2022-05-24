@@ -40,6 +40,8 @@ public interface UserService {
 
 	UserDto detailUser(String userid) throws Exception;
 
+	boolean deleteLikeDong(Map<String, String> map) throws Exception;
+
 	
 
 }

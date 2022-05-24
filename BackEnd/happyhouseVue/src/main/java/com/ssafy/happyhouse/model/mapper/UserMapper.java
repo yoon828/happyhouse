@@ -34,6 +34,8 @@ public interface UserMapper {
 	UserDto pwFind(Map<String, String> map) throws Exception;
 	//관심지역 등록
 	void addLikeDong(Map<String, String>map)throws Exception;
+	//관심지역 제거
+	int deleteLikeDong(Map<String, String> map)throws Exception;
 	//관심지역 조회
 	List<SidoGugunCodeDto> listLikeDong(String userid)throws Exception;
 

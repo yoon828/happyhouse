@@ -108,6 +108,13 @@ public class UserServiceImpl implements UserService{
 	public void addLikeDong(Map<String, String> map) throws Exception {
 		userMapper.addLikeDong(map);
 	}
+	
+	@Override
+	public boolean deleteLikeDong(Map<String, String> map) throws Exception {
+		int n= userMapper.deleteLikeDong(map);
+		System.out.println(n);
+		return n==1;
+	}
 
 	//관심지역 조회
 	@Override

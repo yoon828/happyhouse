@@ -47,6 +47,7 @@ const houseStore = {
       commit("SET_HOUSE_FILTER_LIST", houses);
     },
     detailHouse: ({ commit }, house) => {
+      console.log(house);
       // 나중에 house.일련번호를 이용하여 API 호출
       commit("SET_DETAIL_HOUSE", house);
     },

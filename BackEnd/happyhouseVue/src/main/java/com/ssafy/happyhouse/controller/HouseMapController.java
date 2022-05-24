@@ -63,4 +63,10 @@ public class HouseMapController {
 		logger.debug("aptCode : {}", aptCode);
 		return new ResponseEntity<List<HouseDealDto>>(happyHouseMapService.getDealsByCode(aptCode), HttpStatus.OK);
 	}
+	
+	@GetMapping("/address")
+	public ResponseEntity<SidoGugunCodeDto> getAddressName(@RequestParam("dongcode")String dongcode) throws Exception{
+		logger.debug("dongCode : {}", dongcode);
+		return new ResponseEntity<SidoGugunCodeDto>(happyHouseMapService.getAddressName(dongcode), HttpStatus.OK);
+	}
 }

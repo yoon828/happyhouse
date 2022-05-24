@@ -52,6 +52,13 @@
                   <a href="#/member/pwfind">비밀번호 찾기</a>
                 </md-list-item></md-list
               >
+
+              <md-list v-if="userInfo">
+                <md-list-item href="#/food">
+                  <p>동네 맛집</p>
+                </md-list-item>
+              </md-list>
+
               <md-list v-if="userInfo && userInfo.usertype === 'G'">
                 <md-list-item href="#/member/mypage">
                   <p>마이 페이지</p>

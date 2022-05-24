@@ -8,7 +8,6 @@ async function login(user, success) {
     .then(success)
     .catch((err) => {
       console.log(err);
-      alert("문제가 발생했습니다.");
     });
 }
 
@@ -30,7 +29,6 @@ async function registMember(user, success) {
     .then(success)
     .catch((err) => {
       console.log(err);
-      alert("문제가 발생했습니다.");
     });
 }
 //아이디 중복 체크
@@ -49,7 +47,6 @@ async function idFindMember(user, success) {
     .then(success)
     .catch((err) => {
       console.log(err);
-      alert("문제가 발생했습니다.");
     });
 }
 // 비밀 번호 찾기
@@ -59,7 +56,6 @@ async function pwFindMember(user, success) {
     .then(success)
     .catch((err) => {
       console.log(err);
-      alert("문제가 발생했습니다.");
     });
 }
 //회원 수정
@@ -69,7 +65,6 @@ async function updateMember(user, success) {
     .then(success)
     .catch((err) => {
       console.log(err);
-      alert("문제가 발생했습니다.");
     });
 }
 //회원 삭제
@@ -79,7 +74,6 @@ async function deleteMember(userid, success) {
     .then(success)
     .catch((err) => {
       console.log(err);
-      alert("문제가 발생했습니다.");
     });
 }
 
@@ -89,7 +83,6 @@ async function listMember(success, fail) {
     .get(`/admin/list`)
     .then(success)
     .catch((fail) => {
-      alert("문제가 발생했습니다");
       console.log(fail);
     });
 }

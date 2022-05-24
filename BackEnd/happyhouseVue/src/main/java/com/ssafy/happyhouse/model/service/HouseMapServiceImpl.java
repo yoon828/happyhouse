@@ -46,6 +46,11 @@ public class HouseMapServiceImpl implements HouseMapService {
 		return houseMapMapper.getDealsByCode(aptCode);
 	}
 
+	@Override
+	public SidoGugunCodeDto getAddressName(String dongCode) throws Exception {
+		return houseMapMapper.getAddressName(dongCode);
+	}
+
 //	@Override
 //	public List<HouseInfoDto> getAptByPrice(int start, int end, String dong) throws Exception {
 //		return houseMapMapper.getAptByDong(dong);

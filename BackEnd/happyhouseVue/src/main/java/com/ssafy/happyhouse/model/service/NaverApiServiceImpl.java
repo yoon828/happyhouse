@@ -14,11 +14,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class NaverApiServiceImpl implements NaverApiService {
-
+	String clientId = "phcDjj6MZ2WhkC7K5gyL";// 애플리케이션 클라이언트 아이디값";
+	String clientSecret = "xZn1hH2PJr";// 애플리케이션 클라이언트 시크릿값";
 	@Override
 	public String newsList() {
-		String clientId = "phcDjj6MZ2WhkC7K5gyL";// 애플리케이션 클라이언트 아이디값";
-		String clientSecret = "xZn1hH2PJr";// 애플리케이션 클라이언트 시크릿값";
 		Random random = new Random();
 		int start = random.nextInt(150) + 20;
 		try {
@@ -49,6 +48,39 @@ public class NaverApiServiceImpl implements NaverApiService {
 		} catch (Exception e) {
 			return null;
 		}
-		}
+	}
 
+	@Override
+	public String foodList(String search) {
+		try {
+			String text = URLEncoder.encode(search+" 맛집 "
+					, "UTF-8"); // 검색어";
+			String apiURL = "https://openapi.naver.com/v1/search/local.json?query=" + text
+					+ "&display=5&start=1&sort=random"; // 뉴스의 json 결과
+			// String apiURL = "https://openapi.naver.com/v1/search/blog.xml?query="+ text;
+			// // 블로그의 xml 결과
+			URL url = new URL(apiURL);
+			HttpURLConnection con = (HttpURLConnection) url.openConnection();
+			con.setRequestMethod("GET");
+			con.setRequestProperty("X-Naver-Client-Id", clientId);
+			con.setRequestProperty("X-Naver-Client-Secret", clientSecret);
+			int responseCode = con.getResponseCode();
+			BufferedReader br;
+			if (responseCode == 200) { // 정상 호출
+				br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+			} else { // 에러 발생
+				br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+			}
+			String inputLine;
+			StringBuffer response = new StringBuffer();
+			while ((inputLine = br.readLine()) != null) {
+				response.append(inputLine + "\n");
+			}
+			br.close();
+			return response.toString();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
 }

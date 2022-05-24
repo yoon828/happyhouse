@@ -7,6 +7,7 @@ import BoardView from "./views/BoardView.vue";
 import HouseView from "./views/HouseView.vue";
 import MemberView from "./views/MemberView.vue";
 import NewsView from "./views/NewsView.vue";
+import FoodView from "./views/FoodView.vue";
 const onlyAuthUser = async (to, from, next) => {
   const checkUserInfo = store.getters[""];
 };
@@ -174,6 +175,19 @@ export default new Router({
           component: () => import("@/components/member/AdminUpdate.vue"),
         },
       ],
+    },
+    {
+      path: "/food",
+      name: "food",
+      components: {
+        default: FoodView,
+        header: MainNavbar,
+        footer: MainFooter,
+      },
+      props: {
+        header: { colorOnScroll: 400 },
+        footer: { backgroundColor: "black" },
+      },
     },
   ],
   scrollBehavior: (to) => {

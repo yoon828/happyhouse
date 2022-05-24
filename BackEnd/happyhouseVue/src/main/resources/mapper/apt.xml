@@ -17,6 +17,12 @@
 		order by gugunCode
 	</select>
 	
+	<select id="getAddressName" parameterType="string" resultType="SidoGugunCodeDto">
+		select sidoName, gugunName, dongName
+		from dongcode
+		where dongcode = #{dongcode}
+	</select>
+	
 	<select id="getDongInGugun" parameterType="string" resultType="sidoGugunCodeDto">
 		select distinct dongName, dongCode
 		from dongcode

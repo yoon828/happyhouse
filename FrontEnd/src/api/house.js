@@ -15,7 +15,6 @@ function sidoList(success) {
 
 function gugunList(params, success) {
   api
-
     .get(`/map/gugun?sido=${params.sidoCode}`)
     .then(success)
     .catch((error) => {

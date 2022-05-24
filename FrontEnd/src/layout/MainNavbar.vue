@@ -88,7 +88,7 @@ function resizeThrottler(actualResizeHandler) {
     }, 66);
   }
 }
-import { mapState, mapMutations } from "vuex";
+import { mapState, mapMutations, mapActions } from "vuex";
 import MobileMenu from "@/layout/MobileMenu";
 const memberStore = "memberStore";
 export default {
@@ -126,6 +126,7 @@ export default {
     ...mapState(memberStore, ["isLogin", "userInfo"]),
   },
   methods: {
+    ...mapActions(memberStore, ["clearLikeList"]),
     bodyClick() {
       let bodyClick = document.getElementById("bodyClick");
 
@@ -173,6 +174,7 @@ export default {
     ...mapMutations(memberStore, ["SET_IS_LOGIN", "SET_USER_INFO"]),
     OnclickLogout() {
       sessionStorage.removeItem("token");
+      this.clearLikeList();
       this.SET_IS_LOGIN(false);
       this.SET_USER_INFO(null);
       this.$router.push({ name: "home" });

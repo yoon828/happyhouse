@@ -24,7 +24,7 @@
             <div class="alert-icon">
               <md-icon>info_outline</md-icon>
             </div>
-            주택 목록이 없습니다.
+            아파트 목록이 없습니다.
           </div>
         </b-col>
       </b-row>

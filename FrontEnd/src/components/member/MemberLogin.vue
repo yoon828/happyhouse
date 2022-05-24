@@ -47,11 +47,13 @@ export default {
     ...mapState(memberStore, ["isLogin", "isLoginError"]),
   },
   methods: {
-    ...mapActions(memberStore, ["userConfirm", "getUserInfo"]),
+    ...mapActions(memberStore, ["userConfirm", "getUserInfo", "setLikeList"]),
     async confirm() {
       await this.userConfirm({ userid: this.userid, userpw: this.userpw });
       if (this.isLogin) {
         alert("로그인 성공");
+        //로그인시 관심지역 불러오기
+        this.setLikeList(this.userid);
         this.$router.push({ name: "home" });
       } else {
         alert("입력 정보를 다시 확인하세요.");

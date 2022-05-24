@@ -3,7 +3,7 @@
     <b-row>
       <b-col>
         <div class="mb-1">
-          <md-button @click="moveWrite()">글쓰기</md-button>
+          <b-button @click="moveWrite()">글쓰기</b-button>
         </div>
       </b-col>
       <b-col class="d-flex justify-content-end">
@@ -14,19 +14,32 @@
             ><option value="subject"> 제목 </option></b-form-select
           >
 
-          <b-form-input type="text" class="ml-1" v-model="keyword" />
-          <md-button
+          <b-form-input
+            type="text"
+            class="ml-1"
+            v-model="keyword"
+            @keyup.enter="searchBoard"
+          />
+          <b-button
             type="button"
             class="ml-1 btn md-warning md-sm"
-            @click="searchBoard()"
-            >search</md-button
+            @click="searchBoard"
+            variant="warning"
+            >search</b-button
           >
         </b-form>
       </b-col>
     </b-row>
     <b-row class="mt-3 mb-5">
       <b-col>
-        <b-table-simple hover responsive class="mb-6">
+        <b-table-simple class="mb-6 text-center" id="my-table">
+          <colgroup>
+            <col style="width: 10%" />
+            <col style="width: 60%" />
+            <col style="width: 10%" />
+            <col style="width: 10%" />
+            <col style="width: 10%" />
+          </colgroup>
           <b-thead head-variant="dark">
             <b-tr>
               <b-th>글번호</b-th>
@@ -50,8 +63,12 @@
     </b-row>
     <b-row class="mb-5">
       <b-col class="d-flex justify-content-center">
-        <pagination type="warning" v-model="pg" :page-count="totalPage">
-        </pagination>
+        <b-pagination
+          v-model="pg"
+          :total-rows="rows"
+          :per-page="pageSize"
+          aria-controls="my-table"
+        ></b-pagination>
       </b-col>
     </b-row>
   </b-container>
@@ -65,13 +82,11 @@ import {
   getArticleBySubject,
 } from "@/api/board.js";
 import BoardListItem from "@/components/board/BoardListItem";
-import { Pagination } from "@/components";
 
 export default {
   name: "BoardList",
   components: {
     BoardListItem,
-    Pagination,
   },
   data() {
     return {
@@ -80,12 +95,14 @@ export default {
       pg: 1,
       totalPage: 0,
       pageSize: 10,
+      rows: 0,
       searchQnA: "",
     };
   },
   created() {
     listArticle((res) => {
       this.articles = res.data;
+      this.rows = this.articles.length;
       this.totalPage = this.articles.length / this.pageSize + 1;
     });
   },
@@ -93,7 +110,12 @@ export default {
     moveWrite() {
       this.$router.push({ name: "boardRegister" });
     },
-    searchBoard() {
+    searchBoard(event) {
+      event.preventDefault();
+      if (!this.searchQnA) {
+        alert("카테고리를 선택해주세요");
+        return;
+      }
       this.articles = [];
       //검색기능
       if (this.searchQnA == "userid") {
@@ -102,6 +124,10 @@ export default {
           this.articles = res.data;
         });
       } else if (this.searchQnA == "articleno") {
+        if (isNaN(this.keyword)) {
+          alert("숫자를 입력해주세요.");
+          return;
+        }
         //글번호 검색
         getArticle(this.keyword, (res) => {
           this.articles.push(res.data);
@@ -122,13 +148,4 @@ export default {
 };
 </script>
 
-<style scope>
-.tdClass {
-  width: 50px;
-  text-align: center;
-}
-.tdSubject {
-  width: 300px;
-  text-align: left;
-}
-</style>
+<style scope></style>

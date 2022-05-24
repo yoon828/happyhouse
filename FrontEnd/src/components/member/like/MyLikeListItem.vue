@@ -3,7 +3,12 @@
     <b-td class="a-c">{{ idx }}</b-td>
     <b-td class="a-c">{{ sidoName }} {{ gugunName }} {{ dongName }} </b-td>
     <b-td class="a-c">
-      <b-button type="button" variant="warning" @click="goLikeDong" class="wh">
+      <b-button
+        type="button"
+        variant="warning"
+        @click="goLikeDong"
+        class="wh my-2"
+      >
         조회
       </b-button>
     </b-td>

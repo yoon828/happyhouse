@@ -142,7 +142,7 @@ export default {
   text-align: center;
 }
 .wd {
-  width: 110px;
+  width: 120px;
 }
 .tit {
   display: flex;

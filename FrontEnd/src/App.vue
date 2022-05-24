@@ -26,7 +26,7 @@ h5 {
   font-family: "Gothic A1", sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: normal;
 }
 
@@ -58,5 +58,10 @@ a:active {
   background-color: #ffffff !important;
   color: black !important;
   border: 1px solid #ffc107;
+}
+
+.page-item.active .page-link {
+  background-color: #ffc107 !important;
+  border-color: #ffc107 !important;
 }
 </style>

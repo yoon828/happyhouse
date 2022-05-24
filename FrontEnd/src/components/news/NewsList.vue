@@ -16,8 +16,8 @@
           </b-thead>
           <tbody>
             <news-list-item
-              v-for="item in items"
-              :key="item.title"
+              v-for="(item, idx) in items"
+              :key="idx"
               v-bind="item"
             />
           </tbody>

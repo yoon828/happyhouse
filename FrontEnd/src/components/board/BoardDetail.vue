@@ -4,8 +4,8 @@
       <b-col>
         <b-card
           :header-html="
-            `<h3>${article.articleno}.
-          ${article.subject} [${article.hit}]</h3><div><h6>${article.userid}</div><div>${article.regtime}</h6></div>`
+            `<h4>${article.articleno}.
+          ${article.subject} [${article.hit}]</h4><div><h6>${article.userid}</div><div>${article.regtime}</h6></div>`
           "
           class="mb-2"
           border-variant="gray"

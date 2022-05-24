@@ -11,12 +11,12 @@
         <md-input v-model="user.username" :readonly="true"></md-input>
       </md-field>
       <md-field class="md-form-group" slot="inputs">
-        <md-icon>face</md-icon>
+        <md-icon><b-icon icon="person-circle"></b-icon></md-icon>
         <label>아이디</label>
         <md-input v-model="user.userid" :readonly="true"></md-input>
       </md-field>
       <md-field class="md-form-group" slot="inputs">
-        <md-icon>lock_outline</md-icon>
+        <md-icon><b-icon icon="lock"></b-icon></md-icon>
         <label>비밀번호</label>
         <md-input
           type="password"
@@ -26,7 +26,7 @@
         ></md-input>
       </md-field>
       <md-field class="md-form-group" slot="inputs">
-        <md-icon>email</md-icon>
+        <md-icon><b-icon icon="mailbox"></b-icon></md-icon>
         <label>이메일</label>
         <md-input
           type="email"
@@ -35,7 +35,7 @@
         ></md-input>
       </md-field>
       <md-field class="md-form-group" slot="inputs">
-        <md-icon>phone</md-icon>
+        <md-icon><b-icon icon="telephone-fill"></b-icon></md-icon>
         <label>전화 번호</label>
         <md-input v-model="user.usernumber" :readonly="true"></md-input>
       </md-field>

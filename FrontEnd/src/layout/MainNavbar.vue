@@ -67,7 +67,7 @@
               </md-list>
               <md-list v-if="userInfo">
                 <md-list-item @click="OnclickLogout">
-                  <md-icon>logout</md-icon>
+                  <b-icon icon="box-arrow-in-right"></b-icon>
                 </md-list-item>
               </md-list>
             </md-list>

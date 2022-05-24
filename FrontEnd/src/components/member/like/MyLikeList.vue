@@ -4,8 +4,8 @@
       <colgroup>
         <col style="width: 10%" />
         <col style="width: 60%" />
-        <col style="width: 15%" />
-        <col style="width: 15%" />
+        <col style="width: 10%" />
+        <col style="width: 10%" />
       </colgroup>
       <b-thead>
         <b-tr>

@@ -1,8 +1,11 @@
 <template>
-  <b-tr @click="moveLink">
+  <b-tr>
     <b-th class="text-left" v-html="title"> </b-th>
     <b-th class="text-left" v-html="description"> </b-th>
-    <b-th class="text-left">상세보기</b-th>
+    <b-th class="text-left"
+      ><b-button type="button" variant="warning" @click="moveLink">
+        <b-icon icon="search"></b-icon> </b-button
+    ></b-th>
   </b-tr>
 </template>
 
@@ -22,4 +25,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+b {
+  font-weight: normal;
+}
+</style>

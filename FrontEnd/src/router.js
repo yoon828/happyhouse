@@ -7,6 +7,8 @@ import BoardView from "./views/BoardView.vue";
 import HouseView from "./views/HouseView.vue";
 import MemberView from "./views/MemberView.vue";
 import NewsView from "./views/NewsView.vue";
+import LikeView from "./views/LikeView.vue";
+
 const onlyAuthUser = async (to, from, next) => {
   const checkUserInfo = store.getters[""];
 };
@@ -174,6 +176,15 @@ export default new Router({
           component: () => import("@/components/member/AdminUpdate.vue"),
         },
       ],
+    },
+    {
+      path: "/mylike",
+      name: "like",
+      components: { default: LikeView, header: MainNavbar, footer: MainFooter },
+      props: {
+        header: { colorOnScroll: 400 },
+        footer: { backgroundColor: "black" },
+      },
     },
   ],
   scrollBehavior: (to) => {

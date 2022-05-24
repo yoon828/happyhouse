@@ -46,7 +46,19 @@ export default {
   },
   created() {
     this.getSidoList();
+    let params = this.$route.params;
+    if (params.sidoCodeParam) {
+      this.sidoCode = params.sidoCodeParam.substr(0, 2); //시도 설정
+      //구군 불러오기
+      this.getGugunList();
+      this.gugunCode = params.gugunCodeParam.substr(0, 5); //구군 설정
+      //동 불러오기
+      this.getDongList();
+      this.dongCode = params.dongCodeParam; //동 설정
+      this.getHouseList();
+    }
   },
+
   computed: {
     ...mapState(memberStore, ["userInfo", "likeList"]),
   },
@@ -102,7 +114,6 @@ export default {
         return;
       }
       //관심지역으로 등록하기
-      console.log(this.dongCode);
       if (!this.dongCode) {
         alert("지역을 선택해주세요");
       } else {

@@ -32,6 +32,9 @@
               <md-list-item href="#/house">
                 <p>거래조회</p>
               </md-list-item>
+              <md-list-item href="#/mylike">
+                <p>관심지역</p>
+              </md-list-item>
               <md-list-item href="#/news">
                 <p>뉴스</p>
               </md-list-item>

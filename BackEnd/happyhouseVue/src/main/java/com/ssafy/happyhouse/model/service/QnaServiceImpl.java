@@ -59,6 +59,21 @@ public class QnaServiceImpl implements QnaService{
 		public int hitAdd(int articleno) {
 			return qnaMapper.hitAdd(articleno);
 		}
+
+		@Override
+		public List<QnaDto> selectQnaComment(int articleno) {
+			return qnaMapper.selectQnaComment(articleno);
+		}
+
+		@Override
+		public int insertComment(QnaDto qna) {
+			return qnaMapper.insertComment(qna);
+		}
+
+		@Override
+		public int deleteComment(int articleno, int commentno) {
+			return qnaMapper.deleteComment(articleno, commentno);
+		}
 		
 		
 }

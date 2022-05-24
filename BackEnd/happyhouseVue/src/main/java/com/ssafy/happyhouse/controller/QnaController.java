@@ -33,7 +33,33 @@ public class QnaController {
 
 	@Autowired
 	private QnaService qnaService;
-
+	//댓글 조회
+	@ApiOperation(value = "aritcleno를 받아 그 글의 댓글들을 반환한다.", response = List.class)
+	@GetMapping("/comment/{articleno}")
+	public ResponseEntity<?> commentList(@PathVariable int articleno) throws Exception{
+		logger.debug("commentList 호출");
+		return new ResponseEntity<List<QnaDto>>(qnaService.selectQnaComment(articleno), HttpStatus.OK);
+	}
+	//댓글 입력
+	@ApiOperation(value = "댓글을 받아서 입력한다. 성공하면 'success' 실패하면 'fail'을 반환한다.")
+	@PostMapping("/comment")
+	public ResponseEntity<String> insertComment(@RequestBody QnaDto qna) throws Exception {
+		logger.debug("insertComment 호출");
+		if(qnaService.insertComment(qna) == 1){
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	}
+ 	//댓글 삭제 
+	@ApiOperation(value = "댓글을 받아서 입력한다. 성공하면 'success' 실패하면 'fail'을 반환한다.")
+	@DeleteMapping("/comment/{articleno}/{commentno}")
+	public ResponseEntity<String> deleteComment(@PathVariable int articleno, @PathVariable int commentno) throws Exception {
+		logger.debug("deleteComment 호출");
+		if(qnaService.deleteComment(articleno, commentno) == 1){
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	}
     @ApiOperation(value = "모든 게시글의 정보를 반환한다.", response = List.class)
 	@GetMapping
 	public ResponseEntity<List<QnaDto>> retrieveQna() throws Exception {

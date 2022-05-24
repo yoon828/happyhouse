@@ -17,7 +17,9 @@ public class QnaDto {
 	private int hit;
 	@ApiModelProperty(value = "작성일")
 	private String regtime;
-
+	
+	public QnaDto() {};
+	
 	public int getArticleno() {
 		return articleno;
 	}

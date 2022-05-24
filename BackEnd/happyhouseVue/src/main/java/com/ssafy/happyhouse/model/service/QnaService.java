@@ -16,4 +16,7 @@ public interface QnaService {
 	List<QnaDto> searchById(String searchid);
 	List<QnaDto> searchByTitle(String searchtitle);
 	public int hitAdd(int articleno);
+	public List<QnaDto> selectQnaComment(int articleno);
+	public int insertComment(QnaDto qna);
+	public int deleteComment(int articleno, int commentno);
 }

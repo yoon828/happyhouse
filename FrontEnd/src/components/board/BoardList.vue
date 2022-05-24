@@ -84,6 +84,9 @@ export default {
       searchQnA: "",
     };
   },
+  computed: {
+    ...mapState(memberStore, ["userInfo"]),
+  },
   created() {
     listArticle((res) => {
       this.articles = res.data;
@@ -91,9 +94,8 @@ export default {
     });
   },
   methods: {
-    ...mapState(memberStore, ["userInfo"]),
     moveWrite() {
-      if (!this.userInfo.userid) {
+      if (!this.userInfo?.userid) {
         alert("로그인이 필요한 서비스입니다.");
         this.$router.push({ name: "login" });
       } else {

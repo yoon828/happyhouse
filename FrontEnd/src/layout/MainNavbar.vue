@@ -36,7 +36,7 @@
                 <p>뉴스</p>
               </md-list-item>
               <md-list-item href="#/board">
-                <p>게시판</p>
+                <p>Q&A 게시판</p>
               </md-list-item>
               <md-list v-if="!userInfo">
                 <md-list-item href="#/member/regist">

@@ -32,6 +32,38 @@
         >
       </b-col>
     </b-row>
+    <div>
+      <b-form-textarea
+        id="textarea"
+        v-model="text"
+        placeholder="댓글 작성..."
+        rows="3"
+        max-rows="6"
+      ></b-form-textarea>
+
+      <pre class="mt-3 mb-0">{{ text }}</pre>
+    </div>
+    <b-row class="mb-5">
+      <b-col class="text-right">
+        <md-button type="button" class="m-1 md-success">댓글 작성</md-button>
+      </b-col>
+    </b-row>
+    <b-row class="mt-2">
+      <b-col sm="2">
+        <label for="textarea-no-auto-shrink"
+          >작성자 : <br />
+          작성일:</label
+        >
+      </b-col>
+      <b-col sm="10">
+        <b-form-textarea
+          id="textarea-no-auto-shrink"
+          rows="3"
+          max-rows="8"
+          no-auto-shrink
+        ></b-form-textarea>
+      </b-col>
+    </b-row>
   </b-container>
 </template>
 
@@ -56,10 +88,10 @@ export default {
     },
   },
   created() {
+    hitAdd(this.$route.params.articleno, (res) => {});
     getArticle(this.$route.params.articleno, (res) => {
       this.article = res.data;
     });
-    hitAdd(this.$route.params.articleno, (res) => {});
   },
   methods: {
     listArticle() {

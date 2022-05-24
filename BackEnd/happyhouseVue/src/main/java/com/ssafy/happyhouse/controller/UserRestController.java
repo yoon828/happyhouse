@@ -170,22 +170,40 @@ public class UserRestController {
 	
 	//관심지역 추가
 	@ApiOperation(value = "관심지역을 추가한다.")
-	@PostMapping("/addLikedong")
-	public ResponseEntity<String> addLikedong(@RequestBody Map<String, String> map) throws Exception{
+	@PostMapping("/add-like")
+	public ResponseEntity<String> addLikedong(@RequestParam String userid, @RequestParam String dongCode) throws Exception{
+		Map<String, String >map = new HashMap<String, String>();
+		map.put("userid",userid);
+		map.put("dongCode",dongCode);
 		logger.debug("map : {}",map);
 		try {
 			userService.addLikeDong(map);
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK); 
 		}catch(Exception e) {
 			return new ResponseEntity<String>(FAIL, HttpStatus.OK); 
 		}
-		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK); 
 	}
+
+	//관심지역 제거
+	@ApiOperation(value = "관심지역을 제거한다.")
+	@DeleteMapping("/delete-like")
+	public ResponseEntity<String> deleteLikedong(@RequestParam String userid, @RequestParam String dongCode) throws Exception{
+		Map<String, String >map = new HashMap<String, String>();
+		map.put("userid",userid);
+		map.put("dongCode",dongCode);
+		logger.debug("map : {}",map);
+		if(userService.deleteLikeDong(map)) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK); 
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.OK); 
+	}
+	
+	
 	//내 관심지역 조회
 	@ApiOperation(value = "회원의 아이디를 받아서 관심지역 리스트를 반환한다.")
-	@GetMapping(value = "/myInfo")
-	public ResponseEntity<List<SidoGugunCodeDto>> myInfo(@RequestBody String userid) throws Exception{
+	@GetMapping(value = "/mylike")
+	public ResponseEntity<List<SidoGugunCodeDto>> mylike(@RequestParam String userid) throws Exception{
 		logger.debug("userid : {}", userid);
 		return new ResponseEntity<List<SidoGugunCodeDto>>(userService.listLikeDong(userid), HttpStatus.OK); 
 	}
-	
 }

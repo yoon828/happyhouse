@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -25,6 +26,9 @@ public class BearerAuthInterceptor implements HandlerInterceptor {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+		if (HttpMethod.OPTIONS.matches(request.getMethod())) {
+	        return true;
+	    }
 		logger.debug(">>> interceptor.preHandle 호출");
 		String token = authExtractor.extract(request, "Bearer"); //토큰 추출
 		logger.debug("token : {}", token);

@@ -38,6 +38,9 @@
               <md-list-item href="#/news">
                 <p>뉴스</p>
               </md-list-item>
+              <md-list-item href="#/notice">
+                <p>공지 사항</p>
+              </md-list-item>
               <md-list-item href="#/board">
                 <p>Q&A 게시판</p>
               </md-list-item>

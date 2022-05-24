@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.happyhouse.model.mapper.NoticeMapper">
+
+	<!-- 게시글 전체 조회 -->
+	<select id="selectNotice" resultType="NoticeDto">
+		select articleno, userid,
+		subject, content, hit, regtime
+		from notice
+		order by articleno desc
+	</select>
+
+
+	<!-- 게시글 상세 조회 + 글 번호 검색 -->
+	<select id="selectNoticeByNo" resultType="NoticeDto">
+		select articleno, subject,
+		userid, content, hit, regtime
+		from notice
+		where articleno = #{articleno}
+	</select>
+	
+	<!-- 댓글 조회 -->
+	<select id="selectNoticeComment" parameterType="int"
+		resultType="NoticeDto">
+		select commentno, articleno, userid, content, regtime
+		from noticecomment
+		where articleno = #{articleno}
+		order
+		by regtime desc
+	</select>
+
+
+	<!-- 작성자로 검색 -->
+	<select id="searchById" resultType="map">
+		select articleno,
+		subject, userid, content, hit, regtime
+		from notice
+		where userid = #{searchId}
+	</select>
+
+	<!-- 제목으로 검색 -->
+	<select id="searchByTitle" resultType="map">
+		select articleno,
+		subject, userid, content, hit, regtime
+		from notice
+		where subject like concat('%', #{searchTitle}, '%')
+	</select>
+	<!-- 게시글 등록 -->
+	<insert id="insertNotice" parameterType="NoticeDto">
+		insert into notice(
+		subject, userid, content
+		) values (
+		#{subject}, #{userid}, #{content}
+		)
+	</insert>
+	<!-- 댓글 작성 -->
+	<insert id="insertComment" parameterType="NoticeDto">
+		insert into
+		noticecomment(articleno, userid, content
+		) values(#{articleno}, #{userid},
+		#{content})
+	</insert>
+	
+	<!--  댓글 삭제 -->
+	<delete id="deleteComment" parameterType="map">
+		delete 
+		from noticecomment
+		where commentno = #{commentno}
+	</delete>
+	<!-- 게시글 수정 -->
+	<update id="updateNotice" parameterType="NoticeDto">
+		update notice
+		set subject = #{subject},
+		userid = #{userid},
+		content = #{content}
+		where articleno = #{articleno}
+	</update>
+	<!-- 조회수 증가 -->
+	<update id="hitAdd" parameterType="int">
+		update notice
+		set hit = hit + 1
+		where articleno = #{articleno}
+	</update>
+	<!-- 게시글 삭제 -->
+	<delete id="deleteNotice" parameterType="int">
+		delete
+		from notice
+		where articleno = #{articleno}
+	</delete>
+
+
+
+
+</mapper>

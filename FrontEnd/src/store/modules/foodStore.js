@@ -17,7 +17,7 @@ const foodStore = {
     },
     setFoods: ({ commit }, foods) => {
       commit("SET_FOOD_LIST", foods);
-    } 
+    },
   },
 };
 

@@ -9,7 +9,7 @@ import MemberView from "./views/MemberView.vue";
 import NewsView from "./views/NewsView.vue";
 import FoodView from "./views/FoodView.vue";
 import LikeView from "./views/LikeView.vue";
-
+import NoticeView from "./views/NoticeView.vue";
 
 const onlyAuthUser = async (to, from, next) => {
   const checkUserInfo = store.getters[""];
@@ -200,6 +200,43 @@ export default new Router({
         header: { colorOnScroll: 100 },
         footer: { backgroundColor: "black" },
       },
+    },
+
+    {
+      path: "/notice",
+      name: "notice",
+      components: {
+        default: NoticeView,
+        header: MainNavbar,
+        footer: MainFooter,
+      },
+      props: {
+        header: { colorOnScroll: 100 },
+        footer: { backgroundColor: "black" },
+      },
+      redirect: "/notice/list",
+      children: [
+        {
+          path: "list",
+          name: "noticeList",
+          component: () => import("@/components/notice/NoticeList.vue"),
+        },
+        {
+          path: "regist",
+          name: "noticeRegister",
+          component: () => import("@/components/notice/NoticeRegister.vue"),
+        },
+        {
+          path: "detail/:articleno",
+          name: "noticeDetail",
+          component: () => import("@/components/notice/NoticeDetail.vue"),
+        },
+        {
+          path: "modify/:articleno",
+          name: "noticeModify",
+          component: () => import("@/components/notice/NoticeModify.vue"),
+        },
+      ],
     },
   ],
   scrollBehavior: (to) => {

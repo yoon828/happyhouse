@@ -35,48 +35,44 @@
     <div>
       <b-form-textarea
         id="textarea"
-        v-model="text"
-        placeholder="댓글 작성..."
+        v-model="content"
+        placeholder="답변 작성(관리자만 답변)..."
         rows="3"
         max-rows="6"
       ></b-form-textarea>
-
-      <pre class="mt-3 mb-0">{{ text }}</pre>
     </div>
     <b-row class="mb-5">
       <b-col class="text-right">
-        <md-button type="button" class="m-1 md-success">댓글 작성</md-button>
-      </b-col>
-    </b-row>
-    <b-row class="mt-2">
-      <b-col sm="2">
-        <label for="textarea-no-auto-shrink"
-          >작성자 : <br />
-          작성일:</label
+        <md-button type="button" class="m-1 md-success" @click="commentCheck"
+          >답변 작성</md-button
         >
       </b-col>
-      <b-col sm="10">
-        <b-form-textarea
-          id="textarea-no-auto-shrink"
-          rows="3"
-          max-rows="8"
-          no-auto-shrink
-        ></b-form-textarea>
-      </b-col>
     </b-row>
+    <board-comment
+      v-for="comment in comments"
+      :key="comment.commentno"
+      v-bind="comment"
+    />
   </b-container>
 </template>
 
 <script>
 // import moment from "moment";
-import { getArticle, hitAdd } from "@/api/board.js";
+import { getArticle, hitAdd, writeComment, listComment } from "@/api/board.js";
 import { mapState } from "vuex";
+import BoardComment from "@/components/board/BoardComment";
+
 const memberStore = "memberStore";
 export default {
   name: "BoardDetail",
+  components: {
+    BoardComment,
+  },
   data() {
     return {
       article: {},
+      comments: [],
+      content: null,
     };
   },
   computed: {
@@ -92,8 +88,38 @@ export default {
     getArticle(this.$route.params.articleno, (res) => {
       this.article = res.data;
     });
+    listComment(this.$route.params.articleno, (res) => {
+      this.comments = res.data;
+    });
   },
   methods: {
+    commentCheck() {
+      if (this.content != null && this.content != "") {
+        this.commentRegist();
+      } else {
+        alert("답변을 작성해주세요.");
+      }
+    },
+    commentRegist() {
+      let comment = {
+        userid: this.userInfo?.userid,
+        articleno: this.article.articleno,
+        content: this.content,
+      };
+      let userType = this.userInfo?.usertype;
+      if (userType === "A") {
+        writeComment(comment, (res) => {
+          let msg = "답변 등록시 문제가 발생했습니다.";
+          if (res.data === "success") {
+            msg = "답변 등록이 완료되었습니다.";
+          }
+          alert(msg);
+          this.$router.go();
+        });
+      } else {
+        alert("관리자만 등록할 수 있습니다.");
+      }
+    },
     listArticle() {
       this.$router.push({ name: "boardList" });
     },

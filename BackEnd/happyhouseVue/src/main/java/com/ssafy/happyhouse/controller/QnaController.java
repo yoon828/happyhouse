@@ -52,10 +52,10 @@ public class QnaController {
 	}
  	//댓글 삭제 
 	@ApiOperation(value = "댓글을 받아서 입력한다. 성공하면 'success' 실패하면 'fail'을 반환한다.")
-	@DeleteMapping("/comment/{articleno}/{commentno}")
-	public ResponseEntity<String> deleteComment(@PathVariable int articleno, @PathVariable int commentno) throws Exception {
+	@DeleteMapping("/comment/{commentno}")
+	public ResponseEntity<String> deleteComment(@PathVariable int commentno) throws Exception {
 		logger.debug("deleteComment 호출");
-		if(qnaService.deleteComment(articleno, commentno) == 1){
+		if(qnaService.deleteComment(commentno) == 1){
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);

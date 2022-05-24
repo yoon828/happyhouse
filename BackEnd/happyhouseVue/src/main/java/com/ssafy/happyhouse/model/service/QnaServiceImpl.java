@@ -71,8 +71,8 @@ public class QnaServiceImpl implements QnaService{
 		}
 
 		@Override
-		public int deleteComment(int articleno, int commentno) {
-			return qnaMapper.deleteComment(articleno, commentno);
+		public int deleteComment(int commentno) {
+			return qnaMapper.deleteComment(commentno);
 		}
 		
 		

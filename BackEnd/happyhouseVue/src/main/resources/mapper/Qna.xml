@@ -20,14 +20,15 @@
 		from qna
 		where articleno = #{articleno}
 	</select>
+	
 	<!-- 댓글 조회 -->
 	<select id="selectQnaComment" parameterType="int"
 		resultType="qnaDto">
-		select commentno, articleno, userid, content, regitime
+		select commentno, articleno, userid, content, regtime
 		from qnacomment
 		where articleno = #{articleno}
 		order
-		by regitime desc
+		by regtime desc
 	</select>
 
 
@@ -66,7 +67,7 @@
 	<delete id="deleteComment" parameterType="map">
 		delete 
 		from qnacomment
-		where articleno = #{articleno} and commentno = #{commentno}
+		where commentno = #{commentno}
 	</delete>
 	<!-- 게시글 수정 -->
 	<update id="updateQna" parameterType="qnaDto">

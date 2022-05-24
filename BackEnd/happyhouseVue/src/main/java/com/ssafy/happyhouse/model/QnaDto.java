@@ -17,6 +17,8 @@ public class QnaDto {
 	private int hit;
 	@ApiModelProperty(value = "작성일")
 	private String regtime;
+	@ApiModelProperty(value = "댓글 번호")
+	private int commentno;
 	
 	public QnaDto() {};
 	
@@ -26,6 +28,28 @@ public class QnaDto {
 
 	public void setArticleno(int articleno) {
 		this.articleno = articleno;
+	}
+	
+	
+
+	public int getCommentno() {
+		return commentno;
+	}
+
+	public QnaDto(int articleno, String userid, String subject, String content, int hit, String regtime,
+			int commentno) {
+		super();
+		this.articleno = articleno;
+		this.userid = userid;
+		this.subject = subject;
+		this.content = content;
+		this.hit = hit;
+		this.regtime = regtime;
+		this.commentno = commentno;
+	}
+
+	public void setCommentno(int commentno) {
+		this.commentno = commentno;
 	}
 
 	public String getUserid() {
@@ -68,14 +92,5 @@ public class QnaDto {
 		this.regtime = regtime;
 	}
 
-	public QnaDto(int articleno, String userid, String subject, String content, int hit, String regtime) {
-		super();
-		this.articleno = articleno;
-		this.userid = userid;
-		this.subject = subject;
-		this.content = content;
-		this.hit = hit;
-		this.regtime = regtime;
-	}
 
 }

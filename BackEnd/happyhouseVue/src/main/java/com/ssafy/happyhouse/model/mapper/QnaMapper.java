@@ -21,5 +21,5 @@ public interface QnaMapper {
 	public int hitAdd(int articleno);
 	public List<QnaDto> selectQnaComment(int articleno);
 	public int insertComment(QnaDto qna);
-	public int deleteComment(int articleno, int commentno);
+	public int deleteComment(int commentno);
 }

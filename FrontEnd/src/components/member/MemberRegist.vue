@@ -6,27 +6,27 @@
         happy house에 오신 걸 환영 합니다.
       </p>
       <md-field class="md-form-group" slot="inputs">
-        <md-icon>man</md-icon>
+        <md-icon><b-icon icon="pencil"></b-icon></md-icon>
         <label>이름</label>
         <md-input v-model="username"></md-input>
       </md-field>
       <md-field class="md-form-group" slot="inputs">
-        <md-icon>face</md-icon>
+        <md-icon><b-icon icon="person-circle"></b-icon></md-icon>
         <label>아이디</label>
         <md-input v-model="userid" @keydown="falseCkid()"></md-input>
       </md-field>
       <md-field class="md-form-group" slot="inputs">
-        <md-icon>lock_outline</md-icon>
+        <md-icon><b-icon icon="lock"></b-icon></md-icon>
         <label>비밀번호</label>
         <md-input type="password" v-model="userpw" ref="userpw"></md-input>
       </md-field>
       <md-field class="md-form-group" slot="inputs">
-        <md-icon>email</md-icon>
+        <md-icon><b-icon icon="mailbox"></b-icon></md-icon>
         <label>이메일</label>
         <md-input type="email" v-model="useraddress"></md-input>
       </md-field>
       <md-field class="md-form-group" slot="inputs">
-        <md-icon>phone</md-icon>
+        <md-icon><b-icon icon="telephone-fill"></b-icon></md-icon>
         <label>전화 번호</label>
         <md-input v-model="usernumber"></md-input>
       </md-field>
@@ -90,7 +90,8 @@ export default {
         },
         (error) => {
           console.log(error);
-        },
+          // eslint-disable-next-line prettier/prettier
+        }
       );
     },
     initData() {
@@ -157,7 +158,8 @@ export default {
           let msg = "서버에 문제가 발생했습니다.";
           console.log(error);
           alert(msg);
-        },
+          // eslint-disable-next-line prettier/prettier
+        }
       );
     },
   },

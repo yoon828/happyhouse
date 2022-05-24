@@ -297,8 +297,6 @@ export default {
     },
 
     removeMarkerSide(idx) {
-      console.log("지워라", idx);
-      console.log(this.sideMarkers[idx]);
       for (let i = 0; i < this.sideMarkers[idx].length; i++) {
         this.sideMarkers[idx][i].setMap(null);
       }

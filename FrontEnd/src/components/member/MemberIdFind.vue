@@ -6,17 +6,17 @@
         아이디를 찾기 위해 정보를 입력해주세요.
       </p>
       <md-field class="md-form-group" slot="inputs">
-        <md-icon>face</md-icon>
+        <md-icon><b-icon icon="person-circle"></b-icon></md-icon>
         <label>이름</label>
         <md-input v-model="username"></md-input>
       </md-field>
       <md-field class="md-form-group" slot="inputs">
-        <md-icon>email</md-icon>
+        <md-icon><b-icon icon="mailbox"></b-icon></md-icon>
         <label>이메일</label>
         <md-input v-model="useraddress"></md-input>
       </md-field>
       <md-field class="md-form-group" slot="inputs">
-        <md-icon>phone</md-icon>
+        <md-icon><b-icon icon="telephone-fill"></b-icon></md-icon>
         <label>전화 번호</label>
         <md-input v-model="usernumber"></md-input>
       </md-field>
@@ -109,7 +109,8 @@ export default {
         },
         (error) => {
           console.log(error);
-        },
+          // eslint-disable-next-line prettier/prettier
+        }
       );
     },
   },

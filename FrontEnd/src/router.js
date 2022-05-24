@@ -8,6 +8,9 @@ import HouseView from "./views/HouseView.vue";
 import MemberView from "./views/MemberView.vue";
 import NewsView from "./views/NewsView.vue";
 import FoodView from "./views/FoodView.vue";
+import LikeView from "./views/LikeView.vue";
+
+
 const onlyAuthUser = async (to, from, next) => {
   const checkUserInfo = store.getters[""];
 };
@@ -20,7 +23,7 @@ export default new Router({
       name: "home",
       components: { default: HomeView, header: MainNavbar, footer: MainFooter },
       props: {
-        header: { colorOnScroll: 400 },
+        header: { colorOnScroll: 100 },
         footer: { backgroundColor: "black" },
       },
     },
@@ -33,7 +36,7 @@ export default new Router({
         footer: MainFooter,
       },
       props: {
-        header: { colorOnScroll: 400 },
+        header: { colorOnScroll: 100 },
         footer: { backgroundColor: "black" },
       },
     },
@@ -46,7 +49,7 @@ export default new Router({
         footer: MainFooter,
       },
       props: {
-        header: { colorOnScroll: 400 },
+        header: { colorOnScroll: 100 },
         footer: { backgroundColor: "black" },
       },
       redirect: "/board/list",
@@ -82,7 +85,7 @@ export default new Router({
         footer: MainFooter,
       },
       props: {
-        header: { colorOnScroll: 400 },
+        header: { colorOnScroll: 100 },
         footer: { backgroundColor: "black" },
       },
       redirect: "/news/list",
@@ -104,7 +107,7 @@ export default new Router({
         footer: MainFooter,
       },
       props: {
-        header: { colorOnScroll: 400 },
+        header: { colorOnScroll: 100 },
         footer: { backgroundColor: "black" },
       },
       redirect: "/member/login",
@@ -185,7 +188,16 @@ export default new Router({
         footer: MainFooter,
       },
       props: {
-        header: { colorOnScroll: 400 },
+        header: { colorOnScroll: 100 },
+        footer: { backgroundColor: "black" },
+      },
+    },
+    {
+      path: "/mylike",
+      name: "like",
+      components: { default: LikeView, header: MainNavbar, footer: MainFooter },
+      props: {
+        header: { colorOnScroll: 100 },
         footer: { backgroundColor: "black" },
       },
     },

@@ -61,16 +61,38 @@ function dealsByCode(params, success) {
     });
 }
 
-// //공동 데이터 아파트 실거래 조회 api사용
-// function houseList(params, success) {
-//   house
-//     .get(``, { params: params })
-//     .then(success)
-//     .catch((error) => {
-//       alert("문제가 발생했습니다.");
-//       console.log(error);
-//     });
-// }
+//평점 최초 등록
+function sendReviewApi(params, success) {
+  api
+    .post(`/map/review`, params)
+    .then(success)
+    .catch((error) => {
+      alert("문제가 발생했습니다.");
+      console.log(error);
+    });
+}
+
+//아파트와 사용자의 평점 정보 가져오기
+async function getReviewApi(params, success) {
+  await api
+    .get(`/map/review?aptCode=${params.aptCode}&userid=${params.userid}`)
+    .then(success)
+    .catch((error) => {
+      alert("문제가 발생했습니다.");
+      console.log(error);
+    });
+}
+
+//아파트 정보 가져오기
+async function getHouseApi(params, success) {
+  await api
+    .get(`/map/aptinfo?aptCode=${params.aptCode}`)
+    .then(success)
+    .catch((error) => {
+      alert("문제가 발생했습니다.");
+      console.log(error);
+    });
+}
 
 export {
   sidoList,
@@ -79,5 +101,7 @@ export {
   houseListByDong,
   houseListByName,
   dealsByCode,
-  // houseList,
+  sendReviewApi,
+  getReviewApi,
+  getHouseApi,
 };

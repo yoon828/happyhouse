@@ -6,13 +6,13 @@
         happy house에 오신 걸 환영 합니다.
       </p>
       <md-field class="md-form-group" slot="inputs">
-        <md-icon>face</md-icon>
+        <md-icon><b-icon icon="person-circle"></b-icon></md-icon>
         <label>아이디</label>
         <md-input v-model="userid"></md-input>
       </md-field>
       <p></p>
       <md-field class="md-form-group" slot="inputs">
-        <md-icon>lock_outline</md-icon>
+        <md-icon><b-icon icon="lock"></b-icon></md-icon>
         <label>비밀번호</label>
         <md-input
           type="password"
@@ -47,11 +47,13 @@ export default {
     ...mapState(memberStore, ["isLogin", "isLoginError"]),
   },
   methods: {
-    ...mapActions(memberStore, ["userConfirm", "getUserInfo"]),
+    ...mapActions(memberStore, ["userConfirm", "getUserInfo", "setLikeList"]),
     async confirm() {
       await this.userConfirm({ userid: this.userid, userpw: this.userpw });
       if (this.isLogin) {
         alert("로그인 성공");
+        //로그인시 관심지역 불러오기
+        this.setLikeList(this.userid);
         this.$router.push({ name: "home" });
       } else {
         alert("입력 정보를 다시 확인하세요.");

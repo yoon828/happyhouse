@@ -32,6 +32,9 @@
               <md-list-item href="#/house">
                 <p>거래조회</p>
               </md-list-item>
+              <md-list-item href="#/mylike" v-if="userInfo">
+                <p>관심지역</p>
+              </md-list-item>
               <md-list-item href="#/news">
                 <p>뉴스</p>
               </md-list-item>
@@ -71,7 +74,7 @@
               </md-list>
               <md-list v-if="userInfo">
                 <md-list-item @click="OnclickLogout">
-                  <md-icon>logout</md-icon>
+                  <b-icon icon="box-arrow-in-right"></b-icon>
                 </md-list-item>
               </md-list>
             </md-list>
@@ -95,7 +98,7 @@ function resizeThrottler(actualResizeHandler) {
     }, 66);
   }
 }
-import { mapState, mapMutations } from "vuex";
+import { mapState, mapMutations, mapActions } from "vuex";
 import MobileMenu from "@/layout/MobileMenu";
 const memberStore = "memberStore";
 export default {
@@ -133,6 +136,7 @@ export default {
     ...mapState(memberStore, ["isLogin", "userInfo"]),
   },
   methods: {
+    ...mapActions(memberStore, ["clearLikeList"]),
     bodyClick() {
       let bodyClick = document.getElementById("bodyClick");
 
@@ -180,6 +184,7 @@ export default {
     ...mapMutations(memberStore, ["SET_IS_LOGIN", "SET_USER_INFO"]),
     OnclickLogout() {
       sessionStorage.removeItem("token");
+      this.clearLikeList();
       this.SET_IS_LOGIN(false);
       this.SET_USER_INFO(null);
       this.$router.push({ name: "home" });

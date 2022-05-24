@@ -1,4 +1,9 @@
-import { login, deleteMember, updateMember } from "@/api/member.js";
+import {
+  login,
+  deleteMember,
+  updateMember,
+  selectLikeDong,
+} from "@/api/member.js";
 
 const memberStore = {
   namespaced: true,
@@ -10,6 +15,7 @@ const memberStore = {
     findId: null,
     isUpdate: false,
     isDelete: false,
+    likeList: [],
   },
   getters: {
     checkUserInfo: function(state) {
@@ -38,6 +44,12 @@ const memberStore = {
     },
     SET_FINDPW: (state, findPw) => {
       state.findPw = findPw;
+    },
+    SET_LIKE_LIST: (state, likeList) => {
+      state.likeList = likeList;
+    },
+    CLEAR_LIKE_LIST: (state) => {
+      state.likeList = [];
     },
   },
   actions: {
@@ -77,6 +89,20 @@ const memberStore = {
     },
     async pwFindSet({ commit }, userpw) {
       commit("SET_FINDPW", userpw);
+    },
+    setLikeList: ({ commit }, userid) => {
+      selectLikeDong(
+        {
+          userid: userid,
+        },
+        ({ data }) => {
+          commit("SET_LIKE_LIST", data);
+          // eslint-disable-next-line prettier/prettier
+        }
+      );
+    },
+    clearLikeList({ commit }) {
+      commit("CLEAR_LIKE_LIST");
     },
   },
 };

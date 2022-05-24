@@ -1,27 +1,48 @@
 package com.ssafy.happyhouse.config;
 
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.ssafy.happyhouse.interceptor.BearerAuthInterceptor;
+import com.ssafy.happyhouse.interceptor.JwtInterceptor;
+
 
 @Configuration
 //@EnableAspectJAutoProxy
 @MapperScan(basePackages = { "com.ssafy.**.mapper" })
 public class WebMvcConfiguration implements WebMvcConfigurer {
 
-	private final BearerAuthInterceptor bearerAuthInterceptor;
+	private static final String[] EXCLUDE_PATHS = { "/user/**", "/error/**" };
 
-	public WebMvcConfiguration(BearerAuthInterceptor bearerAuthInterceptor) {
-		this.bearerAuthInterceptor = bearerAuthInterceptor;
+	@Autowired
+	private JwtInterceptor jwtInterceptor;
+
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(jwtInterceptor)
+		.addPathPatterns("/qna")// 기본 적용 경로
+				.excludePathPatterns(EXCLUDE_PATHS);// 적용 제외 경로
+//		registry.addInterceptor(jwtInterceptor).addPathPatterns("/user/**", "/article/**", "/memo/**") // 기본 적용 경로
+//        .excludePathPatterns(Arrays.asList("/user/confirm/**", "/article/list"));// 적용 제외 경로
 	}
-
-//	// 인터셉터 등록하기
-//	public void addInterceptors(InterceptorRegistry registry) {
-//		System.out.println(">>> 인터셉터 등록");
-//		registry.addInterceptor(bearerAuthInterceptor)
-//		.addPathPatterns("/userapi/update");
-//	}
+	
+	@Override
+	public void addCorsMappings(CorsRegistry registry) {
+		registry.addMapping("/**")
+			.allowedOrigins("*")
+			.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+			.maxAge(6000);
+	}
+	
+	@Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//        registry.addResourceHandler("/swagger-ui/index.html**").addResourceLocations("classpath:/META-INF/resources/swagger-ui/index.html");
+//        registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
+		
+	
+	}
 }

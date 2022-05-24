@@ -22,15 +22,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import com.ssafy.happyhouse.model.SidoGugunCodeDto;
 import com.ssafy.happyhouse.model.UserDto;
-import com.ssafy.happyhouse.model.service.JwtTokenProvider;
+import com.ssafy.happyhouse.model.service.JwtServiceImpl;
 import com.ssafy.happyhouse.model.service.UserService;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-
 
 @CrossOrigin(origins = { "*" }, maxAge = 6000)
 @RestController
@@ -39,28 +37,28 @@ public class UserRestController {
 	private static final Logger logger = LoggerFactory.getLogger(UserRestController.class);
 	private static final String SUCCESS = "success";
 	private static final String FAIL = "fail";
-	
+
 	@Autowired
 	private UserService userService;
-	
-	@Autowired
-	private JwtTokenProvider jwtTokenProvider;
-	
 
-	//회원 가입
+	@Autowired
+	private JwtServiceImpl jwtService;
+
+	// 회원 가입
 	@ApiOperation(value = "회원의 정보를 받아서 회원 등록한다. 성공하면 success 실패하면 fail 문자열을 반환한다. ", response = String.class)
-	@PostMapping(value ="/regist")
-	public ResponseEntity<String> registUser(@RequestBody UserDto user) throws Exception{
+	@PostMapping(value = "/regist")
+	public ResponseEntity<String> registUser(@RequestBody UserDto user) throws Exception {
 		logger.debug("회원가입 이름 : {}", user.getUsername());
 		logger.debug("회원가입 아이디 : {}", user.getUserid());
 		logger.debug("회원가입 비밀번호 : {}", user.getUserpw());
 		logger.debug("회원가입 이메일 : {}", user.getUseraddress());
 		logger.debug("회원 가입 전화번호: {}", user.getUsernumber());
-		if(userService.registUser(user) == 1) {
+		if (userService.registUser(user) == 1) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
+
 //	//내 정보 조회 
 //	@ApiOperation(value = "아이디 비밀번호 값을 받아 회원의 정보를 반환한다.")
 //	@GetMapping(value = "/myInfo")
@@ -70,10 +68,10 @@ public class UserRestController {
 //		
 //		return null;
 //	}
-	//내 정보 수정
+	// 내 정보 수정
 	@ApiOperation(value = "수정된 회원 정보를 받아서 이메일, 전화번호, 비밀번호를 수정한다. 성공하면 success 실패하면 fail 문자열을 반환한다.", response = String.class)
 	@PutMapping(value = "/update")
-	public ResponseEntity<String> updateUser(@RequestBody UserDto user, HttpServletRequest request ) throws Exception{
+	public ResponseEntity<String> updateUser(@RequestBody UserDto user, HttpServletRequest request) throws Exception {
 		logger.debug("userName : {}", user.getUsername());
 		logger.debug("userId : {}", user.getUserid());
 		logger.debug("userPw : {}", user.getUserpw());
@@ -81,68 +79,108 @@ public class UserRestController {
 		logger.debug("userNumber : {}", user.getUsernumber());
 
 		logger.debug("userid : {}", request.getAttribute("userid"));
-		if(userService.updateUser(user) == 1) {
+		if (userService.updateUser(user) == 1) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
-	//회원 탈퇴
+
+	// 회원 탈퇴
 	@ApiOperation(value = "아이디를 받아 회원을 삭제한다. 성공하면 success 실패하면 fail 문자열을 반환한다.", response = String.class)
 	@DeleteMapping(value = "/delete/{userid}")
 	public ResponseEntity<String> deleteUser(@PathVariable String userid) throws Exception {
 		logger.debug("userid : {}", userid);
-		if(userService.deleteUser(userid) == 1)  {
+		if (userService.deleteUser(userid) == 1) {
 			logger.debug("s : {}", userid);
-			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK); 
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
-	
-	//로그인
+
+	// 로그인
 	@ApiOperation(value = "아이디와 비밀번호를 입력시 로그인에 성공하면 유저 정보를 받는다. 실패시 fail값 ")
 	@PostMapping(value = "/login")
-	public ResponseEntity<?> login(@RequestBody UserDto userDto) throws Exception{
+	public ResponseEntity<?> login(@RequestBody UserDto userDto) throws Exception {
 		logger.debug("userid : {}", userDto.getUserid());
 		logger.debug("userpw : {}", userDto.getUserpw());
 		Map<String, String> map = new HashMap<String, String>();
+		HttpStatus status = null;
 		map.put("userid", userDto.getUserid());
 		map.put("userpw", userDto.getUserpw());
 		UserDto loginUser = userService.login(map);
 		Map<String, Object> resultMap = new HashMap<String, Object>();
-		if(loginUser != null) {
-			//토큰 생성 
-			String token  = jwtTokenProvider.createToken(userDto.getUserid());
-			logger.debug("token : {}", token);
-			resultMap.put("userInfo", loginUser);
-			resultMap.put("token", token);
-			resultMap.put("message", SUCCESS);
-		} 
+		try {
+			if (loginUser != null) {
+				// 토큰 생성
+				String token = jwtService.create("userid", loginUser.getUserid(), "access-token");// key, data, subject
+				logger.debug("token : {}", token);
+				resultMap.put("userInfo", loginUser);
+				resultMap.put("access-token", token);
+				resultMap.put("message", SUCCESS);
+				status = HttpStatus.ACCEPTED;
+			} else {
+				resultMap.put("message", FAIL);
+				status = HttpStatus.ACCEPTED;
+			}
+		} catch (Exception e) {
+			logger.error("로그인 실패 : {}", e);
+			resultMap.put("message", e.getMessage());
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
 		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
-		} 
-
+	}
 	
-	//아이디 찾기
+	@ApiOperation(value = "회원인증", notes = "회원 정보를 담은 Token을 반환한다.", response = Map.class)
+	@GetMapping("/info/{userid}")
+	public ResponseEntity<Map<String, Object>> getInfo(
+			@PathVariable("userid") @ApiParam(value = "인증할 회원의 아이디.", required = true) String userid,
+			HttpServletRequest request) {
+//		logger.debug("userid : {} ", userid);
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = HttpStatus.ACCEPTED;
+		if (jwtService.isUsable(request.getHeader("access-token"))) {
+			logger.info("사용 가능한 토큰!!!");
+			try {
+//				로그인 사용자 정보.
+				UserDto memberDto = userService.detailUser(userid);
+				resultMap.put("userInfo", memberDto);
+				resultMap.put("message", SUCCESS);
+				status = HttpStatus.ACCEPTED;
+			} catch (Exception e) {
+				logger.error("정보조회 실패 : {}", e);
+				resultMap.put("message", e.getMessage());
+				status = HttpStatus.INTERNAL_SERVER_ERROR;
+			}
+		} else {
+			logger.error("사용 불가능 토큰!!!");
+			resultMap.put("message", FAIL);
+			status = HttpStatus.ACCEPTED;
+		}
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
+	}
+
+	// 아이디 찾기
 	@ApiOperation(value = "이름, 이메일 주소, 전화번호를 받아 아이디를 반환합니다. 성공하면 아이디를 반환하고 실패하면 fail 문자열을 반환합니다.")
 	@PostMapping("/idFind")
-	public ResponseEntity<String> idFind(@RequestBody UserDto userDto) throws Exception{
+	public ResponseEntity<String> idFind(@RequestBody UserDto userDto) throws Exception {
 		logger.debug("username : {}", userDto.getUsername());
 		logger.debug("useraddress : {}", userDto.getUseraddress());
 		logger.debug("usernumber : {}", userDto.getUsernumber());
-		Map<String,String> map = new HashMap<String, String>();
+		Map<String, String> map = new HashMap<String, String>();
 		map.put("username", userDto.getUsername());
 		map.put("useraddress", userDto.getUseraddress());
 		map.put("usernumber", userDto.getUsernumber());
 		String findId = userService.idFind(map);
-		if(findId != ""  && findId != null) {
-			return new ResponseEntity<String>(findId, HttpStatus.OK);  
+		if (findId != "" && findId != null) {
+			return new ResponseEntity<String>(findId, HttpStatus.OK);
 		}
-		return new ResponseEntity<String>(FAIL, HttpStatus.OK);   
+		return new ResponseEntity<String>(FAIL, HttpStatus.OK);
 	}
-	
-	//비밀번호 찾기
+
+	// 비밀번호 찾기
 	@ApiOperation(value = "이름, 아이디 , 이메일 주소, 전화번호를 받아서 임시 비밀번호를 발급한다. 성공하면 임시 비밀 번호를 반환한다.실패하면 fail 문자열을 반환한다.")
 	@PostMapping("/pwFind")
-	public ResponseEntity<String> pwFind(@RequestBody UserDto userDto) throws Exception{
+	public ResponseEntity<String> pwFind(@RequestBody UserDto userDto) throws Exception {
 		logger.debug("username : {}", userDto.getUsername());
 		logger.debug("userid : {}", userDto.getUserid());
 		logger.debug("useraddress : {}", userDto.getUseraddress());
@@ -152,58 +190,60 @@ public class UserRestController {
 		map.put("userid", userDto.getUserid());
 		map.put("useraddress", userDto.getUseraddress());
 		map.put("usernumber", userDto.getUsernumber());
-		String ranPw =  userService.pwFind(map);
-		if(ranPw != null && ranPw !="") {
-			return new ResponseEntity<String>(ranPw, HttpStatus.OK); 
+		String ranPw = userService.pwFind(map);
+		if (ranPw != null && ranPw != "") {
+			return new ResponseEntity<String>(ranPw, HttpStatus.OK);
 		}
-		return new ResponseEntity<String>(FAIL, HttpStatus.OK); 
+		return new ResponseEntity<String>(FAIL, HttpStatus.OK);
 	}
-	//아이디 중복 체크
+
+	// 아이디 중복 체크
 	@ApiOperation(value = "아이디를 받아 아이디를 중복체크한다. ")
 	@PostMapping("/checkid/{userid}")
-	public ResponseEntity<?> checkId(@PathVariable String userid) throws Exception{
-		if(userService.idCheck(userid) == 1) {
+	public ResponseEntity<?> checkId(@PathVariable String userid) throws Exception {
+		if (userService.idCheck(userid) == 1) {
 			return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 		}
 		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 	}
-	
-	//관심지역 추가
+
+	// 관심지역 추가
 	@ApiOperation(value = "관심지역을 추가한다.")
 	@PostMapping("/add-like")
-	public ResponseEntity<String> addLikedong(@RequestParam String userid, @RequestParam String dongCode) throws Exception{
-		Map<String, String >map = new HashMap<String, String>();
-		map.put("userid",userid);
-		map.put("dongCode",dongCode);
-		logger.debug("map : {}",map);
+	public ResponseEntity<String> addLikedong(@RequestParam String userid, @RequestParam String dongCode)
+			throws Exception {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("userid", userid);
+		map.put("dongCode", dongCode);
+		logger.debug("map : {}", map);
 		try {
 			userService.addLikeDong(map);
-			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK); 
-		}catch(Exception e) {
-			return new ResponseEntity<String>(FAIL, HttpStatus.OK); 
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<String>(FAIL, HttpStatus.OK);
 		}
 	}
 
-	//관심지역 제거
+	// 관심지역 제거
 	@ApiOperation(value = "관심지역을 제거한다.")
 	@DeleteMapping("/delete-like")
-	public ResponseEntity<String> deleteLikedong(@RequestParam String userid, @RequestParam String dongCode) throws Exception{
-		Map<String, String >map = new HashMap<String, String>();
-		map.put("userid",userid);
-		map.put("dongCode",dongCode);
-		logger.debug("map : {}",map);
-		if(userService.deleteLikeDong(map)) {
-			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK); 
+	public ResponseEntity<String> deleteLikedong(@RequestParam String userid, @RequestParam String dongCode)
+			throws Exception {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("userid", userid);
+		map.put("dongCode", dongCode);
+		logger.debug("map : {}", map);
+		if (userService.deleteLikeDong(map)) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
-		return new ResponseEntity<String>(FAIL, HttpStatus.OK); 
+		return new ResponseEntity<String>(FAIL, HttpStatus.OK);
 	}
-	
-	
-	//내 관심지역 조회
+
+	// 내 관심지역 조회
 	@ApiOperation(value = "회원의 아이디를 받아서 관심지역 리스트를 반환한다.")
 	@GetMapping(value = "/mylike")
-	public ResponseEntity<List<SidoGugunCodeDto>> mylike(@RequestParam String userid) throws Exception{
+	public ResponseEntity<List<SidoGugunCodeDto>> mylike(@RequestParam String userid) throws Exception {
 		logger.debug("userid : {}", userid);
-		return new ResponseEntity<List<SidoGugunCodeDto>>(userService.listLikeDong(userid), HttpStatus.OK); 
+		return new ResponseEntity<List<SidoGugunCodeDto>>(userService.listLikeDong(userid), HttpStatus.OK);
 	}
 }

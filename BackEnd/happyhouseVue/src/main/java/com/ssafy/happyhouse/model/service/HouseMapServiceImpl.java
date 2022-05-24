@@ -1,12 +1,14 @@
 package com.ssafy.happyhouse.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.happyhouse.model.HouseDealDto;
 import com.ssafy.happyhouse.model.HouseInfoDto;
+import com.ssafy.happyhouse.model.ReviewDto;
 import com.ssafy.happyhouse.model.SidoGugunCodeDto;
 import com.ssafy.happyhouse.model.mapper.HouseMapMapper;
 
@@ -44,6 +46,21 @@ public class HouseMapServiceImpl implements HouseMapService {
 	@Override
 	public List<HouseDealDto> getDealsByCode(String aptCode) throws Exception {
 		return houseMapMapper.getDealsByCode(aptCode);
+	}
+
+	@Override
+	public boolean postReview(ReviewDto reivew) throws Exception {
+		return houseMapMapper.postReview(reivew)==1;
+	}
+
+	@Override
+	public ReviewDto getReview(Map<String, String> map) throws Exception {
+		return houseMapMapper.getReview(map);
+	}
+
+	@Override
+	public HouseInfoDto selectHouse(String aptCode) throws Exception {
+		return houseMapMapper.selectHouse(aptCode);
 	}
 
 //	@Override

@@ -46,7 +46,7 @@ export default {
   },
   computed: {},
   methods: {
-    ...mapActions(houseStore, ["setHouses"]),
+    ...mapActions(houseStore, ["setHouses", "setHousesFilter"]),
     getSidoList() {
       sidoList((res) => {
         res.data.forEach((sido) => {
@@ -81,6 +81,7 @@ export default {
         },
         (res) => {
           this.setHouses(res.data);
+          this.setHousesFilter(res.data);
           // eslint-disable-next-line prettier/prettier
         }
       );

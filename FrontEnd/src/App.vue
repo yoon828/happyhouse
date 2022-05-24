@@ -10,6 +10,10 @@
   </div>
 </template>
 
+<script>
+export default {};
+</script>
+
 <style>
 a,
 a:link,
@@ -30,5 +34,14 @@ a:active {
 }
 .bold {
   font-weight: bold;
+}
+.vue-slider-process {
+  background-color: #ffc107 !important;
+}
+.vue-slider-dot-tooltip-inner {
+  border-color: #ffc107 !important;
+  background-color: #ffffff !important;
+  color: black !important;
+  border: 1px solid #ffc107;
 }
 </style>

@@ -32,7 +32,7 @@
       </md-field>
 
       <md-button slot="footer" class="md-success" v-on:click="registCheck()">
-        회원 가입
+        회원 등록
       </md-button>
 
       <md-button slot="footer" class="md-warning" v-on:click="initData()">

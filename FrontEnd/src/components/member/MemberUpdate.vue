@@ -104,17 +104,25 @@ export default {
     deleteUser() {
       if (confirm("탈퇴 하시겠습니까?")) {
         if (this.isLogin) {
-          this.userDelete(this.userInfo.userid, ({ data }) => {
-            let msg = "회원 탈퇴 시 문제가 발생했습니다.";
-            if (data === "success") {
-              msg = "회원 탈퇴가 완료되었습니다.";
-              err = false;
-            }
-            alert(msg);
-            if (!err) {
-              this.$router.push({ name: "home" });
-            }
-          });
+          this.userDelete(
+            this.userInfo.userid,
+            ({ data }) => {
+              let msg = "회원 탈퇴 시 문제가 발생했습니다.";
+              let err = true;
+              console.log(data);
+              if (data === "success") {
+                msg = "회원 탈퇴가 완료되었습니다.";
+                err = false;
+              }
+              alert(msg);
+              if (!err) {
+                this.$router.push({ name: "home" });
+              }
+            },
+            (error) => {
+              console.log(error);
+            },
+          );
         }
       }
     },

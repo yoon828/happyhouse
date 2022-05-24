@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <b-container class="flex-direction-col">
     <b-tabs content-class="mt-3" align="center">
       <b-tab title="지역 검색" active>
         <search-dong></search-dong>
@@ -7,7 +7,7 @@
       <b-tab title="아파트 명 검색">
         <search-name></search-name>
       </b-tab>
-    </b-tabs></div
+    </b-tabs> </b-container
 ></template>
 
 <script>

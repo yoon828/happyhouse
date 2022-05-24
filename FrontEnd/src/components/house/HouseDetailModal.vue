@@ -1,7 +1,10 @@
 <template>
   <b-container class="flex-direction-col">
     <div class="tit">
-      <h3>{{ this.house.apartmentName }}</h3>
+      <div>
+        <h3>{{ this.house.apartmentName }}</h3>
+        <house-review mode="show"></house-review>
+      </div>
       <b-button type="button" variant="warning" @click="linkMap" class="wd"
         >자세히보기</b-button
       >
@@ -47,23 +50,28 @@
             {{ deal.dealDay }}일</b-td
           >
           <b-td>{{ deal.area | areaChange }}</b-td>
-          <b-td>{{ deal.dealAmount | price | toprice }}만원</b-td>
+          <b-td>{{ deal.dealAmount | toInt | price | toprice }}만원</b-td>
           <b-td>{{ deal.floor }}층</b-td>
         </b-tr>
       </b-tbody>
     </b-table-simple>
+    <house-review mode="send"></house-review>
   </b-container>
 </template>
 
 <script>
 import { mapState } from "vuex";
 import { dealsByCode } from "@/api/house.js";
+import HouseReview from "./reviews/HouseReview.vue";
 
 const houseStore = "houseStore";
 
 export default {
   computed: {
     ...mapState(houseStore, ["house"]),
+  },
+  components: {
+    HouseReview,
   },
   data() {
     return {
@@ -113,7 +121,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .title {
   font-weight: bold;
 }
@@ -128,7 +136,7 @@ export default {
   border-radius: 10px;
 }
 .b-table-sticky-header {
-  max-height: 450px !important;
+  max-height: 300px !important;
 }
 .center {
   text-align: center;
@@ -139,5 +147,6 @@ export default {
 .tit {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 </style>

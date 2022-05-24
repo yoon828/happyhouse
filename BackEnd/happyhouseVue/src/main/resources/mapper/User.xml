@@ -30,7 +30,7 @@
 		where userid = #{userid}
 	</select>
 	<select id="idCheck" parameterType="string" resultType="int">
-		select count(userid)
+		select count(*)
 		from user
 		where userid = #{userid}
 	</select>

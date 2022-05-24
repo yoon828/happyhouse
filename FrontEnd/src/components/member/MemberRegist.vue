@@ -13,7 +13,7 @@
       <md-field class="md-form-group" slot="inputs">
         <md-icon>face</md-icon>
         <label>아이디</label>
-        <md-input v-model="userid"></md-input>
+        <md-input v-model="userid" @keydown="falseCkid()"></md-input>
       </md-field>
       <md-field class="md-form-group" slot="inputs">
         <md-icon>lock_outline</md-icon>
@@ -31,6 +31,10 @@
         <md-input v-model="usernumber"></md-input>
       </md-field>
 
+      <md-button slot="footer" class="md-info" v-on:click="idvalueCheck()">
+        아이디 중복 체크
+      </md-button>
+
       <md-button slot="footer" class="md-success" v-on:click="registCheck()">
         회원 가입
       </md-button>
@@ -43,7 +47,7 @@
 </template>
 
 <script>
-import { registMember } from "@/api/member";
+import { registMember, idCheck } from "@/api/member";
 export default {
   data() {
     return {
@@ -52,6 +56,7 @@ export default {
       userpw: "",
       useraddress: "",
       usernumber: "",
+      checkId: false,
     };
   },
   props: {
@@ -68,6 +73,26 @@ export default {
     },
   },
   methods: {
+    falseCkid() {
+      this.checkId = false;
+    },
+    idvalueCheck() {
+      idCheck(
+        this.userid,
+        ({ data }) => {
+          console.log(data);
+          if (data === "success") {
+            this.checkId = true;
+            alert(this.userid + "는 사용 가능한 아이디 입니다.");
+          } else {
+            alert(this.userid + "는 사용 불가능한 아이디 입니다.");
+          }
+        },
+        (error) => {
+          console.log(error);
+        },
+      );
+    },
     initData() {
       this.username = "";
       this.userid = "";
@@ -94,6 +119,9 @@ export default {
       } else if (!this.usernumber) {
         msg = "전화번호를 입력해주세요.";
         err = true;
+      } else if (!this.checkId) {
+        msg = "아이디 중복 체크를 진행해주세요.";
+        err = true;
       }
       if (err) {
         alert(msg);
@@ -119,6 +147,7 @@ export default {
           }
           alert(msg);
           if (!err) {
+            this.checkId = false;
             this.$router.push({ name: "login" });
           } else {
             this.$router.push({ name: "regist" });

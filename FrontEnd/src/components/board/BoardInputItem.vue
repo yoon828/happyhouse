@@ -2,19 +2,12 @@
   <b-row class="mb-5">
     <b-col style="text-align: left">
       <b-form @submit="onSubmit" @reset="onReset">
-        <b-form-group
-          id="userid-group"
-          label="작성자:"
-          label-for="userid"
-          description="작성자를 입력하세요."
-        >
+        <b-form-group id="userid-group" label="작성자:" label-for="userid">
           <b-form-input
-            id="userid"
             :disabled="isUserid"
-            v-model="article.userid"
+            v-model="userInfo.userid"
             type="text"
-            required
-            placeholder="작성자 입력..."
+            :readonly="true"
           ></b-form-input>
         </b-form-group>
 
@@ -57,8 +50,9 @@
 </template>
 
 <script>
-import { writeArticle, modifyArticle } from "@/api/board.js";
-
+import { writeArticle, modifyArticle, getArticle } from "@/api/board.js";
+import { mapState } from "vuex";
+const memberStore = "memberStore";
 export default {
   name: "BoardInputItem",
   data() {
@@ -72,6 +66,9 @@ export default {
       },
       isUserid: false,
     };
+  },
+  computed: {
+    ...mapState(memberStore, ["userInfo"]),
   },
   props: {
     type: { type: String },
@@ -89,7 +86,7 @@ export default {
       event.preventDefault();
       let err = true;
       let msg = "";
-      !this.article.userid &&
+      !this.userInfo.userid &&
         ((msg = "작성자 입력해주세요"),
         (err = false),
         this.$refs.userid.focus());
@@ -116,7 +113,7 @@ export default {
     },
     registArticle() {
       let article = {
-        userid: this.article.userid,
+        userid: this.userInfo.userid,
         subject: this.article.subject,
         content: this.article.content,
       };
@@ -132,7 +129,7 @@ export default {
     modifyArticleM() {
       let article = {
         articleno: this.article.articleno,
-        userid: this.article.userid,
+        userid: this.userInfo.userid,
         subject: this.article.subject,
         content: this.article.content,
       };

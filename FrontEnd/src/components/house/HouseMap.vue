@@ -1,6 +1,37 @@
 /* eslint-disable prettier/prettier */
 <template>
-  <b-container>
+  <b-container class="flex-direction-col">
+    <b-list-group horizontal id="category" class="mb-2">
+      <b-list-group-item
+        class="category"
+        :class="{ selected: bankSelected }"
+        @click="selectBank(0)"
+      >
+        은행
+        <!-- <b-button type="button">은행</b-button -->
+      </b-list-group-item>
+      <b-list-group-item
+        class="category"
+        :class="{ selected: martSelected }"
+        @click="selectMarket"
+      >
+        편의점
+      </b-list-group-item>
+      <b-list-group-item
+        class="category"
+        :class="{ selected: hpSelected }"
+        @click="selectHospital"
+      >
+        병원
+      </b-list-group-item>
+      <b-list-group-item
+        class="category"
+        :class="{ selected: subwaySelected }"
+        @click="selectSubway"
+      >
+        지하철
+      </b-list-group-item>
+    </b-list-group>
     <div id="map" class="map" style="height:600px"></div>
   </b-container>
 </template>
@@ -15,27 +46,49 @@ export default {
   data() {
     return {
       initPostion: [],
-      markers: [],
+      markers: [], //마커를 담는 배열
       map: null,
       places: null,
       infoWindow: null,
       customOverlay: null,
+      ps: null, //장소 검색 객체
+      sideMarkers: [[], [], [], []], //순서대로 은행, 병원, 마트 마커를 담을 배열
+      bankSelected: false,
+      martSelected: false,
+      hpSelected: false,
+      subwaySelected: false,
+      imgSrcs: [
+        "https://github.com/yoon828/happyhouse/blob/main/FrontEnd/src/assets/img/bank.png?raw=true",
+        "https://github.com/yoon828/happyhouse/blob/main/FrontEnd/src/assets/img/market.png?raw=true",
+        "https://github.com/yoon828/happyhouse/blob/main/FrontEnd/src/assets/img/hospital.png?raw=true",
+        "https://github.com/yoon828/happyhouse/blob/main/FrontEnd/src/assets/img/subway.png?raw=true",
+      ],
+      codes: ["BK9", "CS2", "HP8", "SW8"],
     };
   },
   computed: {
-    ...mapState(houseStore, ["houses", "house"]),
+    ...mapState(houseStore, ["houses", "house", "housesfilter"]),
     // listUpdate: function() {
-    //   return displayMarkers(this.houses);
+    //   return displayMarkers(this.housesfilter);
     // },
   },
   watch: {
-    houses: function() {
-      if (this.houses.length != 0 && this.houses) {
+    housesfilter: function() {
+      if (this.housesfilter.length != 0 && this.housesfilter) {
         this.displayMarkers();
       }
     },
     house: function() {
       this.setMapCenter();
+    },
+    houses: function() {
+      this.bankSelected = false;
+      this.martSelected = false;
+      this.hpSelected = false;
+      this.subwaySelected = false;
+      for (let i = 0; i < 4; i++) {
+        this.removeMarkerSide(i);
+      }
     },
   },
   mounted() {
@@ -62,13 +115,26 @@ export default {
       };
       this.map = new kakao.maps.Map(mapContainer, mapOption);
       this.infoWindow = new kakao.maps.InfoWindow({ zIndex: 1 });
+      this.ps = new kakao.maps.services.Places(this.map);
+      //지도를 이동할때마다 편의시설 조회해서 지도에 표기
+      kakao.maps.event.addListener(this.map, "idle", this.searchPlaces);
     },
+    setDetail(house) {
+      this.detailHouse(house);
+      this.$emit("show-modal");
+    },
+    setMapCenter() {
+      let moveLatLon = new kakao.maps.LatLng(this.house.lat, this.house.lng);
+      this.map.setCenter(moveLatLon);
+      this.map.setLevel(2);
+    },
+    //집 관련 마커 추가
     displayMarkers() {
       let map = this.map;
       let bounds = new kakao.maps.LatLngBounds();
       this.removeMarker();
 
-      this.houses.map((house) => {
+      this.housesfilter.map((house) => {
         let placePosition = new kakao.maps.LatLng(
           house.lat,
           // eslint-disable-next-line prettier/prettier
@@ -94,14 +160,6 @@ export default {
         kakao.maps.event.addListener(mk, "click", () => {
           this.setDetail(house);
         });
-        // kakao.maps.event.addListener(mk, "click", function() {
-        //   //마커 클릭시 해당 좌표를 중심으로 이동 , 레벨 변경
-        //   map.setCenter(placePosition);
-        //   if (map.getLevel() > 4) {
-        //     map.setLevel(3, { anchor: placePosition });
-        //   }
-        //   overlay.setMap(map);
-        // });
         kakao.maps.event.addListener(mk, "mouseover", function() {
           overlay.setMap(map);
         });
@@ -111,10 +169,6 @@ export default {
       });
       //검색된 장소 위치를 기준으로 지도 범위 재설정
       this.map.setBounds(bounds);
-    },
-    setDetail(house) {
-      this.detailHouse(house);
-      this.$emit("show-modal");
     },
     removeMarker() {
       for (let i = 0; i < this.markers.length; i++) {
@@ -146,10 +200,107 @@ export default {
 
       return marker;
     },
-    setMapCenter() {
-      let moveLatLon = new kakao.maps.LatLng(this.house.lat, this.house.lng);
-      this.map.setCenter(moveLatLon);
-      this.map.setLevel(2);
+
+    //편의시설 관련 메소드
+    //은행 선택
+    selectBank() {
+      if (this.bankSelected) {
+        this.bankSelected = false;
+        //마커에 은행 제거하기
+        this.removeMarkerSide(0);
+      } else {
+        this.bankSelected = true;
+        this.findSide(0, this.codes[0]);
+      }
+    },
+    //편의점
+    selectMarket() {
+      if (this.martSelected) {
+        this.martSelected = false;
+        //마커에 은행 제거하기
+        this.removeMarkerSide(1);
+      } else {
+        this.martSelected = true;
+        this.findSide(1, this.codes[1]);
+      }
+    },
+    //병원
+    selectHospital() {
+      if (this.hpSelected) {
+        this.hpSelected = false;
+        //마커에 은행 제거하기
+        this.removeMarkerSide(2);
+      } else {
+        this.hpSelected = true;
+        this.findSide(2, this.codes[2]);
+      }
+    },
+    //지하철
+    selectSubway() {
+      if (this.subwaySelected) {
+        this.subwaySelected = false;
+        //마커에 은행 제거하기
+        this.removeMarkerSide(3);
+      } else {
+        this.subwaySelected = true;
+        this.findSide(3, this.codes[3]);
+      }
+    },
+
+    //idle함수
+    searchPlaces() {
+      if (this.bankSelected) this.findSide(0, this.codes[0]);
+      if (this.martSelected) this.findSide(1, this.codes[1]);
+      if (this.hpSelected) this.findSide(2, this.codes[2]);
+      if (this.subwaySelected) this.findSide(3, this.codes[3]);
+    },
+
+    //시설 찾기
+    findSide(idx, code) {
+      this.ps.categorySearch(
+        code,
+        (data, status) => {
+          if (status === kakao.maps.services.Status.OK) {
+            this.displayMarkerSide(idx, data);
+          }
+        },
+        // eslint-disable-next-line prettier/prettier
+        { useMapBounds: true }
+      );
+    },
+
+    //편의시설 관련 마커 추가
+    displayMarkerSide(idx, data) {
+      this.removeMarkerSide(idx);
+      // idle함수가 실행되는 동안에 초기화 시키기 때문에 한번더 체크 해야함
+      if (
+        (idx == 0 && !this.bankSelected) ||
+        (idx == 1 && !this.martSelected) ||
+        (idx == 2 && !this.hpSelected) ||
+        (idx == 3 && !this.subwaySelected)
+      )
+        return;
+
+      let imgSrc = this.imgSrcs[idx],
+        imgSize = new kakao.maps.Size(40, 40),
+        markerImage = new kakao.maps.MarkerImage(imgSrc, imgSize);
+
+      data.map((item) => {
+        let itemPositon = new kakao.maps.LatLng(item.y, item.x);
+        let mk = new kakao.maps.Marker({
+          position: itemPositon, // 마커의 위치
+          image: markerImage,
+        });
+        mk.setMap(this.map);
+        this.sideMarkers[idx].push(mk);
+      });
+    },
+
+    removeMarkerSide(idx) {
+      for (let i = 0; i < this.sideMarkers[idx].length; i++) {
+        this.sideMarkers[idx][i].setMap(null);
+      }
+      this.sideMarkers[idx] = [];
     },
   },
 };
@@ -168,5 +319,15 @@ export default {
   border: 1px solid #ccc;
   border-bottom: 2px solid #ddd;
   float: left;
+}
+
+.selected {
+  background-color: #ffc107 !important;
+  color: whitesmoke;
+}
+.category {
+  height: 40px;
+  display: flex !important;
+  align-items: center !important;
 }
 </style>

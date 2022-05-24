@@ -71,7 +71,6 @@
 	where aptCode=#{aptCode} and userid = #{userid}
 	</select>
 	
-	
 	<select id="selectHouse" parameterType="String" resultType="houseInfoDto">
 	select h.aptCode, h.roadName, h.roadNameBonbun, h.roadNameBubun, h.roadNameSeq, h.roadNameCode, h.bonbun, h.apartmentName, h.buildYear, h.dongCode, h.dong, h.jibun, h.lat, h.lng, si.sidoname, gu.gugunname,
 		(select round(avg(cast(replace(dealAmount, ',' ,'')as unsigned))) from housedeal hd where hd.aptCode=h.aptCode) avgPrice,

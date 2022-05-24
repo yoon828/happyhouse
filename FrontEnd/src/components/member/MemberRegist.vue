@@ -6,7 +6,7 @@
         happy house에 오신 걸 환영 합니다.
       </p>
       <md-field class="md-form-group" slot="inputs">
-        <md-icon>man</md-icon>
+        <md-icon><b-icon icon="pencil"></b-icon></md-icon>
         <label>이름</label>
         <md-input v-model="username"></md-input>
       </md-field>
@@ -90,7 +90,8 @@ export default {
         },
         (error) => {
           console.log(error);
-        },
+          // eslint-disable-next-line prettier/prettier
+        }
       );
     },
     initData() {
@@ -157,7 +158,8 @@ export default {
           let msg = "서버에 문제가 발생했습니다.";
           console.log(error);
           alert(msg);
-        },
+          // eslint-disable-next-line prettier/prettier
+        }
       );
     },
   },

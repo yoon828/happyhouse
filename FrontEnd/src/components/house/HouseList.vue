@@ -22,7 +22,7 @@
         <b-col>
           <div class="alert alert-info d-flex align-items-center">
             <div class="alert-icon">
-              <md-icon>info_outline</md-icon>
+              <b-icon icon="info-circle"></b-icon>
             </div>
             아파트 목록이 없습니다.
           </div>

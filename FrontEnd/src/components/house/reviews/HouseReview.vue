@@ -14,7 +14,7 @@
       <span v-if="!userInfo">
         <div class="alert alert-danger d-flex align-items-center">
           <div class="alert-icon">
-            <md-icon>info_outline</md-icon>
+            <b-icon icon="info-circle"></b-icon>
           </div>
           로그인 후 이용해주세요.
         </div>
@@ -22,7 +22,7 @@
       <span v-else-if="isRating">
         <div class="alert alert-info d-flex align-items-center">
           <div class="alert-icon">
-            <md-icon>info_outline</md-icon>
+            <b-icon icon="info-circle"></b-icon>
           </div>
           등록된 평점이 존재합니다.
         </div>

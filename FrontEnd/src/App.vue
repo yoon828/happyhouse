@@ -15,6 +15,21 @@ export default {};
 </script>
 
 <style>
+@import url("https://fonts.googleapis.com/css2?family=Gothic+A1:wght@400;500;600;700;800&display=swap");
+
+*,
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: "Gothic A1", sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 18px;
+  font-weight: normal;
+}
+
 a,
 a:link,
 a:visited,

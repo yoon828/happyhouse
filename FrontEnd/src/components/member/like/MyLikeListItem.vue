@@ -78,5 +78,6 @@ export default {
 }
 .a-c {
   vertical-align: baseline;
+  padding: 0;
 }
 </style>

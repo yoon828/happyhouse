@@ -21,7 +21,7 @@ export default new Router({
       name: "home",
       components: { default: HomeView, header: MainNavbar, footer: MainFooter },
       props: {
-        header: { colorOnScroll: 400 },
+        header: { colorOnScroll: 100 },
         footer: { backgroundColor: "black" },
       },
     },
@@ -34,7 +34,7 @@ export default new Router({
         footer: MainFooter,
       },
       props: {
-        header: { colorOnScroll: 400 },
+        header: { colorOnScroll: 100 },
         footer: { backgroundColor: "black" },
       },
     },
@@ -47,7 +47,7 @@ export default new Router({
         footer: MainFooter,
       },
       props: {
-        header: { colorOnScroll: 400 },
+        header: { colorOnScroll: 100 },
         footer: { backgroundColor: "black" },
       },
       redirect: "/board/list",
@@ -83,7 +83,7 @@ export default new Router({
         footer: MainFooter,
       },
       props: {
-        header: { colorOnScroll: 400 },
+        header: { colorOnScroll: 100 },
         footer: { backgroundColor: "black" },
       },
       redirect: "/news/list",
@@ -105,7 +105,7 @@ export default new Router({
         footer: MainFooter,
       },
       props: {
-        header: { colorOnScroll: 400 },
+        header: { colorOnScroll: 100 },
         footer: { backgroundColor: "black" },
       },
       redirect: "/member/login",
@@ -182,7 +182,7 @@ export default new Router({
       name: "like",
       components: { default: LikeView, header: MainNavbar, footer: MainFooter },
       props: {
-        header: { colorOnScroll: 400 },
+        header: { colorOnScroll: 100 },
         footer: { backgroundColor: "black" },
       },
     },

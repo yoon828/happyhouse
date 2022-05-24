@@ -66,31 +66,42 @@ export default {
       this.$router.push({ name: "boardList" });
     },
     moveModifyArticle() {
-      if (this.userInfo.userid != this.article.userid) {
-        alert("다른 사용자의 글은 수정 할 수 없습니다.");
+      if (this.userInfo?.userid === undefined || this.userInfo.userid == null) {
+        alert("로그인이 필요한 서비스입니다.");
+        this.$router.push({ name: "login" });
       } else {
-        this.$router.replace({
-          name: "boardModify",
-          params: {
-            articleno: this.article.articleno,
-          },
-        });
+        if (this.userInfo?.userid != this.article.userid) {
+          alert("다른 사용자의 글은 수정 할 수 없습니다.");
+        } else {
+          this.$router.replace({
+            name: "boardModify",
+            params: {
+              articleno: this.article.articleno,
+            },
+          });
+        }
       }
+
       //   this.$router.push({ path: `/board/modify/${this.article.articleno}` });
     },
     deleteArticle() {
-      if (this.userInfo.userid != this.article.userid) {
-        alert("다른 사용자의 글은 삭제 할 수 없습니다.");
+      if (this.userInfo?.userid === undefined || this.userInfo.userid == null) {
+        alert("로그인이 필요한 서비스입니다.");
+        this.$router.push({ name: "login" });
       } else {
-        if (confirm("삭제하시겠습니까?")) {
-          deleteArticle(this.$route.params.articleno, (res) => {
-            let msg = "문제가 발생했습니다.";
-            if (res.data == "success") {
-              msg = "글이 삭제되었습니다.";
-            }
-            alert(msg);
-            this.$router.push({ name: "boardList" });
-          });
+        if (this.userInfo?.userid != this.article.userid) {
+          alert("다른 사용자의 글은 삭제 할 수 없습니다.");
+        } else {
+          if (confirm("삭제하시겠습니까?")) {
+            deleteArticle(this.$route.params.articleno, (res) => {
+              let msg = "문제가 발생했습니다.";
+              if (res.data == "success") {
+                msg = "글이 삭제되었습니다.";
+              }
+              alert(msg);
+              this.$router.push({ name: "boardList" });
+            });
+          }
         }
       }
     },

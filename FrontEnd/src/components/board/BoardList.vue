@@ -66,7 +66,8 @@ import {
 } from "@/api/board.js";
 import BoardListItem from "@/components/board/BoardListItem";
 import { Pagination } from "@/components";
-
+import { mapState } from "vuex";
+const memberStore = "memberStore";
 export default {
   name: "BoardList",
   components: {
@@ -90,8 +91,14 @@ export default {
     });
   },
   methods: {
+    ...mapState(memberStore, ["userInfo"]),
     moveWrite() {
-      this.$router.push({ name: "boardRegister" });
+      if (!this.userInfo.userid) {
+        alert("로그인이 필요한 서비스입니다.");
+        this.$router.push({ name: "login" });
+      } else {
+        this.$router.push({ name: "boardRegister" });
+      }
     },
     searchBoard() {
       this.articles = [];

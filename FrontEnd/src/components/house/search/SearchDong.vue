@@ -17,9 +17,14 @@
       <b-form-select v-model="dongCode" :options="dongs" @change="getHouseList">
       </b-form-select>
     </b-col>
-    <b-button type="button" variant="warning" @click="addLikeDong">
-      <b-icon v-if="isLike" icon="heart-fill"></b-icon>
-      <b-icon v-else icon="heart"></b-icon>
+    <b-button type="button" variant="inline-warning" @click="addLikeDong">
+      <b-icon
+        v-if="isLike"
+        icon="star-fill"
+        variant="warning"
+        scale="1.5"
+      ></b-icon>
+      <b-icon v-else icon="star" variant="warning" scale="1.5"></b-icon>
     </b-button>
   </b-row>
 </template>

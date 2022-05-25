@@ -39,9 +39,9 @@ function getAddressName(params, success) {
       console.log(error);
     });
 }
-function getFoodList(address, success) {
+function getFoodList(search, success) {
   api
-    .post(`naverapi/food`, JSON.stringify(address))
+    .get(`naverapi/food/${search}`)
     .then(success)
     .catch((err) => {
       console.log(err);

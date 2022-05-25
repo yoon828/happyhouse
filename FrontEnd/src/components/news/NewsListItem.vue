@@ -19,7 +19,7 @@ export default {
   },
   methods: {
     moveLink() {
-      window.location.href = this.link;
+      window.open(this.link);
     },
   },
 };

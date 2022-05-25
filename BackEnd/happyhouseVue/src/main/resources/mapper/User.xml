@@ -4,12 +4,12 @@
 
 <mapper namespace="com.ssafy.happyhouse.model.mapper.UserMapper">
 	
-	<!-- 
+	
 	<insert id="registUser" parameterType="UserDto">
 		insert into user (userid, userpw, username, useraddress, usernumber, usertype)
 		values (#{userid}, #{userpw}, #{username}, #{useraddress}, #{usernumber} ,"G")
 	</insert>
-	
+	<!-- 
 	<insert id="registAdmin" parameterType="UserDto">
 		insert into user (userid, userpw, username, useraddress, usernumber, usertype)
 		values (#{userid}, #{userpw}, #{username}, #{useraddress}, #{usernumber} ,"A")

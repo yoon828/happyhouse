@@ -20,6 +20,10 @@
           @keyup.enter="confirm"
         ></md-input>
       </md-field>
+      <div>
+        <a href="#/member/idfind">아이디찾기 | </a>
+        <a href="#/member/pwfind">비밀번호 찾기</a>
+      </div>
       <md-button slot="footer" class="md-success" @click="confirm">
         로그인
       </md-button>

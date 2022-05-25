@@ -5,35 +5,45 @@
       <p slot="description" class="description">
         happy house에 오신 걸 환영 합니다.
       </p>
-      <md-field class="md-form-group" slot="inputs">
+      <md-field class="md-form-group  " slot="inputs">
         <md-icon><b-icon icon="pencil"></b-icon></md-icon>
         <label>이름</label>
         <md-input v-model="username"></md-input>
       </md-field>
-      <md-field class="md-form-group" slot="inputs">
+      <md-field
+        class="md-form-group"
+        :class="[{ 'md-error': !checkId }]"
+        slot="inputs"
+      >
         <md-icon><b-icon icon="person-circle"></b-icon></md-icon>
         <label>아이디</label>
-        <md-input v-model="userid" @keydown="falseCkid()"></md-input>
+        <md-input v-model="userid" @change="idvalueCheck"></md-input>
+        <b-icon
+          icon="exclamation-circle-fill"
+          variant="danger"
+          v-if="!checkId"
+          v-b-tooltip.hover.right="'사용이 불가능한 아이디입니다.'"
+        ></b-icon>
       </md-field>
-      <md-field class="md-form-group" slot="inputs">
+      <md-field class="md-form-group " slot="inputs">
         <md-icon><b-icon icon="lock"></b-icon></md-icon>
         <label>비밀번호</label>
         <md-input type="password" v-model="userpw" ref="userpw"></md-input>
       </md-field>
-      <md-field class="md-form-group" slot="inputs">
+      <md-field class="md-form-group " slot="inputs">
         <md-icon><b-icon icon="mailbox"></b-icon></md-icon>
         <label>이메일</label>
         <md-input type="email" v-model="useraddress"></md-input>
       </md-field>
-      <md-field class="md-form-group" slot="inputs">
+      <md-field class="md-form-group " slot="inputs">
         <md-icon><b-icon icon="telephone-fill"></b-icon></md-icon>
         <label>전화 번호</label>
         <md-input v-model="usernumber"></md-input>
       </md-field>
-
+      <!-- 
       <md-button slot="footer" class="md-info" v-on:click="idvalueCheck()">
         아이디 중복 체크
-      </md-button>
+      </md-button> -->
 
       <md-button slot="footer" class="md-success" v-on:click="registCheck()">
         회원 가입
@@ -56,7 +66,7 @@ export default {
       userpw: "",
       useraddress: "",
       usernumber: "",
-      checkId: false,
+      checkId: true,
     };
   },
   props: {
@@ -73,19 +83,19 @@ export default {
     },
   },
   methods: {
-    falseCkid() {
-      this.checkId = false;
-    },
+    // falseCkid() {
+    //   this.checkId = false;
+    // },
     idvalueCheck() {
       idCheck(
         this.userid,
         ({ data }) => {
-          console.log(data);
           if (data === "success") {
             this.checkId = true;
-            alert(this.userid + "는 사용 가능한 아이디 입니다.");
+            // alert(this.userid + "는 사용 가능한 아이디 입니다.");
           } else {
-            alert(this.userid + "는 사용 불가능한 아이디 입니다.");
+            this.checkId = false;
+            // alert(this.userid + "는 사용 불가능한 아이디 입니다.");
           }
         },
         (error) => {
@@ -100,6 +110,7 @@ export default {
       this.userpw = "";
       this.useraddress = "";
       this.usernumber = "";
+      this.checkId = true;
     },
     registCheck() {
       let err = false;
@@ -173,7 +184,7 @@ export default {
 }
 .md-form-group {
   width: 50%;
-  margin: 0 auto;
+  margin: 1rem auto;
   padding: 15px;
 }
 </style>

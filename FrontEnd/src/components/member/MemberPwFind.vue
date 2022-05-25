@@ -107,14 +107,13 @@ export default {
           let err = false;
           if (data === "fail") {
             msg = "입력 정보를 확인하세요.";
+            err = true;
           }
           alert(msg);
 
           if (!err) {
             this.pwFindSet(data);
             this.$router.push({ name: "pwfindResult" });
-          } else {
-            this.$router.push({ name: "pwFind" });
           }
         },
         (error) => {

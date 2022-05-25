@@ -53,14 +53,7 @@
                   <p>로그인</p>
                 </md-list-item>
 
-                <md-list-item>
-                  <a href="#/member/idfind">아이디/</a>
-                  <a href="#/member/pwfind">비밀번호 찾기</a>
-                </md-list-item></md-list
-              >
-
-              <md-list v-if="userInfo">
-                <md-list-item href="#/food">
+                <md-list-item href="#/food" v-if="userInfo">
                   <p>동네 맛집</p>
                 </md-list-item>
               </md-list>

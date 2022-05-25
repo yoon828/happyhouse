@@ -39,8 +39,8 @@ public class NaverApiController {
 	}
 	
 	@ApiOperation(value="맛집 검색 결과를 조회한다.",response = String.class)
-	@PostMapping(value = "/food")
-	public ResponseEntity<?> foodList(@RequestBody String search) throws Exception{
+	@GetMapping(value = "/food/{search}")
+	public ResponseEntity<?> foodList(@PathVariable String search) throws Exception{
 		logger.debug("맛집 검색 결과 호출");
 		if(naverApiService.foodList(search) != null) {
 			return new ResponseEntity<String>(naverApiService.foodList(search), HttpStatus.OK);

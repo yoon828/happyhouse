@@ -44,6 +44,9 @@
               <md-list-item href="#/board">
                 <p>Q&A 게시판</p>
               </md-list-item>
+              <md-list-item href="#/food">
+                <p>동네 맛집</p>
+              </md-list-item>
               <md-list v-if="!userInfo">
                 <md-list-item href="#/member/regist">
                   <p>회원 가입</p>
@@ -51,10 +54,6 @@
 
                 <md-list-item href="#/member/login">
                   <p>로그인</p>
-                </md-list-item>
-
-                <md-list-item href="#/food" v-if="userInfo">
-                  <p>동네 맛집</p>
                 </md-list-item>
               </md-list>
 

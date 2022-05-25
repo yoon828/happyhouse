@@ -39,8 +39,8 @@ export default {
   },
   methods: {
     checkDelete() {
-      if (this.userInfo?.usertype != "A") {
-        alert("관리자만 삭제할 수 있습니다.");
+      if (this.userInfo?.userid != this.userid) {
+        alert("자신이 작성한 댓글만 삭제할 수 있습니다.");
       } else {
         if (confirm("정말로 삭제 하시겠습니까?")) {
           deleteComment(this.commentno, (res) => {

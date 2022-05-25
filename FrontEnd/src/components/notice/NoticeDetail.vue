@@ -84,12 +84,15 @@ export default {
     },
   },
   created() {
-    hitAdd(this.$route.params.articleno, (res) => {});
-    getArticle(this.$route.params.articleno, (res) => {
-      this.article = res.data;
-    });
-    listComment(this.$route.params.articleno, (res) => {
-      this.comments = res.data;
+    hitAdd(this.$route.params.articleno, (res) => {
+      if (res.data == "success") {
+        getArticle(this.$route.params.articleno, (res) => {
+          this.article = res.data;
+        });
+        listComment(this.$route.params.articleno, (res) => {
+          this.comments = res.data;
+        });
+      }
     });
   },
   methods: {
@@ -107,18 +110,15 @@ export default {
         content: this.content,
       };
       let userType = this.userInfo?.usertype;
-      if (userType === "A") {
-        writeComment(comment, (res) => {
-          let msg = "답변 등록시 문제가 발생했습니다.";
-          if (res.data === "success") {
-            msg = "답변 등록이 완료되었습니다.";
-          }
-          alert(msg);
-          this.$router.go();
-        });
-      } else {
-        alert("관리자만 등록할 수 있습니다.");
-      }
+
+      writeComment(comment, (res) => {
+        let msg = "답변 등록시 문제가 발생했습니다.";
+        if (res.data === "success") {
+          msg = "답변 등록이 완료되었습니다.";
+        }
+        alert(msg);
+        this.$router.go();
+      });
     },
     listArticle() {
       this.$router.push({ name: "noticeList" });

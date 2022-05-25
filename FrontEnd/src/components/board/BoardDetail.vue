@@ -84,12 +84,15 @@ export default {
     },
   },
   created() {
-    hitAdd(this.$route.params.articleno, (res) => {});
-    getArticle(this.$route.params.articleno, (res) => {
-      this.article = res.data;
-    });
-    listComment(this.$route.params.articleno, (res) => {
-      this.comments = res.data;
+    hitAdd(this.$route.params.articleno, (res) => {
+      if (res.data == "success") {
+        getArticle(this.$route.params.articleno, (res) => {
+          this.article = res.data;
+        });
+        listComment(this.$route.params.articleno, (res) => {
+          this.comments = res.data;
+        });
+      }
     });
   },
   methods: {

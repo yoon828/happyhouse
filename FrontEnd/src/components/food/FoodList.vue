@@ -24,7 +24,7 @@
         </b-form-select>
       </b-col>
     </b-row>
-    <b-row>
+    <b-row class="justify-content-center">
       <b-form-input
         placeholder="음식 검색"
         v-model="searchfood"

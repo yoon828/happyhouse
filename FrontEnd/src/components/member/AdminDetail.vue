@@ -80,27 +80,27 @@ export default {
     },
     deleteUser() {
       if (confirm("탈퇴 하시겠습니까?")) {
-        deleteMember(this.user.userid),
-          ({ data }) => {
-            let msg = "회원 탈퇴 시에 문제가 발생했습니다.";
-            let err = true;
-            if (data === "success") {
-              msg = "회원 탈퇴가 완료되었습니다.";
-              err = false;
-            }
-            alert(msg);
-            if (!err) {
-              this.$router.push({ name: "adminList" });
-            } else {
-              this.$router.push({
-                name: "adminDetail",
-                params: { userid: this.user.userid },
-              });
-            }
-          },
-          (error) => {
-            console.log(error);
-          };
+        deleteMember(this.user.userid, (res) => {
+          let msg = "회원 탈퇴 시에 문제가 발생했습니다.";
+          let err = true;
+          console.log(res.data);
+          if (res.data == "success") {
+            msg = "회원 탈퇴가 완료되었습니다.";
+            err = false;
+          }
+          alert(msg);
+          if (!err) {
+            this.$router.push({ name: "adminList" });
+          } else {
+            this.$router.push({
+              name: "adminDetail",
+              params: { userid: this.user.userid },
+            });
+          }
+        });
+        (error) => {
+          console.log(error);
+        };
       }
     },
   },

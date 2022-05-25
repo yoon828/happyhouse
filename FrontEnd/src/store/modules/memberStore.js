@@ -79,6 +79,9 @@ const memberStore = {
       await deleteMember(userid, (response) => {
         if (response.data === "success") {
           commit("SET_IS_DELETE", true);
+          commit("SET_USER_INFO", null);
+          commit("SET_IS_LOGIN", false);
+          commit("SET_IS_LOGIN_ERROR", true);
         } else {
           commit("SET_IS_DELETE", false);
         }

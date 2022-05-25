@@ -2,8 +2,19 @@
   <b-tr>
     <b-td>{{ userid }}</b-td>
     <b-td>{{ useraddress }}</b-td>
-    <b-td v-if="this.usertype === 'A'">관리자</b-td>
-    <b-td v-else>사용자</b-td>
+    <b-td>
+      <b-form-select v-if="userid === userInfo.userid" disabled>
+        <b-form-select-option value="관리자">관리자</b-form-select-option>
+      </b-form-select>
+      <b-form-select
+        v-else
+        v-model="selected"
+        :options="options"
+        value-field="item"
+        text-field="name"
+        @change="changeGrade"
+      ></b-form-select>
+    </b-td>
     <b-th
       ><router-link
         :to="{
@@ -17,6 +28,11 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+import { gradeAdmin } from "@/api/member.js";
+
+const memberStore = "memberStore";
+
 export default {
   name: "AdminListItem",
   props: {
@@ -26,6 +42,36 @@ export default {
     usernumber: String,
     username: String,
     usertype: String,
+  },
+  computed: {
+    ...mapState(memberStore, ["userInfo"]),
+  },
+  data() {
+    return {
+      selected: this.usertype === "A" ? "A" : "U",
+      options: [
+        { item: "U", name: "사용자" },
+        { item: "A", name: "관리자" },
+      ],
+    };
+  },
+  methods: {
+    changeGrade() {
+      gradeAdmin(
+        {
+          type: this.selected,
+          userid: this.userid,
+        },
+        ({ data }) => {
+          if (data == "fail") {
+            alert("문제가 발생했습니다.");
+            if (this.selected == "A") this.selected = "U";
+            else this.selected = "A";
+          }
+          // eslint-disable-next-line prettier/prettier
+        }
+      );
+    },
   },
 };
 </script>

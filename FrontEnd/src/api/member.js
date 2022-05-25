@@ -101,6 +101,17 @@ async function registAdmin(user, success, fail) {
     .catch(fail);
 }
 
+//관리자 회원 등급 변경
+async function gradeAdmin(params, success) {
+  api
+    .put(`/admin/grade?type=${params.type}&userid=${params.userid}`)
+    .then(success)
+    .catch((err) => {
+      alert("문제가 발생했습니다.");
+      console.log(err);
+    });
+}
+
 /////////////////관심지역 등록 //////////////////////
 
 //관심지역 등록
@@ -159,4 +170,5 @@ export {
   registLikeDong,
   deleteLikeDong,
   selectLikeDong,
+  gradeAdmin,
 };

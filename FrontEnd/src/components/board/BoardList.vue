@@ -13,7 +13,6 @@
             ><option value="articleno"> 글번호 </option
             ><option value="subject"> 제목 </option></b-form-select
           >
-
           <b-form-input
             type="text"
             class="ml-1"
@@ -83,7 +82,6 @@ import {
 } from "@/api/board.js";
 import BoardListItem from "@/components/board/BoardListItem";
 
-import { Pagination } from "@/components";
 import { mapState } from "vuex";
 const memberStore = "memberStore";
 

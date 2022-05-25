@@ -7,10 +7,6 @@
         </div>
       </div>
     </div>
-    <div class="mb-1">
-      <md-button @click="moveRegist()">회원 등록</md-button>
-      <md-button @click="moveAdminRegist()">관리자 등록</md-button>
-    </div>
     <b-row class="mt-3 mb-5">
       <b-col>
         <b-table-simple hover responsive class="mb-6 text-center">
@@ -19,7 +15,7 @@
               <b-th>아이디</b-th>
               <b-th>이메일</b-th>
               <b-th>유저 타입</b-th>
-              <b-th></b-th>
+              <b-th>상세조회</b-th>
             </b-tr>
           </b-thead>
           <tbody>

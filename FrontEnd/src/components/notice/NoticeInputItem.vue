@@ -36,14 +36,17 @@
           ></b-form-textarea>
         </b-form-group>
 
-        <md-button
+        <b-button
           type="submit"
-          class="m-1 md-info "
+          class="m-1 "
+          variant="info"
           v-if="this.type === 'register'"
-          >글작성</md-button
+          >글작성</b-button
         >
-        <md-button type="submit" class="m-1 md-info" v-else>글수정</md-button>
-        <md-button type="reset" class="m-1 md-rose">초기화</md-button>
+        <b-button variant="info" type="submit" class="m-1" v-else
+          >글수정</b-button
+        >
+        <b-button variant="danger" type="reset" class="m-1">초기화</b-button>
       </b-form>
     </b-col>
   </b-row>

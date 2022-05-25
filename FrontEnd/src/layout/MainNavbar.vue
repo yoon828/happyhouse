@@ -42,7 +42,7 @@
                 <p>공지 사항</p>
               </md-list-item>
               <md-list-item href="#/board">
-                <p>Q&A 게시판</p>
+                <p>Q&A</p>
               </md-list-item>
               <md-list-item href="#/food">
                 <p>동네 맛집</p>

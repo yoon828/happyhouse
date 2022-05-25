@@ -19,48 +19,62 @@
     </b-row>
     <b-row class="mb-5">
       <b-col class="text-left">
-        <md-button type="button" class="m-1" @click="listArticle"
-          >목록</md-button
-        >
+        <b-button type="button" class="m-1" @click="listArticle">목록</b-button>
       </b-col>
-      <b-col class="text-right">
-        <md-button type="button" class="m-1 md-info" @click="moveModifyArticle"
-          >글수정</md-button
-        >
-        <md-button
+      <b-col
+        v-if="userInfo && userInfo.userid == article.userid"
+        class="text-right"
+      >
+        <b-button
           type="button"
-          class="m-1 md-danger"
+          class="m-1"
+          variant="success"
+          @click="moveModifyArticle"
+          >글수정</b-button
+        >
+        <b-button
+          type="button"
+          class="m-1"
+          variant="danger"
           @click="deleteArticleCheck"
-          >글삭제</md-button
+          >글삭제</b-button
         >
       </b-col>
     </b-row>
-    <div>
+    <div v-if="userInfo && userInfo.usertype == 'A'">
       <b-form-textarea
         id="textarea"
         v-model="content"
-        placeholder="댓글 작성"
+        placeholder="답변작성"
         rows="3"
         max-rows="6"
       ></b-form-textarea>
+      <b-row class="mb-5">
+        <b-col class="text-right">
+          <b-button
+            variant="dark"
+            type="button"
+            class="m-1"
+            @click="commentCheck"
+            >댓글 작성</b-button
+          >
+        </b-col>
+      </b-row>
     </div>
-    <b-row class="mb-5">
-      <b-col class="text-right">
-        <md-button type="button" class="m-1 md-success" @click="commentCheck"
-          >댓글 작성</md-button
-        >
-      </b-col>
-    </b-row>
-    <notice-comment
-      v-for="comment in comments"
-      :key="comment.commentno"
-      v-bind="comment"
-    />
+    <div class="mb-3">
+      <notice-comment
+        v-for="comment in comments"
+        :key="comment.commentno"
+        v-bind="comment"
+        @reListComment="reListComment"
+      />
+    </div>
   </b-container>
 </template>
 
 <script>
-// import moment from "moment";
+import moment from "moment";
+
 import {
   getArticle,
   hitAdd,
@@ -82,8 +96,10 @@ export default {
       article: {},
       comments: [],
       content: null,
+      userType: "",
     };
   },
+
   computed: {
     ...mapState(memberStore, ["userInfo"]),
     message() {
@@ -96,6 +112,7 @@ export default {
     hitAdd(this.$route.params.articleno, (res) => {
       if (res.data == "success") {
         getArticle(this.$route.params.articleno, (res) => {
+          console.log(res);
           this.article = res.data;
         });
         listComment(this.$route.params.articleno, (res) => {
@@ -105,10 +122,16 @@ export default {
     });
   },
   methods: {
+    reListComment() {
+      listComment(this.article.articleno, (res) => {
+        this.comments = res.data;
+      });
+    },
     commentCheck() {
       if (this.userInfo?.userid != null) {
         if (this.content != null && this.content != "") {
           this.commentRegist();
+          this.content = "";
         } else {
           alert("답변을 작성해주세요.");
         }
@@ -123,7 +146,7 @@ export default {
         articleno: this.article.articleno,
         content: this.content,
       };
-      let userType = this.userInfo?.usertype;
+      this.userType = this.userInfo?.usertype;
 
       writeComment(comment, (res) => {
         let msg = "답변 등록시 문제가 발생했습니다.";
@@ -131,7 +154,7 @@ export default {
           msg = "답변 등록이 완료되었습니다.";
         }
         alert(msg);
-        this.$router.go();
+        this.reListComment();
       });
     },
     listArticle() {

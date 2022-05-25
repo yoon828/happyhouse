@@ -30,43 +30,36 @@
         </b-form>
       </b-col>
     </b-row>
-    <b-row class="mt-3 mb-5">
+
+    <b-row>
       <b-col>
-        <b-table-simple class="mb-6 text-center" id="my-table">
-          <colgroup>
-            <col style="width: 10%" />
-            <col style="width: 60%" />
-            <col style="width: 10%" />
-            <col style="width: 10%" />
-            <col style="width: 10%" />
-          </colgroup>
-          <b-thead head-variant="dark">
-            <b-tr>
-              <b-th>글번호</b-th>
-              <b-th>제목</b-th>
-              <b-th>조회수</b-th>
-              <b-th>작성자</b-th>
-              <b-th>작성일</b-th>
-            </b-tr>
-          </b-thead>
-          <tbody>
-            <!-- 하위 component인 ListRow에 데이터 전달(props) -->
-            <notice-list-item
-              v-for="article in articles"
-              :key="article.articleno"
-              v-bind="article"
-            />
-          </tbody>
-        </b-table-simple>
+        <b-table
+          class="mb-6 text-center"
+          id="my-table"
+          :fields="fields"
+          :items="articles"
+          :per-page="perPage"
+          :current-page="currentPage"
+        >
+          <template #cell(subject)="data">
+            <router-link
+              :to="{
+                name: 'noticeDetail',
+                params: { articleno: data.item.articleno },
+              }"
+              >{{ data.item.subject }}</router-link
+            >
+          </template>
+        </b-table>
         <!-- <b-col v-else class="text-center">도서 목록이 없습니다.</b-col> -->
       </b-col>
     </b-row>
     <b-row class="mb-5">
       <b-col class="d-flex justify-content-center">
         <b-pagination
-          v-model="pg"
+          v-model="currentPage"
           :total-rows="rows"
-          :per-page="pageSize"
+          :per-page="perPage"
           aria-controls="my-table"
         ></b-pagination>
       </b-col>
@@ -86,21 +79,39 @@ import NoticeListItem from "@/components/notice/NoticeListItem";
 import { Pagination } from "@/components";
 import { mapState } from "vuex";
 const memberStore = "memberStore";
+import moment from "moment";
 
 export default {
   name: "NoticeList",
   components: {
-    NoticeListItem,
+    // NoticeListItem,
   },
   data() {
     return {
       articles: [],
       keyword: "",
-      pg: 1,
-      totalPage: 0,
-      pageSize: 10,
+      currentPage: 1,
+      perPage: 10,
       rows: 0,
       searchQnA: "",
+      fields: [
+        { key: "articleno", label: "글번호", thClass: "w10" },
+        {
+          key: "subject",
+          label: "제목",
+          thClass: "w60",
+        },
+        { key: "hit", label: "조회수", thClass: "w10" },
+        { key: "userid", label: "작성자", thClass: "w10" },
+        {
+          key: "regtime",
+          label: "작성일",
+          thClass: "w10",
+          formatter: (value, key, item) => {
+            return moment(new Date(value)).format("YY.MM.DD");
+          },
+        },
+      ],
     };
   },
   computed: {
@@ -109,8 +120,6 @@ export default {
   created() {
     listArticle((res) => {
       this.articles = res.data;
-      this.rows = this.articles.length;
-      this.totalPage = this.articles.length / this.pageSize + 1;
     });
   },
   methods: {
@@ -159,7 +168,6 @@ export default {
           this.articles = res.data;
         });
       }
-      this.totalPage = this.articles.length / this.pageSize + 1;
     },
   },
 };

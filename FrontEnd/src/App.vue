@@ -64,4 +64,8 @@ a:active {
   background-color: #ffc107 !important;
   border-color: #ffc107 !important;
 }
+
+.poi {
+  cursor: pointer;
+}
 </style>

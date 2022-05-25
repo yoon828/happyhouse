@@ -19,43 +19,57 @@
     </b-row>
     <b-row class="mb-5">
       <b-col class="text-left">
-        <md-button type="button" class="m-1" @click="listArticle"
-          >목록</md-button
-        >
+        <b-button type="button" class="m-1" @click="listArticle">목록</b-button>
       </b-col>
-      <b-col class="text-right">
-        <md-button type="button" class="m-1 md-info" @click="moveModifyArticle"
-          >글수정</md-button
-        >
-        <md-button
+      <b-col
+        v-if="userInfo && userInfo.userid == article.userid"
+        class="text-right"
+      >
+        <b-button
           type="button"
-          class="m-1 md-danger"
+          class="m-1"
+          variant="success"
+          @click="moveModifyArticle"
+          >글수정</b-button
+        >
+        <b-button
+          type="button"
+          class="m-1"
+          variant="danger"
           @click="deleteArticleCheck"
-          >글삭제</md-button
+          >글삭제</b-button
         >
       </b-col>
     </b-row>
-    <div>
+    <div v-if="userInfo">
       <b-form-textarea
         id="textarea"
         v-model="content"
-        placeholder="답변 작성(관리자만 답변)..."
+        placeholder="댓글 작성"
         rows="3"
         max-rows="6"
       ></b-form-textarea>
+      <b-row class="mb-5">
+        <b-col class="text-right">
+          <b-button
+            variant="dark"
+            type="button"
+            class="m-1"
+            @click="commentCheck"
+            >댓글 작성</b-button
+          >
+        </b-col>
+      </b-row>
     </div>
-    <b-row class="mb-5">
-      <b-col class="text-right">
-        <md-button type="button" class="m-1 md-success" @click="commentCheck"
-          >답변 작성</md-button
-        >
-      </b-col>
-    </b-row>
-    <board-comment
-      v-for="comment in comments"
-      :key="comment.commentno"
-      v-bind="comment"
-    />
+
+    <div class="mb-3">
+      <board-comment
+        v-for="comment in comments"
+        :key="comment.commentno"
+        v-bind="comment"
+        @reListComment="reListComment"
+      />
+    </div>
   </b-container>
 </template>
 
@@ -105,9 +119,15 @@ export default {
     });
   },
   methods: {
+    reListComment() {
+      listComment(this.article.articleno, (res) => {
+        this.comments = res.data;
+      });
+    },
     commentCheck() {
       if (this.content != null && this.content != "") {
         this.commentRegist();
+        this.content = "";
       } else {
         alert("답변을 작성해주세요.");
       }
@@ -118,19 +138,14 @@ export default {
         articleno: this.article.articleno,
         content: this.content,
       };
-      let userType = this.userInfo?.usertype;
-      if (userType === "A") {
-        writeComment(comment, (res) => {
-          let msg = "답변 등록시 문제가 발생했습니다.";
-          if (res.data === "success") {
-            msg = "답변 등록이 완료되었습니다.";
-          }
-          alert(msg);
-          this.$router.go();
-        });
-      } else {
-        alert("관리자만 등록할 수 있습니다.");
-      }
+      writeComment(comment, (res) => {
+        let msg = "답변 등록시 문제가 발생했습니다.";
+        if (res.data === "success") {
+          msg = "답변 등록이 완료되었습니다.";
+        }
+        alert(msg);
+        this.reListComment();
+      });
     },
     listArticle() {
       this.$router.push({ name: "boardList" });
@@ -159,19 +174,15 @@ export default {
         alert("로그인이 필요한 서비스입니다.");
         this.$router.push({ name: "login" });
       } else {
-        if (this.userInfo?.userid != this.article.userid) {
-          alert("다른 사용자의 글은 삭제 할 수 없습니다.");
-        } else {
-          if (confirm("삭제하시겠습니까?")) {
-            deleteArticle(this.$route.params.articleno, (res) => {
-              let msg = "문제가 발생했습니다.";
-              if (res.data == "success") {
-                msg = "글이 삭제되었습니다.";
-              }
-              alert(msg);
-              this.$router.push({ name: "boardList" });
-            });
-          }
+        if (confirm("삭제하시겠습니까?")) {
+          deleteArticle(this.$route.params.articleno, (res) => {
+            let msg = "문제가 발생했습니다.";
+            if (res.data == "success") {
+              msg = "글이 삭제되었습니다.";
+            }
+            alert(msg);
+            this.$router.push({ name: "boardList" });
+          });
         }
       }
     },

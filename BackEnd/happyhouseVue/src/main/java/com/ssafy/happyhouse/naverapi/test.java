@@ -14,7 +14,7 @@ public class test {
 		String clientId = "phcDjj6MZ2WhkC7K5gyL";// 애플리케이션 클라이언트 아이디값";
 		String clientSecret = "xZn1hH2PJr";// 애플리케이션 클라이언트 시크릿값";
 		try {
-			String text = URLEncoder.encode("서울특별시 마포구 공덕동 맛집 돈까스 "
+			String text = URLEncoder.encode("서울특별시 마포구 공덕동 병원"
 					+ "", "UTF-8"); // 검색어";
 			String apiURL = "https://openapi.naver.com/v1/search/local.json?query=" + text
 					+ "&display=5&start=1&sort=random"; // 뉴스의 json 결과

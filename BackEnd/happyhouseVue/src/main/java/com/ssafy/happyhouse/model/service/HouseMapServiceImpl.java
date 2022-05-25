@@ -66,6 +66,11 @@ public class HouseMapServiceImpl implements HouseMapService {
 		return houseMapMapper.selectHouse(aptCode);
 	}
 
+	@Override
+	public int countLike(String dongCode) throws Exception {
+		return houseMapMapper.countLike(dongCode);
+	}
+
 //	@Override
 //	public List<HouseInfoDto> getAptByPrice(int start, int end, String dong) throws Exception {
 //		return houseMapMapper.getAptByDong(dong);

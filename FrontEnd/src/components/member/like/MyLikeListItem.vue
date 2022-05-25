@@ -2,6 +2,7 @@
   <b-tr>
     <b-td class="a-c">{{ idx }}</b-td>
     <b-td class="a-c">{{ sidoName }} {{ gugunName }} {{ dongName }} </b-td>
+    <b-td class="a-c">{{ this.count }} 명</b-td>
     <b-td class="a-c">
       <b-button
         type="button"
@@ -21,7 +22,7 @@
 </template>
 
 <script>
-import { deleteLikeDong } from "@/api/member.js";
+import { deleteLikeDong, countLike } from "@/api/member.js";
 import { mapActions, mapState } from "vuex";
 
 const memberStore = "memberStore";
@@ -38,9 +39,15 @@ export default {
   },
   components: {},
   data() {
-    return {};
+    return {
+      count: null,
+    };
   },
-  created() {},
+  created() {
+    countLike(this.dongCode, ({ data }) => {
+      this.count = data;
+    });
+  },
   computed: {
     ...mapState(memberStore, ["userInfo"]),
   },

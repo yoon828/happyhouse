@@ -23,4 +23,5 @@ public interface HouseMapMapper {
 	int postReview(ReviewDto reivew)throws SQLException;
 	ReviewDto getReview(Map<String, String> map)throws SQLException;
 	HouseInfoDto selectHouse(String aptCode)throws SQLException;
+	int countLike(String dongCode) throws Exception;
 }

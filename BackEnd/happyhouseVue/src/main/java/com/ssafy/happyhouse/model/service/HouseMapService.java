@@ -21,4 +21,5 @@ public interface HouseMapService {
 	boolean postReview(ReviewDto reivew)throws Exception;
 	ReviewDto getReview(Map<String, String> map)throws Exception;
 	HouseInfoDto selectHouse(String aptCode)throws Exception;
+	int countLike(String dongCode) throws Exception;
 }

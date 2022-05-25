@@ -11,6 +11,7 @@
         <b-tr>
           <b-th>번호</b-th>
           <b-th>지역</b-th>
+          <b-th>좋아요</b-th>
           <b-th>조회</b-th>
           <b-th>삭제</b-th>
         </b-tr>

@@ -163,6 +163,15 @@ async function selectLikeDong(params, success) {
     });
 }
 
+//관심 지역 등록한 유저 숫자 출력
+async function countLike(dongCode, success) {
+  await api
+    .get(`/map/count/${dongCode}`)
+    .then(success)
+    .catch((err) => {
+      console.log(err);
+    });
+}
 export {
   login,
   findById,
@@ -180,4 +189,5 @@ export {
   selectLikeDong,
   gradeAdmin,
   updateAdmin,
+  countLike,
 };

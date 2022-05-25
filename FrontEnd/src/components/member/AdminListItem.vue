@@ -48,9 +48,9 @@ export default {
   },
   data() {
     return {
-      selected: this.usertype === "A" ? "A" : "U",
+      selected: this.usertype === "A" ? "A" : "G",
       options: [
-        { item: "U", name: "사용자" },
+        { item: "G", name: "사용자" },
         { item: "A", name: "관리자" },
       ],
     };
@@ -65,7 +65,7 @@ export default {
         ({ data }) => {
           if (data == "fail") {
             alert("문제가 발생했습니다.");
-            if (this.selected == "A") this.selected = "U";
+            if (this.selected == "A") this.selected = "G";
             else this.selected = "A";
           }
           // eslint-disable-next-line prettier/prettier

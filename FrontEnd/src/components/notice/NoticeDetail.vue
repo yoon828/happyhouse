@@ -106,10 +106,15 @@ export default {
   },
   methods: {
     commentCheck() {
-      if (this.content != null && this.content != "") {
-        this.commentRegist();
+      if (this.userInfo?.userid != null) {
+        if (this.content != null && this.content != "") {
+          this.commentRegist();
+        } else {
+          alert("답변을 작성해주세요.");
+        }
       } else {
-        alert("답변을 작성해주세요.");
+        alert("로그인이 필요한 서비스입니다.");
+        this.$router.push({ name: "login" });
       }
     },
     commentRegist() {

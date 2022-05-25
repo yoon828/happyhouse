@@ -111,4 +111,11 @@ public class HouseMapController {
 		logger.debug("result : {}", happyHouseMapService.getReview(map));
 		return new ResponseEntity<ReviewDto>(happyHouseMapService.getReview(map), HttpStatus.OK);
 	}
+    
+    @ApiOperation(value = "동 코드를 입력 받아 그 지역에 관심 등록한 사용자의 수를 출력한다. ", response = int.class)
+    @GetMapping("/count")
+    public ResponseEntity<Integer> countLike(@RequestParam String dongCode) throws Exception{
+    	logger.debug("관심지역 카운트 출력");
+    	return new ResponseEntity<Integer>(happyHouseMapService.countLike(dongCode), HttpStatus.OK);
+    }
 }

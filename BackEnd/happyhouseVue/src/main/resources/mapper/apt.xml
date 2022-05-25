@@ -10,6 +10,11 @@
 		order by sidoCode
 	</select>
 	
+	<select id="countLike" parameterType="string" resultType="int">
+		select count(*)
+		from likedong
+		where dongcode = #{dongcode}	
+	</select>
 	<select id="getGugunInSido" parameterType="string" resultType="sidoGugunCodeDto">
 		select left(gugunCode,5) gugunCode, gugunName
 		from guguncode

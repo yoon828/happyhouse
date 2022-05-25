@@ -8,7 +8,7 @@
       <md-field class="md-form-group" slot="inputs">
         <md-icon><b-icon icon="person-circle"></b-icon></md-icon>
         <label>아이디</label>
-        <md-input v-model="userid"></md-input>
+        <md-input v-model="userid" @keyup.enter="confirm"></md-input>
       </md-field>
       <p></p>
       <md-field class="md-form-group" slot="inputs">

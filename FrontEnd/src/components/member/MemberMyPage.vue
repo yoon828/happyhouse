@@ -36,7 +36,7 @@
       </md-field>
       <md-field class="md-form-group" slot="inputs">
         <md-icon><b-icon icon="telephone-fill"></b-icon></md-icon>
-        <label>전화 번호</label>
+        <label>전화번호</label>
         <md-input v-model="userInfo.usernumber" :readonly="true"></md-input>
       </md-field>
 
@@ -67,6 +67,7 @@ export default {
       "isLogin",
       "isLoginError",
       "isUpdate",
+      "isDelete",
     ]),
   },
   methods: {
@@ -78,18 +79,17 @@ export default {
     deleteUser() {
       if (confirm("탈퇴 하시겠습니까?")) {
         if (this.isLogin) {
-          this.userDelete(this.userInfo.userid, ({ data }) => {
-            let msg = "회원 탈퇴 시 문제가 발생했습니다.";
-            let err = true;
-            if (data === "success") {
-              msg = "회원 탈퇴가 완료되었습니다.";
-              err = false;
-            }
-            alert(msg);
-            if (!err) {
-              this.$router.push({ name: "home" });
-            }
-          });
+          this.userDelete(this.userInfo.userid);
+          let msg = "회원 탈퇴 시 문제가 발생했습니다.";
+          let err = true;
+          if (this.isDelete) {
+            msg = "회원 탈퇴가 완료되었습니다.";
+            err = false;
+          }
+          alert(msg);
+          if (!err) {
+            this.$router.push({ name: "home" });
+          }
         }
       }
     },

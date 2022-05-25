@@ -27,7 +27,7 @@
       </md-field>
       <md-field class="md-form-group" slot="inputs">
         <md-icon><b-icon icon="telephone-fill"></b-icon></md-icon>
-        <label>전화 번호(수정 가능)</label>
+        <label>전화번호(수정 가능)</label>
         <md-input v-model="userInfo.usernumber"></md-input>
       </md-field>
 
@@ -92,7 +92,7 @@ export default {
         msg = "이메일을 입력해주세요";
         err = true;
       } else if (!this.userInfo.usernumber) {
-        msg = "전화 번호를 입력해주세요.";
+        msg = "전화번호를 입력해주세요.";
         err = true;
       }
       if (err) {

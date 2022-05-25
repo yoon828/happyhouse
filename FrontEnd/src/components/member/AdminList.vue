@@ -1,19 +1,23 @@
 <template>
   <b-container class="bv-example-col mt-3 mb-10 wrapper flex-direction-col">
-    <br />
-    <h2>회원 리스트</h2>
-    <br />
+    <div class="section section-basic pb-2">
+      <div class="container">
+        <div class="title">
+          <h2>회원 관리</h2>
+        </div>
+      </div>
+    </div>
     <div class="mb-1">
       <md-button @click="moveRegist()">회원 등록</md-button>
       <md-button @click="moveAdminRegist()">관리자 등록</md-button>
     </div>
     <b-row class="mt-3 mb-5">
       <b-col>
-        <b-table-simple hover responsive class="mb-6">
+        <b-table-simple hover responsive class="mb-6 text-center">
           <b-thead head-variant="dark">
             <b-tr>
               <b-th>아이디</b-th>
-              <b-th>비밀 번호</b-th>
+              <b-th>이메일</b-th>
               <b-th>유저 타입</b-th>
               <b-th></b-th>
             </b-tr>

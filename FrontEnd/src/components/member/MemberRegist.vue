@@ -8,7 +8,7 @@
       <md-field class="md-form-group  " slot="inputs">
         <md-icon><b-icon icon="pencil"></b-icon></md-icon>
         <label>이름</label>
-        <md-input v-model="username"></md-input>
+        <md-input v-model="username" ref="userpw"></md-input>
       </md-field>
       <md-field
         class="md-form-group"
@@ -17,7 +17,7 @@
       >
         <md-icon><b-icon icon="person-circle"></b-icon></md-icon>
         <label>아이디</label>
-        <md-input v-model="userid" @change="idvalueCheck"></md-input>
+        <md-input v-model="userid" @change="idvalueCheck" ref="id"></md-input>
         <b-icon
           icon="exclamation-circle-fill"
           variant="danger"
@@ -25,7 +25,7 @@
           v-b-tooltip.hover.right="'사용이 불가능한 아이디입니다.'"
         ></b-icon>
       </md-field>
-      <md-field class="md-form-group " slot="inputs">
+      <md-field class="md-form-group dis" slot="inputs">
         <md-icon><b-icon icon="lock"></b-icon></md-icon>
         <label>비밀번호</label>
         <md-input type="password" v-model="userpw" ref="userpw"></md-input>
@@ -33,12 +33,12 @@
       <md-field class="md-form-group " slot="inputs">
         <md-icon><b-icon icon="mailbox"></b-icon></md-icon>
         <label>이메일</label>
-        <md-input type="email" v-model="useraddress"></md-input>
+        <md-input type="email" v-model="useraddress" ref="usermail"></md-input>
       </md-field>
       <md-field class="md-form-group " slot="inputs">
         <md-icon><b-icon icon="telephone-fill"></b-icon></md-icon>
-        <label>전화 번호</label>
-        <md-input v-model="usernumber"></md-input>
+        <label>전화번호</label>
+        <md-input v-model="usernumber" ref="userphone"></md-input>
       </md-field>
       <!-- 
       <md-button slot="footer" class="md-info" v-on:click="idvalueCheck()">
@@ -184,7 +184,10 @@ export default {
 }
 .md-form-group {
   width: 50%;
-  margin: 1rem auto;
+  margin: 1rem auto !important;
   padding: 15px;
 }
+/* .dis .md-icon-button {
+  display: none !important;
+} */
 </style>

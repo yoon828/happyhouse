@@ -27,7 +27,7 @@
       </md-field>
       <md-field class="md-form-group" slot="inputs">
         <md-icon><b-icon icon="telephone-fill"></b-icon></md-icon>
-        <label>전화 번호</label>
+        <label>전화번호</label>
         <md-input v-model="usernumber"></md-input>
       </md-field>
 

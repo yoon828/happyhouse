@@ -1,7 +1,7 @@
 <template>
   <b-tr>
     <b-td>{{ userid }}</b-td>
-    <b-td>************</b-td>
+    <b-td>{{ useraddress }}</b-td>
     <b-td v-if="this.usertype === 'A'">관리자</b-td>
     <b-td v-else>사용자</b-td>
     <b-th

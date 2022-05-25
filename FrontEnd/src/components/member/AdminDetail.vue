@@ -36,7 +36,7 @@
       </md-field>
       <md-field class="md-form-group" slot="inputs">
         <md-icon><b-icon icon="telephone-fill"></b-icon></md-icon>
-        <label>전화 번호</label>
+        <label>전화번호</label>
         <md-input v-model="user.usernumber" :readonly="true"></md-input>
       </md-field>
       <md-button slot="footer" class="md-success" v-on:click="moveList()">

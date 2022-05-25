@@ -3,6 +3,8 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ssafy.happyhouse.model.mapper.UserMapper">
+	
+	<!-- 
 	<insert id="registUser" parameterType="UserDto">
 		insert into user (userid, userpw, username, useraddress, usernumber, usertype)
 		values (#{userid}, #{userpw}, #{username}, #{useraddress}, #{usernumber} ,"G")
@@ -12,6 +14,15 @@
 		insert into user (userid, userpw, username, useraddress, usernumber, usertype)
 		values (#{userid}, #{userpw}, #{username}, #{useraddress}, #{usernumber} ,"A")
 	</insert>
+	 -->
+	
+	<update id="gradeAdmin" parameterType="map">
+	update user 
+	set usertype=#{type} 
+	where userid=#{userid}; 
+	</update>	
+	
+	
 	<select id="idFind" parameterType="map" resultType="string">
 		select userid
 		from user
@@ -89,9 +100,9 @@
 	left join dongcode d
 	on l.dongcode=d.dongcode
 	left join guguncode g
-	on d.gugunName=g.gugunName
-	left join sidocode s
-	on d.sidoName = s.sidoName
+	on left(d.dongCode,5) = left(g.gugunCode,5)
+    left join sidocode s
+	on left(d.dongCode,2) = left(s.sidoCode,2)
 	where userid=#{userid}
 	</select>
 	

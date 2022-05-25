@@ -53,6 +53,12 @@ public class UserServiceImpl implements UserService{
 		userDto.setUserpw(encodePw);
 		return userMapper.registAdmin(userDto);	
 	}
+	
+	@Override
+	public int gradeAdmin(Map<String, String> map) throws Exception {
+		return userMapper.gradeAdmin(map);	
+	}
+
 	//유저 목록 조회
 	@Override
 	public List<UserDto> listUser() throws Exception {

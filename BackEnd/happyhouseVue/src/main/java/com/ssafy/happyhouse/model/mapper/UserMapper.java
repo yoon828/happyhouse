@@ -14,6 +14,8 @@ public interface UserMapper {
 	int registUser(UserDto userDto) throws Exception;
 	//관리자 등록
 	int registAdmin(UserDto userDto) throws Exception;
+	//회원의 등급 변경
+	int gradeAdmin(Map<String, String> map);
 	//로그인
 	UserDto login(Map<String, String> map) throws Exception;
 	//회원 상세 조회 

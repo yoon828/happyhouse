@@ -42,6 +42,9 @@ public interface UserService {
 
 	boolean deleteLikeDong(Map<String, String> map) throws Exception;
 
+	//회원 등급 수정
+	int gradeAdmin(Map<String, String> map) throws Exception;
+
 	
 
 }

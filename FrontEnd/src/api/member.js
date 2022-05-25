@@ -112,6 +112,14 @@ async function gradeAdmin(params, success) {
     });
 }
 
+//관리자 회원수정
+async function updateAdmin(user, success, fail) {
+  api
+    .put(`/admin/update`, JSON.stringify(user))
+    .then(success)
+    .catch(fail);
+}
+
 /////////////////관심지역 등록 //////////////////////
 
 //관심지역 등록
@@ -171,4 +179,5 @@ export {
   deleteLikeDong,
   selectLikeDong,
   gradeAdmin,
+  updateAdmin,
 };

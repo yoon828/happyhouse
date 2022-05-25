@@ -6,7 +6,7 @@
         회원 정보 입니다.
       </p>
       <md-field class="md-form-group" slot="inputs">
-        <b-icon icon="person-circle" aria-hidden="true"></b-icon>
+        <md-icon><b-icon icon="pencil"></b-icon></md-icon>
         <label>이름</label>
         <md-input v-model="user.username" :readonly="true"></md-input>
       </md-field>

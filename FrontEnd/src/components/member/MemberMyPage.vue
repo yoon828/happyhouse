@@ -82,7 +82,6 @@ export default {
           this.userDelete(this.userInfo.userid);
           let msg = "회원 탈퇴 시 문제가 발생했습니다.";
           let err = true;
-          console.log(this.isDelete);
           if (this.isDelete) {
             msg = "회원 탈퇴가 완료되었습니다.";
             err = false;

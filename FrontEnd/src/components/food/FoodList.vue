@@ -138,10 +138,8 @@ export default {
             res.data.dongName +
             " " +
             this.searchfood;
-          console.log(search);
           getFoodList(search, (res) => {
             this.foods = res.data.items;
-            console.log(this.foods);
           });
         });
       }

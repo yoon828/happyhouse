@@ -121,11 +121,9 @@ export default {
         return;
       } else if (this.userInfo.usertype == "A") {
         this.$router.push({ name: "noticeRegister" });
-        console.log(this.userInfo?.usertype);
         return;
       } else {
         alert("공지 사항은 관리자만 등록할 수 있습니다.");
-        console.log(this.userInfo?.usertype);
         return;
       }
     },

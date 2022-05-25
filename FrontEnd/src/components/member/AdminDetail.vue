@@ -83,7 +83,6 @@ export default {
         deleteMember(this.user.userid, (res) => {
           let msg = "회원 탈퇴 시에 문제가 발생했습니다.";
           let err = true;
-          console.log(res.data);
           if (res.data == "success") {
             msg = "회원 탈퇴가 완료되었습니다.";
             err = false;

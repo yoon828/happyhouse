@@ -99,7 +99,6 @@ const memberStore = {
           userid: userid,
         },
         ({ data }) => {
-          console.log(data);
           commit("SET_LIKE_LIST", data);
           // eslint-disable-next-line prettier/prettier
         }

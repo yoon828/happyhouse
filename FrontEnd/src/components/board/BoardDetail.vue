@@ -27,7 +27,10 @@
         <md-button type="button" class="m-1 md-info" @click="moveModifyArticle"
           >글수정</md-button
         >
-        <md-button type="button" class="m-1 md-danger" @click="deleteArticle"
+        <md-button
+          type="button"
+          class="m-1 md-danger"
+          @click="deleteArticleCheck"
           >글삭제</md-button
         >
       </b-col>
@@ -58,7 +61,13 @@
 
 <script>
 // import moment from "moment";
-import { getArticle, hitAdd, writeComment, listComment } from "@/api/board.js";
+import {
+  getArticle,
+  hitAdd,
+  writeComment,
+  listComment,
+  deleteArticle,
+} from "@/api/board.js";
 import { mapState } from "vuex";
 import BoardComment from "@/components/board/BoardComment";
 
@@ -145,7 +154,7 @@ export default {
 
       //   this.$router.push({ path: `/board/modify/${this.article.articleno}` });
     },
-    deleteArticle() {
+    deleteArticleCheck() {
       if (this.userInfo?.userid === undefined || this.userInfo.userid == null) {
         alert("로그인이 필요한 서비스입니다.");
         this.$router.push({ name: "login" });

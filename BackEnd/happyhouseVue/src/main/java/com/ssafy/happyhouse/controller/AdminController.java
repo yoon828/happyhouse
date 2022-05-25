@@ -79,6 +79,17 @@ public class AdminController {
 		logger.debug("userList 호출");
 		return new ResponseEntity<List<UserDto>>(userService.listUser(), HttpStatus.OK);
 	}
+	
+	//관리자 수정
+	@ApiOperation(value = "관리자의 회원 수정 성공시 success, 실패시 fail" , response = String.class)
+	@PutMapping(value = "/update")
+	public ResponseEntity<String> updateAdmin(@RequestBody UserDto userDto) throws Exception{
+		logger.debug("관리자 수정 호출");
+		if(userService.updateAdmin(userDto) != 1) {
+			return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+	}
 
 
 

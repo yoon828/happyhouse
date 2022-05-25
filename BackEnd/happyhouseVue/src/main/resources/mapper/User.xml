@@ -73,6 +73,15 @@
       </trim>
       where userid = #{userid}
    </update>
+   
+   <update id="updateAdmin" parameterType="UserDto" >
+      update user
+      <trim prefix="set" suffixOverrides=",">
+         <if test="useraddress != null">useraddress = #{useraddress},</if>
+         <if test="useraddress != null">usernumber = #{usernumber},</if>
+      </trim>
+      where userid = #{userid}
+   </update>
 	
 	<delete id="deleteUser" parameterType="String">
 		delete from user

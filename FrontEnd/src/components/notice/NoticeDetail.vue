@@ -39,7 +39,7 @@
       <b-form-textarea
         id="textarea"
         v-model="content"
-        placeholder="답변 작성(관리자만 답변)..."
+        placeholder="댓글 작성"
         rows="3"
         max-rows="6"
       ></b-form-textarea>
@@ -47,7 +47,7 @@
     <b-row class="mb-5">
       <b-col class="text-right">
         <md-button type="button" class="m-1 md-success" @click="commentCheck"
-          >답변 작성</md-button
+          >댓글 작성</md-button
         >
       </b-col>
     </b-row>

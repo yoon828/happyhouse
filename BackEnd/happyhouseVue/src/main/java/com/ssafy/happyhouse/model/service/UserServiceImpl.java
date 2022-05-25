@@ -76,6 +76,12 @@ public class UserServiceImpl implements UserService{
 		userDto.setUserpw(encodePw);
 		return userMapper.updateUser(userDto);
 	}
+	//관리자 업데이트
+	@Override
+	@Transactional
+	public int updateAdmin(UserDto userDto) throws Exception {
+		return userMapper.updateAdmin(userDto);
+	}
 
 	@Override
 	@Transactional

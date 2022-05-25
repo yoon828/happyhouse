@@ -45,6 +45,8 @@ public interface UserService {
 	//회원 등급 수정
 	int gradeAdmin(Map<String, String> map) throws Exception;
 
+	int updateAdmin(UserDto userDto) throws Exception;
+
 	
 
 }

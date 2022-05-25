@@ -40,5 +40,7 @@ public interface UserMapper {
 	int deleteLikeDong(Map<String, String> map)throws Exception;
 	//관심지역 조회
 	List<SidoGugunCodeDto> listLikeDong(String userid)throws Exception;
+	//관리가 회원 수정
+	int updateAdmin(UserDto userDto) throws Exception;
 
 }

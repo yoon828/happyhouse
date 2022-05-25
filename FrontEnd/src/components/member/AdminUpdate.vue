@@ -45,12 +45,12 @@
 </template>
 
 <script>
-import { getMember, updateMember, deleteMember } from "@/api/member.js";
+import { getMember, deleteMember, updateAdmin } from "@/api/member.js";
 export default {
   data() {
     return {
       user: {},
-      userpw: null,
+      userpw: "***********",
     };
   },
   created() {
@@ -65,10 +65,7 @@ export default {
     updateCheck() {
       let err = false;
       let msg = "";
-      if (!this.userpw) {
-        msg = "비밀 번호를 입력해주세요.";
-        err = true;
-      } else if (!this.user.useraddress) {
+      if (!this.user.useraddress) {
         msg = "이메일을 입력해주세요";
         err = true;
       } else if (!this.user.usernumber) {
@@ -82,10 +79,9 @@ export default {
       }
     },
     updateAdmin() {
-      updateMember(
+      updateAdmin(
         {
           userid: this.user.userid,
-          userpw: this.userpw,
           username: this.user.username,
           useraddress: this.user.useraddress,
           usernumber: this.user.usernumber,

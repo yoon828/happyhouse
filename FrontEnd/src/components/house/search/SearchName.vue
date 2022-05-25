@@ -1,17 +1,14 @@
 <template>
-  <b-row class="mt-4 mb-4 text-center d-flex justify-content-center">
+  <b-row
+    class="mt-4 mb-4 text-center d-flex align-items-center justify-content-center  "
+  >
     <b-form-input
       v-model="aptname"
       placeholder="아파트 이름"
       class="col-md-3 mr-1"
-    ></b-form-input>
-    <b-button
-      type="button"
-      variant="warning"
       @keyup.enter="search"
-      @click="search"
-      >검색</b-button
-    >
+    ></b-form-input>
+    <b-button type="button" variant="warning" @click="search">검색</b-button>
   </b-row>
 </template>
 
@@ -27,8 +24,9 @@ export default {
     };
   },
   methods: {
-    ...mapActions(houseStore, ["setHouses", "setHousesFilter"]),
+    ...mapActions(houseStore, ["setHouses", "setHousesFilter", "clearHouse"]),
     search() {
+      this.clearHouse();
       houseListByName(
         {
           aptName: this.aptname,

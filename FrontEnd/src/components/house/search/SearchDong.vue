@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 <template>
-  <b-row class="my-4 wc mx-auto d-flex     align-items-center">
+  <b-row class="my-4 wc mx-auto d-flex align-items-center">
     <b-col class="sm-3">
       <b-form-select v-model="sidoCode" :options="sidos" @change="getGugunList">
       </b-form-select>

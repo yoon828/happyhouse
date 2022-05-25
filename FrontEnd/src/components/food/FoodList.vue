@@ -23,6 +23,8 @@
         <b-form-select v-model="dongCode" :options="dongs" id="dong">
         </b-form-select>
       </b-col>
+    </b-row>
+    <b-row>
       <b-form-input
         placeholder="음식 검색"
         v-model="searchfood"
@@ -71,6 +73,7 @@ import {
   getFoodList,
 } from "@/api/food.js";
 import FoodListItem from "@/components/food/FoodListItem.vue";
+
 export default {
   name: "RestaurantSearchBar",
   components: {
@@ -90,6 +93,22 @@ export default {
   },
   created() {
     this.getSidoList();
+    let params = this.$route.params;
+    if (params.sidoCodeParam) {
+      this.sidoCode = params.sidoCodeParam.substr(0, 2); //시도 설정
+      //구군 불러오기
+      this.getGugunList();
+      this.gugunCode = params.gugunCodeParam.substr(0, 5); //구군 설정
+      //동 불러오기
+      this.getDongList();
+      this.dongCode = params.dongCodeParam; //동 설정
+
+      //음식 키워드 설정
+      this.getDongList();
+      this.searchfood = params.kewordParam; //음식 키워드 설정
+
+      this.getFoodList();
+    }
   },
   methods: {
     getSidoList() {
@@ -151,5 +170,9 @@ export default {
 <style>
 .foods {
   text-align: center;
+}
+
+b {
+  font-weight: normal;
 }
 </style>

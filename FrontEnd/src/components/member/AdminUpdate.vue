@@ -18,7 +18,12 @@
       <md-field class="md-form-group" slot="inputs">
         <md-icon><b-icon icon="lock"></b-icon></md-icon>
         <label>비밀번호</label>
-        <md-input type="password" v-model="userpw" ref="userpw"></md-input>
+        <md-input
+          type="password"
+          v-model="userpw"
+          ref="userpw"
+          :readonly="true"
+        ></md-input>
       </md-field>
       <md-field class="md-form-group" slot="inputs">
         <md-icon><b-icon icon="mailbox"></b-icon></md-icon>

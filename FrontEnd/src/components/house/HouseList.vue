@@ -6,7 +6,7 @@
       variant="warning"
       class="mb-2"
     >
-      <b-icon icon="sliders"></b-icon>
+      <b-icon icon="sliders" v-b-tooltip.hover.right="'필터'"></b-icon>
     </b-button>
     <div v-if="houses && houses.length != 0" class="bv-example-row wd">
       <b-list-group class="con wt-100">

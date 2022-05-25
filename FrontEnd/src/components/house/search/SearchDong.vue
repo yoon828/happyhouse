@@ -1,20 +1,27 @@
-/* eslint-disable prettier/prettier */
 <template>
   <b-row class="my-4 wc mx-auto d-flex align-items-center">
     <b-col class="sm-3">
-      <b-form-select v-model="sidoCode" :options="sidos" @change="getGugunList">
+      <b-form-select
+        v-model="currentSido"
+        :options="sidos"
+        @change="getGugunList"
+      >
       </b-form-select>
     </b-col>
     <b-col class="sm-3">
       <b-form-select
-        v-model="gugunCode"
+        v-model="currentGugun"
         :options="guguns"
         @change="getDongList"
       >
       </b-form-select>
     </b-col>
     <b-col class="sm-3">
-      <b-form-select v-model="dongCode" :options="dongs" @change="getHouseList">
+      <b-form-select
+        v-model="currentDong"
+        :options="dongs"
+        @change="getHouseList"
+      >
       </b-form-select>
     </b-col>
     <b-button type="button" variant="inline-warning" @click="addLikeDong">
@@ -40,9 +47,9 @@ export default {
   name: "SearchDong",
   data() {
     return {
-      sidoCode: null,
-      gugunCode: null,
-      dongCode: null,
+      currentSido: null,
+      currentGugun: null,
+      currentDong: null,
       sidos: [{ value: null, text: "선택" }],
       guguns: [{ value: null, text: "선택" }],
       dongs: [{ value: null, text: "선택" }],
@@ -50,25 +57,43 @@ export default {
     };
   },
   created() {
+    this.currentSido = this.sidoCode;
+    this.currentGugun = this.gugunCode;
+    this.currentDong = this.dongCode;
     this.getSidoList();
     let params = this.$route.params;
     if (params.sidoCodeParam) {
-      this.sidoCode = params.sidoCodeParam.substr(0, 2); //시도 설정
+      this.currentSido = params.sidoCodeParam.substr(0, 2); //시도 설정
       //구군 불러오기
       this.getGugunList();
-      this.gugunCode = params.gugunCodeParam.substr(0, 5); //구군 설정
+      this.currentGugun = params.gugunCodeParam.substr(0, 5); //구군 설정
       //동 불러오기
       this.getDongList();
-      this.dongCode = params.dongCodeParam; //동 설정
+      this.currentDong = params.dongCodeParam; //동 설정
       this.getHouseList();
     }
+  },
+  destroyed() {
+    this.clearSidoCode();
+    this.clearGugunCode();
+    this.clearDongCode();
   },
 
   computed: {
     ...mapState(memberStore, ["userInfo", "likeList"]),
+    ...mapState(houseStore, ["sidoCode", "gugunCode", "dongCode"]),
   },
   methods: {
-    ...mapActions(houseStore, ["setHouses", "setHousesFilter"]),
+    ...mapActions(houseStore, [
+      "setHouses",
+      "setHousesFilter",
+      "setSidoCode",
+      "setGugunCode",
+      "setDongCode",
+      "clearSidoCode",
+      "clearGugunCode",
+      "clearDongCode",
+    ]),
     ...mapActions(memberStore, ["setLikeList"]),
     getSidoList() {
       sidoList((res) => {
@@ -78,30 +103,35 @@ export default {
       });
     },
     getGugunList() {
+      this.setSidoCode(this.currentSido);
       this.guguns = [{ value: null, text: "선택" }];
-      gugunList({ sidoCode: this.sidoCode }, (res) => {
+      gugunList({ sidoCode: this.currentSido }, (res) => {
         res.data.forEach((gugun) => {
           if (gugun.gugunName != null) {
+            if (!gugun.gugunCode) gugun.gugunCode = null;
             this.guguns.push({ value: gugun.gugunCode, text: gugun.gugunName });
           }
         });
       });
     },
     getDongList() {
+      this.setGugunCode(this.currentGugun);
       this.dongs = [{ value: null, text: "선택" }];
-      dongList({ sidoCode: this.gugunCode }, (res) => {
+      dongList({ sidoCode: this.currentGugun }, (res) => {
         res.data.forEach((dong) => {
           if (dong.dongName != null) {
+            if (!dong.dongCode) dong.dongCode = null;
             this.dongs.push({ value: dong.dongCode, text: dong.dongName });
           }
         });
       });
     },
     getHouseList() {
+      this.setDongCode(this.currentDong);
       this.isLikeDong();
       houseListByDong(
         {
-          dongCode: this.dongCode,
+          dongCode: this.currentDong,
         },
         (res) => {
           this.setHouses(res.data);

@@ -21,7 +21,8 @@ export default {
     moveLink() {
       window.open(
         "https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=" +
-          this.setTitle(this.title),
+          // eslint-disable-next-line prettier/prettier
+          this.setTitle(this.title)
       );
     },
     setTitle(title) {

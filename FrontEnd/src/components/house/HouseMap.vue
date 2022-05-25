@@ -1,37 +1,54 @@
 /* eslint-disable prettier/prettier */
 <template>
   <b-container class="flex-direction-col">
-    <b-list-group horizontal id="category" class="mb-2">
-      <b-list-group-item
-        class="category"
-        :class="{ selected: bankSelected }"
-        @click="selectBank(0)"
-      >
-        은행
-        <!-- <b-button type="button">은행</b-button -->
-      </b-list-group-item>
-      <b-list-group-item
-        class="category"
-        :class="{ selected: martSelected }"
-        @click="selectMarket"
-      >
-        편의점
-      </b-list-group-item>
-      <b-list-group-item
-        class="category"
-        :class="{ selected: hpSelected }"
-        @click="selectHospital"
-      >
-        병원
-      </b-list-group-item>
-      <b-list-group-item
-        class="category"
-        :class="{ selected: subwaySelected }"
-        @click="selectSubway"
-      >
-        지하철
-      </b-list-group-item>
-    </b-list-group>
+    <b-row>
+      <b-col>
+        <b-list-group horizontal id="category" class="mb-2">
+          <b-list-group-item
+            class="category"
+            :class="{ selected: bankSelected }"
+            @click="selectBank(0)"
+          >
+            은행
+            <!-- <b-button type="button">은행</b-button -->
+          </b-list-group-item>
+          <b-list-group-item
+            class="category"
+            :class="{ selected: martSelected }"
+            @click="selectMarket"
+          >
+            편의점
+          </b-list-group-item>
+          <b-list-group-item
+            class="category"
+            :class="{ selected: hpSelected }"
+            @click="selectHospital"
+          >
+            병원
+          </b-list-group-item>
+          <b-list-group-item
+            class="category"
+            :class="{ selected: subwaySelected }"
+            @click="selectSubway"
+          >
+            지하철
+          </b-list-group-item>
+        </b-list-group>
+      </b-col>
+      <b-col>
+        <b-input-group class="flex-right">
+          <b-form-input
+            placeholder="음식 검색"
+            v-model="searchfood"
+            class="col-md-6 mr-1 wd"
+            @keyup.enter="getSearchFood"
+          ></b-form-input>
+          <b-button type="button" variant="warning" @click="getSearchFood">
+            <b-icon icon="search"></b-icon>
+          </b-button>
+        </b-input-group>
+      </b-col>
+    </b-row>
     <div id="map" class="map" style="height:600px"></div>
   </b-container>
 </template>
@@ -45,6 +62,7 @@ export default {
   components: {},
   data() {
     return {
+      searchfood: "",
       initPostion: [],
       markers: [], //마커를 담는 배열
       map: null,
@@ -67,7 +85,14 @@ export default {
     };
   },
   computed: {
-    ...mapState(houseStore, ["houses", "house", "housesfilter"]),
+    ...mapState(houseStore, [
+      "houses",
+      "house",
+      "housesfilter",
+      "sidoCode",
+      "gugunCode",
+      "dongCode",
+    ]),
     // listUpdate: function() {
     //   return displayMarkers(this.housesfilter);
     // },
@@ -302,6 +327,25 @@ export default {
       }
       this.sideMarkers[idx] = [];
     },
+
+    getSearchFood() {
+      if (!this.dongCode) {
+        alert("지역을 선택해주세요");
+        return;
+      } else if (!this.searchfood) {
+        alert("검색어를 입력해주세요");
+        return;
+      }
+      this.$router.push({
+        name: "food",
+        params: {
+          sidoCodeParam: this.sidoCode,
+          gugunCodeParam: this.gugunCode,
+          dongCodeParam: this.dongCode,
+          kewordParam: this.searchfood,
+        },
+      });
+    },
   },
 };
 </script>
@@ -329,5 +373,11 @@ export default {
   height: 40px;
   display: flex !important;
   align-items: center !important;
+}
+.flex-right {
+  justify-content: right;
+}
+.wd-40 {
+  width: 40px !important;
 }
 </style>

@@ -146,7 +146,7 @@ export default {
       //필터 해제
       let origin = this.houses;
       this.setHousesFilter(origin);
-      this.pricevalue = "120";
+      this.pricevalue = "1200";
       this.buildrange = [1961, 2022];
     },
   },

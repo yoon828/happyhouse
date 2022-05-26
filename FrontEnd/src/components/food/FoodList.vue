@@ -33,20 +33,26 @@
       ></b-form-input>
       <b-button type="button" variant="warning" @click="getFoodList">
         <b-icon icon="search"></b-icon>
-        <!-- <b-icon icon="heart-fill"></b-icon> -->
       </b-button>
     </b-row>
     <div class="container">
       <b-row class="mt-5 mb-5">
         <b-col>
           <b-table-simple hover responsive class="mb-6">
+            <colgroup>
+              <col style="width: 10%" />
+              <col style="width: 10%" />
+              <col style="width: 30%" />
+              <col style="width: 30%" />
+              <col style="width: 7%" />
+            </colgroup>
             <b-thead head-variant="dark">
               <b-tr>
                 <b-th>상호명</b-th>
                 <b-th>카테고리</b-th>
                 <b-th>지번 주소</b-th>
                 <b-th>도로명 주소</b-th>
-                <b-th>링크</b-th>
+                <b-th class="text-center">검색</b-th>
               </b-tr>
             </b-thead>
             <tbody>

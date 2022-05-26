@@ -4,7 +4,11 @@
     <b-td>{{ category }}</b-td>
     <b-td>{{ address }}</b-td>
     <b-td>{{ roadAddress }}</b-td>
-    <b-td @click="moveLink"> 검색 링크 </b-td>
+    <b-td @click="moveLink" class="text-center">
+      <b-button type="button" variant="warning" @click="getFoodList">
+        검색
+      </b-button>
+    </b-td>
   </b-tr></template
 >
 <script>

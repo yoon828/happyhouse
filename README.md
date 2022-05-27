@@ -1,13 +1,13 @@
 # Happy House :house:
 주택 실거래 내역 정보를 제공하는 HappyHouse 입니다.
  <br/><br/>
-## 개요:blush:
+## :blush:개요
 - SAFFY 7기 1학기 최종 관통 프로젝트
 - 주택 거래 정보 검색 및 주택 관련 정보 제공서비스
 <img width="60%" src="https://user-images.githubusercontent.com/64458685/170626666-cc6447b7-fc1f-498c-af57-8af98bb65d33.png"/>
 
  <br/><br/>
-## TEAM:+1:
+## :+1:TEAM
 - 김윤민(팀장), 정지원(팀원) <br/>
 
 <img width="60%" src="https://user-images.githubusercontent.com/64458685/170626847-e274f17f-b81b-40b0-bcd1-e6a3d79887f8.png"/>
@@ -15,11 +15,11 @@
 
 
 
-## 프로젝트 일정:calendar:
+## :calendar:프로젝트 일정
 전체 기간 : 2022.0519 ~ 2022.05.26 <br>
 ![image](https://user-images.githubusercontent.com/64458685/170627276-347e107c-1d20-43ff-92d0-7709fe7bc480.png)
  <br/><br/>
-## 개발 환경:wrench:
+## :wrench:개발 환경
 
 ### FrontEnd
 
@@ -41,7 +41,7 @@
 |Springboot|2.6.7|
 
  <br/><br/>
-## 개발 결과:star:
+## :star:개발 결과
 ### 주요 기능
 >  <strong>회원관리</strong>
 >   * 회원가입
@@ -79,7 +79,7 @@
 
 
  <br/><br/>
-### 요구사항 목록raised_hands:
+### :raised_hands:요구사항 목록
 [:point_right:요구사항 목록(Notion):point_left:](./docs/screen)
  <br/><br/>
 ### 화면 설계서:computer:

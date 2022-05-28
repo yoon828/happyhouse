@@ -82,8 +82,8 @@
 ### :raised_hands:요구사항 목록
 [:point_right:요구사항 목록(Notion):point_left:](./docs/screen)
  <br/><br/>
-### 화면 설계서:computer:
+### :computer:화면 설계서
 [:point_right:화면설계서 보러가기:point_left:](https://road-desk-e0c.notion.site/9319dcda34d349efa2a62d604f7ceeda?v=78581bd5ac974ce3b002550d212d5bc4)
  <br/><br/>
-### 시연영상
+### :camera:시연영상
 [:point_right:시연영상 보러가기:point_left:](https://youtu.be/Z8zZywKfSx4)

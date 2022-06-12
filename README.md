@@ -1,5 +1,8 @@
 # Happy House :house:
 주택 실거래 내역 정보를 제공하는 HappyHouse 입니다.
+
+:trophy:광주 5반 우수 프로젝트 선정:trophy:
+
  <br/><br/>
 ## :blush:개요
 - SAFFY 7기 1학기 최종 관통 프로젝트
